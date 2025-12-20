@@ -1,0 +1,30 @@
+-- =============================================================================
+-- FSA Road Safety Database — Security-Hardened POC Schema
+-- PostgreSQL 16 (Ubuntu)
+-- =============================================================================
+--
+-- WHAT THIS FILE IS:
+--   A security-hardened proof-of-concept version of the FSA (Field Safety
+--   Assessment) Road Safety Database schema used by the Government of India
+--   for road accident data collection across multiple states and districts.
+--
+--   Compare against: fps_schema.sql  (the original, unmodified production dump)
+--
+-- ─────────────────────────────────────────────────────────────────────────────
+-- COMPLETE DIFF SUMMARY vs fps_schema.sql
+-- ─────────────────────────────────────────────────────────────────────────────
+--
+-- [NEW] Extensions:
+--   • pgcrypto — required for all encryption and password hashing
+--
+-- [NEW] Roles (did not exist in original):
+--   • fsa_admin  — superuser equivalent, owns all objects, BYPASSRLS
+--   • fsa_app    — used by application for all CRUD
+--   • fsa_readonly — used by dashboards / reports, SELECT only
+--
+-- [NEW] Schemas (did not exist in original):
+--   • audit  — holds the change_log table for full audit trail
+--   (master schema already existed and is preserved unchanged)
+--
+-- [NEW] Entire function library (Section 4, nothing like this in original):
+--   • hash_password(text)          — bcrypt cost-10 via pgcrypto

@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  dbgate:
+    image: dbgate/dbgate:latest
+    container_name: poc-dbgate
+    restart: unless-stopped
+    ports:
+      - "3100:3000"
+    environment:
+      CONNECTIONS: con1

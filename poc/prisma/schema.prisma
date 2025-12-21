@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model fsa_acc {
+  detail_id          BigInt
+  acc_pattern_onspot String?     @db.VarChar
+  no_of_injuries     String?     @db.VarChar
+  no_of_deaths       String?     @db.VarChar
+  no_of_accidents    String?     @db.VarChar
+  nearest_hosp       String?     @db.VarChar
+  acc_id             String      @id(map: "acc_pkey") @db.VarChar
+  start_age_range    Int?
+  end_age_range      Int?
+  age_range          String?     @db.VarChar
+  time_frame_acc     String?     @db.VarChar
+  edited             Boolean?    @default(false)
+  created_at         DateTime    @default(now()) @db.Timestamptz(6)
+  updated_at         DateTime    @default(now()) @db.Timestamptz(6)
+  gen_details        gen_details @relation(fields: [detail_id], references: [detail_id], onDelete: NoAction, onUpdate: NoAction, map: "detail_id")
+
+  @@index([detail_id], map: "idx_fsa_acc_detail_id")
+}

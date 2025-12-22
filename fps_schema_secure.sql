@@ -28,3 +28,32 @@
 --
 -- [NEW] Entire function library (Section 4, nothing like this in original):
 --   • hash_password(text)          — bcrypt cost-10 via pgcrypto
+--   • verify_password(text, text)  — constant-time bcrypt compare
+--   • trg_hash_admin_password()    — auto-hashes admin_pwd on INSERT/UPDATE
+--   • trg_hash_user_password()     — auto-hashes pwd on INSERT/UPDATE
+--   • require_encryption_key()     — reads app.encryption_key session var
+--   • hash_lookup_value(text)      — SHA-256 hex for searchable email hash
+--   • encrypt_text_value(text)     — ChaCha20 encrypt → "enc:chacha20:v1:<b64>"
+--   • decrypt_text_value(text)     — reverse of above
+--   • encrypt_jsonb_value(jsonb)   — encrypts JSON string values
+--   • decrypt_jsonb_value(jsonb)   — reverse of above
+--   • trg_encrypt_sensitive_fields() — master encryption trigger (all tables)
+--   • update_timestamp()           — keeps updated_at current
+--   • audit.log_changes()          — writes old/new jsonb to audit.change_log
+--
+-- [NEW] Audit table (did not exist in original):
+--   • audit.change_log             — timestamped INSERT/UPDATE/DELETE log
+--
+-- [NEW] Columns added to existing tables:
+--   • fsa_user_table.email_hash     — SHA-256 of email; needed because email
+--                                     itself is encrypted and not searchable
+--   • fsa_admin_table.admin_email_hash — same reason for admin email
+--   • Every public table now has:   created_at timestamptz, updated_at timestamptz
+--
+-- [NEW] CHECK constraints (did not exist in original):
+--   • fsa_user_table.pwd           — enforces bcrypt format ($2...)
+--   • fsa_admin_table.admin_pwd    — enforces bcrypt format ($2...)
+--
+-- [CHANGED] Column types in fsa_acc (to allow AES-256 encrypted storage):
+--   • no_of_injuries  integer  →  character varying
+--   • no_of_deaths    integer  →  character varying

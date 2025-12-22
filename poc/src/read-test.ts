@@ -23,3 +23,28 @@ type AnyRow = Record<string, unknown>;
 async function compareTable(
   prisma: PrismaClient,
   tableName: string,
+  viewName: string,
+  columns: string[],
+  idCol: string,
+) {
+  console.log(`\n━━━ ${tableName} (BASE → ciphertext) ━━━`);
+  const colList = [idCol, ...columns].join(', ');
+  const baseRows = await prisma.$queryRawUnsafe<AnyRow[]>(`SELECT ${colList} FROM ${tableName}`);
+  for (const row of baseRows) {
+    console.log(`  ${idCol}=${row[idCol]}`);
+    for (const col of columns) {
+      console.log(`    ${col.padEnd(24)} = ${trunc(String(row[col] ?? '(null)'))}`);
+    }
+  }
+
+  console.log(`  ↓ ${viewName} (VIEW → plaintext)`);
+  const viewRows = await prisma.$queryRawUnsafe<AnyRow[]>(`SELECT ${colList} FROM ${viewName}`);
+  for (const row of viewRows) {
+    const vals = columns.map(c => `${c}=${trunc(String(row[c] ?? '(null)'), 40)}`).join('  ');
+    console.log(`  ${idCol}=${row[idCol]}  ${vals}`);
+  }
+
+  if (baseRows.length === 0) {
+    console.log('  ⚠ No rows found');
+  }
+}

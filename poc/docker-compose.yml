@@ -10,3 +10,14 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: fsa_encrypted_verify
     ports:
+      - "55432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:

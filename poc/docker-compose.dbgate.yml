@@ -8,3 +8,12 @@ services:
       - "3100:3000"
     environment:
       CONNECTIONS: con1
+      LABEL_con1: "FSA Encrypted Verify"
+      SERVER_con1: host.docker.internal
+      USER_con1: postgres
+      PASSWORD_con1: postgres
+      PORT_con1: 55432
+      ENGINE_con1: postgres@dbgate-plugin-postgres
+      DATABASE_con1: fsa_encrypted_verify
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

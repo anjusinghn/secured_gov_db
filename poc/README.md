@@ -21,3 +21,25 @@ Application-layer ChaCha20-Poly1305 encryption for PII columns in the FSA Road S
 ```bash
 npm install
 npx prisma generate
+```
+
+## Run
+
+```bash
+# Seed sample data (encrypted on write)
+npx tsx src/seed.ts
+
+# Verify encryption: shows decrypted vs encrypted reads
+npx tsx src/read-test.ts
+```
+
+## View in DbGate
+
+```bash
+docker compose -f docker-compose.dbgate.yml up -d
+```
+
+Open http://localhost:3100 — browse `fsa_user_table`, `fsa_admin_table`, etc. to see encrypted ciphertext in PII columns.
+
+## Encrypted Fields
+

@@ -57,3 +57,32 @@
 -- [CHANGED] Column types in fsa_acc (to allow AES-256 encrypted storage):
 --   • no_of_injuries  integer  →  character varying
 --   • no_of_deaths    integer  →  character varying
+--   (Decrypted view casts them back to integer for consumers)
+--
+-- [CHANGED] Column types in fsa_onspot (to allow AES-256 encrypted storage):
+--   • lat   double precision  →  character varying
+--   • long  double precision  →  character varying
+--
+-- [CHANGED] FK constraints: all had NOT VALID in original; fully enforced here
+--
+-- [CHANGED] Table ownership: all objects owned by fsa_admin (was postgres)
+--
+-- [NEW] Unique constraints on hash columns:
+--   • fsa_user_table.email_hash_unique
+--   • fsa_admin_table.admin_email_hash_unique
+--
+-- [NEW] Indexes (none existed in original):
+--   • FK column indexes on all child tables (detail_id, userid, etc.)
+--   • State/district expression indexes for RLS performance
+--
+-- [NEW] Triggers (none existed in original):
+--   • Section 13  — password hashing (trg_hash_*)
+--   • Section 13A — field encryption (trg_encrypt_*)
+--   • Section 14  — timestamp maintenance (trg_ts_*)
+--   • Section 15  — audit logging (audit_*)
+--
+-- [NEW] Row Level Security (Section 16):
+--   • Enabled on all public data tables
+--   • Policies filter by app.current_state_code / app.current_district_code
+--   • fsa_admin BYPASSRLS; fsa_app read-write; fsa_readonly SELECT only
+--

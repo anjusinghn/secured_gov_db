@@ -26,3 +26,30 @@ model fsa_acc {
 
   @@index([detail_id], map: "idx_fsa_acc_detail_id")
 }
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model fsa_admin_table {
+  /// @encrypted
+  admin_email      String   @db.VarChar
+  admin_email_hash String   @unique(map: "admin_email_hash_unique") @db.VarChar
+  admin_id         BigInt   @id @default(autoincrement())
+  admin_role_id    BigInt?
+  admin_role       String?  @db.VarChar
+  /// @encrypted
+  admin_name       String?  @db.VarChar
+  admin_pwd        String?  @db.VarChar
+  login_status     Boolean?
+  last_login       String?  @db.VarChar
+  user_status      Boolean?
+  /// @encrypted
+  state_name       String?  @db.VarChar
+  /// @encrypted
+  district_name    String?  @db.VarChar
+  state_code       String?  @db.VarChar
+  district_code    String?  @db.VarChar
+  /// @encrypted
+  created_by       String?  @db.VarChar
+  /// @encrypted
+  phone_no         String?  @db.VarChar
+  created_at       DateTime @default(now()) @db.Timestamptz(6)

@@ -54,3 +54,31 @@ If you want the fastest review path, use this order instead of reading top to bo
      - `schema-diff.md:164` for `fsa_onspot`
    - SQL refs:
      - `fps_schema.sql:779` vs `fps_schema_secure.sql:1124`
+     - `fps_schema.sql:858` vs `fps_schema_secure.sql:1151`
+   - this is where the storage model changes most clearly:
+     - `integer -> character varying`
+     - `double precision -> character varying`
+
+4. Encrypted operational/workflow tables
+   - markdown:
+     - `schema-diff.md:183` for survey tables
+     - `schema-diff.md:194` for admin/workflow tables
+   - focus on which columns are encrypted vs unchanged
+
+5. Integrity and performance
+   - markdown:
+     - `schema-diff.md:280` for constraints/indexes/security
+   - SQL refs:
+     - FKs: `fps_schema.sql:1633` vs `fps_schema_secure.sql:1776`
+     - indexes: `fps_schema_secure.sql:1864`
+
+6. Runtime security behavior
+   - SQL refs:
+     - password triggers: `fps_schema_secure.sql:1905`
+     - field encryption triggers: `fps_schema_secure.sql:1916`
+     - timestamp triggers: `fps_schema_secure.sql:1992`
+     - audit triggers: `fps_schema_secure.sql:2112`
+     - RLS: `fps_schema_secure.sql:2204`
+
+7. Read path / decrypted access
+   - markdown: `schema-diff.md:355`

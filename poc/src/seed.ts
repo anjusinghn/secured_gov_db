@@ -52,3 +52,30 @@ async function main() {
       { user_type: 'PO', user_role: 'Police Officer' },
     ],
     skipDuplicates: true,
+  });
+  console.log('✓ Seeded fsa_user_roles');
+
+  // 2. Seed state_district_master_table (no PK → Prisma marks @@ignore → raw SQL)
+  await prisma.$executeRaw`
+    INSERT INTO state_district_master_table (state_name, district_name, state_code, district_code, s_no)
+    VALUES ('Odisha', 'Khurda', '21', '05', 1), ('Odisha', 'Cuttack', '21', '06', 2)
+    ON CONFLICT DO NOTHING
+  `;
+  console.log('✓ Seeded state_district_master_table');
+
+  // 3. Seed users
+  // - pwd: plaintext → DB trigger `trg_hash_user_pwd` bcrypt-hashes it
+  // - email, rep_name, etc.: plaintext → DB trigger `trg_encrypt_fsa_user_table` encrypts them
+  // - email_hash: pass empty string → DB trigger computes SHA-256 hash from email
+  const user1 = await prisma.fsa_user_table.create({
+    data: {
+      pwd: 'SecurePass123!',
+      email: 'rajesh.kumar@gov.in',
+      email_hash: '', // trigger overwrites with SHA-256 hash
+      rep_name: 'Rajesh Kumar',
+      designation: 'Assistant Engineer',
+      department: 'Public Works Department',
+      phone_no: '+91-9876543210',
+      user_type: 'AE',
+      user_role: 'Assistant Engineer',
+      terms_cond: true,

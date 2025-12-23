@@ -43,3 +43,25 @@ Open http://localhost:3100 — browse `fsa_user_table`, `fsa_admin_table`, etc. 
 
 ## Encrypted Fields
 
+| Table | Encrypted Columns |
+|-------|------------------|
+| `fsa_user_table` | email, rep_name, designation, department, phone_no, state_name, district_name, police_station |
+| `fsa_admin_table` | admin_email, admin_name, phone_no, state_name, district_name, created_by |
+| `gen_details` | police_station |
+| `fsa_onspot` | highway_no, junction_name, landmark_name, name_of_stretch |
+| `intervention` | admin_name, admin_email |
+| `remarks_by_engg` | admin_name, admin_email |
+| `stages_table` | admin_name, admin_email |
+| `status_*` tables | admin_name, admin_email |
+
+## Encryption Format
+
+```
+enc:chacha20:v1:<iv_hex>:<authTag_hex>:<ciphertext_hex>
+```
+
+- Algorithm: ChaCha20-Poly1305
+- Nonce: 12 bytes (random per field per write)
+- Auth Tag: 16 bytes (integrity verification via Poly1305)
+- Key: 32 bytes from `ENCRYPTION_KEY` env var (hex-encoded)
+- Legacy `enc:v1:` (AES-256-GCM) ciphertext is transparently decrypted for backward compatibility

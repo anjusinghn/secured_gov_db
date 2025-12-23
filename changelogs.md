@@ -27,3 +27,31 @@ both lines removed. no replacement.
 ### 2. added pgcrypto extension
 
 needed for bcrypt password hashing. without it none of the password security in changes 4 onwards is possible.
+
+#### before
+no extensions loaded.
+
+#### after
+```sql
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+```
+
+---
+
+### 3. role separation
+
+everything was owned by `postgres` (the superuser). a compromised app connection meant full db access — read, write, drop, anything.
+
+three dedicated roles replace this:
+
+| role | used by | privileges |
+|------|---------|------------|
+| `fsa_admin` | dbas only | owns all tables, bypasses RLS, full access |
+| `fsa_app` | backend application | SELECT/INSERT/UPDATE/DELETE on operational tables |
+| `fsa_readonly` | dashboards, reports | SELECT only |
+
+#### before
+```sql
+ALTER TABLE public.fsa_user_table OWNER TO postgres;
+ALTER TABLE public.gen_details     OWNER TO postgres;
+-- every table: OWNER TO postgres

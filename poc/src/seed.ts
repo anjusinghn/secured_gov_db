@@ -79,3 +79,30 @@ async function main() {
       user_type: 'AE',
       user_role: 'Assistant Engineer',
       terms_cond: true,
+      user_status: true,
+      state_code: '21',
+      district_code: '05',
+      state_name: 'Odisha',
+      district_name: 'Khurda',
+      ps_code: 'PS001',
+      police_station: 'Chandrasekharpur PS',
+      login_status: false,
+      last_login: new Date().toISOString(),
+      user_file: { '0': '/uploads/id_card_001.pdf' },
+    },
+  });
+  console.log(`✓ Seeded user: userid=${user1.userid}`);
+
+  const user2 = await prisma.fsa_user_table.create({
+    data: {
+      pwd: 'AnotherPass456!',
+      email: 'priya.sharma@gov.in',
+      email_hash: '', // trigger overwrites
+      rep_name: 'Priya Sharma',
+      designation: 'Junior Engineer',
+      department: 'Road Transport',
+      phone_no: '+91-9123456780',
+      user_type: 'JE',
+      user_role: 'Junior Engineer',
+      terms_cond: true,
+      user_status: true,

@@ -86,3 +86,32 @@
 --   • Policies filter by app.current_state_code / app.current_district_code
 --   • fsa_admin BYPASSRLS; fsa_app read-write; fsa_readonly SELECT only
 --
+-- [NEW] Decrypted read views (Section 16A):
+--   • v_fsa_user_table_decrypted, v_fsa_admin_table_decrypted,
+--     v_gen_details_decrypted, v_fsa_acc_decrypted, v_fsa_onspot_decrypted,
+--     v_fsa_light_decrypted, v_fsa_traff_status_decrypted,
+--     v_fsa_visible_decrypted, v_fsa_roadcnd_decrypted,
+--     v_fsa_ped_cross_decrypted, v_fsa_state_district_table_decrypted,
+--     v_intervention_decrypted, v_remarks_by_engg_decrypted,
+--     v_stages_table_decrypted, v_status_field_inspection_decrypted,
+--     v_status_of_approval_decrypted, v_status_of_estimate_decrypted,
+--     v_status_of_implementation_decrypted
+--
+-- [REMOVED] fsa_user_table_bak — intentionally excluded (stored plaintext
+--   passwords with no constraints, no production purpose)
+--
+-- [REMOVED] \restrict / \unrestrict meta-commands at top/bottom of file —
+--   these were psql-specific and not valid SQL
+--
+-- [UNCHANGED] All master schema tables (lookup/reference data) — identical
+-- [UNCHANGED] Column names and business logic — no renames, no logic changes
+-- [UNCHANGED] fetch_data_from_tables() function — preserved as-is
+-- [UNCHANGED] All sequences — identical definitions
+--
+-- ─────────────────────────────────────────────────────────────────────────────
+-- HOW TO RUN:
+--   Connect as a PostgreSQL superuser and run this file on a fresh PG 16 instance:
+--     psql -U postgres -d your_database -f fps_schema_secure.sql
+--
+-- HOW THE APP SHOULD CONNECT:
+--   The application must connect as role fsa_app and set session variables

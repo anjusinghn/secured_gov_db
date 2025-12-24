@@ -53,3 +53,31 @@ model fsa_admin_table {
   /// @encrypted
   phone_no         String?  @db.VarChar
   created_at       DateTime @default(now()) @db.Timestamptz(6)
+  updated_at       DateTime @default(now()) @db.Timestamptz(6)
+
+  @@index([district_code], map: "idx_fsa_admin_district_code")
+  @@index([state_code], map: "idx_fsa_admin_state_code")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model fsa_light {
+  light_id        String      @id(map: "fsa_light_visib_pkey") @db.VarChar
+  detail_id       BigInt
+  light_avail     String?     @db.VarChar
+  switch_type     String?     @db.VarChar
+  non_avail_light String?     @db.VarChar
+  light_photos    Json?
+  edited          Boolean?    @default(false)
+  delete_status   Boolean?
+  created_at      DateTime    @default(now()) @db.Timestamptz(6)
+  updated_at      DateTime    @default(now()) @db.Timestamptz(6)
+  gen_details     gen_details @relation(fields: [detail_id], references: [detail_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([detail_id], map: "idx_fsa_light_detail_id")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model fsa_onspot {
+  detail_id                 BigInt
+  onspot_id                 String      @id @db.VarChar
+  lat                       String?     @db.VarChar

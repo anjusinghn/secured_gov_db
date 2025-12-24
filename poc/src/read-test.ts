@@ -48,3 +48,28 @@ async function compareTable(
     console.log('  ⚠ No rows found');
   }
 }
+
+async function main() {
+  const prisma = createClient();
+  await prisma.$executeRawUnsafe(`SET app.encryption_key = '${ENCRYPTION_KEY}'`);
+
+  console.log('╔═══════════════════════════════════════════════════════════════════════╗');
+  console.log('║  DB-Side Encryption: All 18 Encrypted Tables — Base vs Decrypted View  ║');
+  console.log('╚═══════════════════════════════════════════════════════════════════════╝');
+
+  await compareTable(prisma, 'fsa_user_table', 'v_fsa_user_table_decrypted',
+    ['email', 'email_hash', 'rep_name', 'phone_no', 'designation', 'department', 'state_name', 'district_name', 'police_station', 'last_login', 'user_file'], 'userid');
+
+  await compareTable(prisma, 'fsa_admin_table', 'v_fsa_admin_table_decrypted',
+    ['admin_email', 'admin_name', 'phone_no', 'state_name', 'district_name', 'created_by', 'last_login', 'admin_role'], 'admin_id');
+
+  await compareTable(prisma, 'gen_details', 'v_gen_details_decrypted',
+    ['rep_name', 'designation', 'department', 'phone_no', 'email', 'state', 'district', 'police_station', 'state_code', 'district_code'], 'detail_id');
+
+  await compareTable(prisma, 'fsa_onspot', 'v_fsa_onspot_decrypted',
+    ['adjoining_or_junction_no', 'junction_name', 'landmark_name', 'landmark_dist', 'name_of_stretch', 'lat', 'long', 'onspot_images'], 'onspot_id');
+
+  await compareTable(prisma, 'fsa_acc', 'v_fsa_acc_decrypted',
+    ['nearest_hosp', 'acc_pattern_onspot', 'no_of_injuries', 'no_of_deaths', 'age_range', 'time_frame_acc'], 'acc_id');
+
+  await compareTable(prisma, 'fsa_ped_cross', 'v_fsa_ped_cross_decrypted',

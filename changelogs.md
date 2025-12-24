@@ -55,3 +55,31 @@ three dedicated roles replace this:
 ALTER TABLE public.fsa_user_table OWNER TO postgres;
 ALTER TABLE public.gen_details     OWNER TO postgres;
 -- every table: OWNER TO postgres
+```
+
+#### after
+```sql
+DO $$ BEGIN
+    CREATE ROLE fsa_admin WITH LOGIN NOINHERIT BYPASSRLS;
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$ BEGIN
+    CREATE ROLE fsa_app WITH LOGIN NOINHERIT;
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$ BEGIN
+    CREATE ROLE fsa_readonly WITH LOGIN NOINHERIT;
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+ALTER TABLE public.fsa_user_table OWNER TO fsa_admin;
+ALTER TABLE public.gen_details     OWNER TO fsa_admin;
+-- every table: OWNER TO fsa_admin
+```
+
+the `DO $$ ... EXCEPTION` block makes creation idempotent — running the script twice won't fail if the role already exists.
+
+---
+

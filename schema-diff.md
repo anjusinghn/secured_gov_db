@@ -82,3 +82,31 @@ If you want the fastest review path, use this order instead of reading top to bo
 
 7. Read path / decrypted access
    - markdown: `schema-diff.md:355`
+   - SQL refs:
+     - decrypted views section: `fps_schema_secure.sql:2634`
+     - first view: `fps_schema_secure.sql:2650`
+   - use this last so you first understand how data is stored, then how it is read back
+
+## Global Diff
+
+### New in `fps_schema_secure.sql`
+
+- refs:
+  - `pgcrypto`: `fps_schema_secure.sql:145`
+  - `audit` schema: `fps_schema_secure.sql:185`
+  - `audit.change_log`: `fps_schema_secure.sql:956`
+  - `hash_password()`: `fps_schema_secure.sql:199`
+  - `encrypt_text_value()`: `fps_schema_secure.sql:295`
+  - `decrypt_text_value()`: `fps_schema_secure.sql:318`
+  - `trg_encrypt_sensitive_fields()`: `fps_schema_secure.sql:383`
+  - `trg_hash_admin_pwd`: `fps_schema_secure.sql:1905`
+  - `trg_encrypt_fsa_user_table`: `fps_schema_secure.sql:1922`
+  - RLS start: `fps_schema_secure.sql:2204`
+  - decrypted views start: `fps_schema_secure.sql:2634`
+
+- `pgcrypto` extension
+- roles: `fsa_admin`, `fsa_app`, `fsa_readonly`
+- schema: `audit`
+- table: `audit.change_log`
+- hashing functions for `pwd` and `admin_pwd`
+- AES-256 encryption/decryption helper functions

@@ -85,3 +85,31 @@ CREATE FUNCTION public.fetch_data_from_tables(adm_id integer) RETURNS TABLE(stat
 							        OR sdmt.district_code = d_code.district_code
 							   )
 							WHERE fsd.state_roa_id = adm_id;
+							
+                        ELSIF the_role = 'ROA_district_Admin' THEN
+						
+                            RETURN QUERY
+	                        SELECT
+							    string_agg(DISTINCT sdmt.state_name, ',') AS state_names,
+							    string_agg(DISTINCT sdmt.district_name, ',') AS district_names
+							FROM fsa_state_district_table fsd
+							CROSS JOIN LATERAL unnest(string_to_array(fsd.roa_state_code[1], ',')) AS s_code(state_code)
+							CROSS JOIN LATERAL unnest(string_to_array(fsd.roa_district_code[1], ',')) AS d_code(district_code)
+							JOIN state_district_master_table sdmt
+							    ON sdmt.state_code = s_code.state_code
+							   AND sdmt.district_code = d_code.district_code
+							WHERE fsd.district_roa_id = adm_id;
+						ELSE
+                            RETURN;  
+                        END IF;
+                    END;
+                    $$;
+
+
+ALTER FUNCTION public.fetch_data_from_tables(adm_id integer) OWNER TO postgres;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--

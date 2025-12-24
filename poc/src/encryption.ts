@@ -49,3 +49,29 @@ function decrypt(ciphertext: string): string {
     const decipher = createDecipheriv('aes-256-gcm', key, Buffer.from(ivHex, 'hex'));
     decipher.setAuthTag(Buffer.from(authTagHex, 'hex'));
     return decipher.update(Buffer.from(encHex, 'hex')).toString('utf8') + decipher.final('utf8');
+  }
+
+  return ciphertext;
+}
+
+// Parses `/// @encrypted` annotations from the Prisma schema file.
+// Uses a simple state machine: track current model, flag when annotation is seen, capture next field name.
+function parseEncryptedFields(): Map<string, Set<string>> {
+  const schemaPath = join(__dirname, '..', 'prisma', 'schema.prisma');
+  const schema = readFileSync(schemaPath, 'utf8');
+  const map = new Map<string, Set<string>>();
+  let currentModel: string | null = null;
+  let nextFieldEncrypted = false;
+
+  for (const line of schema.split('\n')) {
+    const trimmed = line.trim();
+
+    const modelMatch = trimmed.match(/^model\s+(\w+)\s*\{/);
+    if (modelMatch) {
+      currentModel = modelMatch[1];
+      nextFieldEncrypted = false;
+      continue;
+    }
+
+    if (trimmed === '}') {
+      currentModel = null;

@@ -73,3 +73,28 @@ async function main() {
     ['nearest_hosp', 'acc_pattern_onspot', 'no_of_injuries', 'no_of_deaths', 'age_range', 'time_frame_acc'], 'acc_id');
 
   await compareTable(prisma, 'fsa_ped_cross', 'v_fsa_ped_cross_decrypted',
+    ['remarks'], 'ped_self_park_t_rash_id');
+
+  await compareTable(prisma, 'fsa_state_district_table', 'v_fsa_state_district_table_decrypted',
+    ['state_admin_name', 'district_admin_name', 'state_roa_name', 'district_roa_name'], 'state_code');
+
+  await compareTable(prisma, 'stages_table', 'v_stages_table_decrypted',
+    ['remarks_by_engg', 'admin_name', 'admin_email', 'upload_docs_intervention', 'upload_docs_estimation', 'admin_role'], 'detail_id');
+
+  await compareTable(prisma, 'intervention', 'v_intervention_decrypted',
+    ['admin_name', 'admin_email', 'uploaded_docs', 'admin_role'], 'id');
+
+  await compareTable(prisma, 'remarks_by_engg', 'v_remarks_by_engg_decrypted',
+    ['admin_name', 'admin_email', 'admin_role'], 'id');
+
+  await compareTable(prisma, 'status_field_inspection', 'v_status_field_inspection_decrypted',
+    ['admin_name', 'admin_email', 'admin_role'], 'id');
+
+  await compareTable(prisma, 'status_of_approval', 'v_status_of_approval_decrypted',
+    ['admin_name', 'admin_email', 'admin_role'], 'id');
+
+  await compareTable(prisma, 'status_of_estimate', 'v_status_of_estimate_decrypted',
+    ['admin_name', 'admin_email', 'uploaded_docs', 'admin_role'], 'id');
+
+  await compareTable(prisma, 'status_of_implementation', 'v_status_of_implementation_decrypted',
+    ['admin_name', 'admin_email', 'admin_role'], 'id');

@@ -75,3 +75,28 @@ function parseEncryptedFields(): Map<string, Set<string>> {
 
     if (trimmed === '}') {
       currentModel = null;
+      nextFieldEncrypted = false;
+      continue;
+    }
+
+    if (trimmed === '/// @encrypted') {
+      nextFieldEncrypted = true;
+      continue;
+    }
+
+    if (nextFieldEncrypted && currentModel) {
+      const fieldMatch = trimmed.match(/^(\w+)\s+/);
+      if (fieldMatch) {
+        if (!map.has(currentModel)) map.set(currentModel, new Set());
+        map.get(currentModel)!.add(fieldMatch[1]);
+      }
+      nextFieldEncrypted = false;
+    } else {
+      nextFieldEncrypted = false;
+    }
+  }
+
+  return map;
+}
+
+function encryptFields(data: unknown, encryptedFieldSet: Set<string>): unknown {

@@ -83,3 +83,31 @@ the `DO $$ ... EXCEPTION` block makes creation idempotent — running the script
 
 ---
 
+### 4. password hashing
+
+passwords were stored as plain `character varying`. anyone with read access to the db could see every password directly.
+
+three layers of protection added: a CHECK constraint, a helper function pair, and an auto-hash trigger.
+
+#### before
+```sql
+CREATE TABLE public.fsa_user_table (
+    pwd character varying NOT NULL,
+    ...
+);
+
+CREATE TABLE public.fsa_admin_table (
+    admin_pwd character varying,
+    ...
+);
+```
+
+#### after — columns get a CHECK constraint
+```sql
+CREATE TABLE public.fsa_user_table (
+    pwd character varying NOT NULL
+        CONSTRAINT pwd_must_be_bcrypt CHECK (pwd LIKE '$2%'),
+    ...
+);
+
+CREATE TABLE public.fsa_admin_table (

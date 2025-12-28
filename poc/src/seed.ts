@@ -106,3 +106,30 @@ async function main() {
       user_role: 'Junior Engineer',
       terms_cond: true,
       user_status: true,
+      state_code: '21',
+      district_code: '06',
+      state_name: 'Odisha',
+      district_name: 'Cuttack',
+      ps_code: 'PS002',
+      police_station: 'Cuttack Sadar PS',
+      login_status: false,
+      last_login: new Date().toISOString(),
+      user_file: { '0': '/uploads/id_card_002.pdf' },
+    },
+  });
+  console.log(`✓ Seeded user: userid=${user2.userid}`);
+
+  // 4. Seed admin
+  // - admin_pwd: plaintext → trigger bcrypt-hashes
+  // - admin_email, admin_name, etc.: plaintext → trigger encrypts
+  // - admin_email_hash: pass empty string → trigger computes SHA-256 hash
+  await prisma.fsa_admin_table.create({
+    data: {
+      admin_email: 'admin@fsaroadindia.gov.in',
+      admin_email_hash: '', // trigger overwrites
+      admin_name: 'Suresh Patel',
+      admin_pwd: 'AdminPass789!',
+      admin_role_id: BigInt(1),
+      admin_role: 'Super Admin',
+      login_status: false,
+      user_status: true,

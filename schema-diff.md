@@ -110,3 +110,30 @@ If you want the fastest review path, use this order instead of reading top to bo
 - table: `audit.change_log`
 - hashing functions for `pwd` and `admin_pwd`
 - AES-256 encryption/decryption helper functions
+- timestamp trigger function
+- audit logging trigger function
+- password hashing triggers
+- field encryption triggers
+- audit triggers
+- RLS policies
+- decrypted views `v_*_decrypted`
+- FK indexes and RLS-supporting indexes
+
+### Removed from `fps_schema_secure.sql`
+
+- refs:
+  - `fsa_user_table_bak`: `fps_schema.sql:1084`
+  - `\restrict`: `fps_schema.sql:5`
+  - `\unrestrict`: `fps_schema.sql:1721`
+
+- `fsa_user_table_bak`
+- psql-only meta commands `\restrict` and `\unrestrict`
+
+### Changed Everywhere
+
+- ownership moved from `postgres` to `fsa_admin`
+- many public operational tables add `created_at` and `updated_at`
+- foreign keys are enforced directly instead of `NOT VALID`
+
+## Table-by-Table Diff
+

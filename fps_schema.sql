@@ -113,3 +113,32 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: accidents_due_to_small_t_junction_accidents_or_nearby_joining_r; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.accidents_due_to_small_t_junction_accidents_or_nearby_joining_r (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.accidents_due_to_small_t_junction_accidents_or_nearby_joining_r OWNER TO postgres;
+
+--
+-- Name: age_range; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.age_range (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.age_range OWNER TO postgres;
+
+--
+-- Name: defects; Type: TABLE; Schema: master; Owner: postgres

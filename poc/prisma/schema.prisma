@@ -81,3 +81,30 @@ model fsa_onspot {
   detail_id                 BigInt
   onspot_id                 String      @id @db.VarChar
   lat                       String?     @db.VarChar
+  long                      String?     @db.VarChar
+  /// @encrypted
+  highway_no                String?     @db.VarChar
+  land_use_pattern          String?     @db.VarChar
+  hotspot_type              String?     @db.VarChar
+  junction_type             String?     @db.VarChar
+  /// @encrypted
+  junction_name             String?     @db.VarChar
+  junction_formation        String?     @db.VarChar
+  stretch_type              String?     @db.VarChar
+  stretch_shape             String?     @db.VarChar
+  no_of_lanes               String?     @db.VarChar
+  median_presence           String?     @db.VarChar
+  median_opening            String?     @db.VarChar
+  speed_of_all_vehicles     String?     @db.VarChar
+  adjoining_or_junction_no  String?     @db.VarChar
+  /// @encrypted
+  landmark_name             String?     @db.VarChar
+  landmark_type             String?     @db.VarChar
+  landmark_dist             String?     @db.VarChar
+  onspot_images             Json?
+  landmark_type_other       String?     @db.VarChar
+  edited                    Boolean?    @default(false)
+  junction_formation_others String?     @db.VarChar
+  no_of_lanes_others        String?     @db.VarChar
+  /// @encrypted
+  name_of_stretch           String?     @db.VarChar

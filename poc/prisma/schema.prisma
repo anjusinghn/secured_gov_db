@@ -108,3 +108,31 @@ model fsa_onspot {
   no_of_lanes_others        String?     @db.VarChar
   /// @encrypted
   name_of_stretch           String?     @db.VarChar
+  delete_status             Boolean?
+  created_at                DateTime    @default(now()) @db.Timestamptz(6)
+  updated_at                DateTime    @default(now()) @db.Timestamptz(6)
+  gen_details               gen_details @relation(fields: [detail_id], references: [detail_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([detail_id], map: "idx_fsa_onspot_detail_id")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model fsa_ped_cross {
+  ped_self_park_t_rash_id                    String      @id(map: "fsa_ped_self_park_t_rash_pkey") @db.VarChar
+  detail_id                                  BigInt
+  ped_animal_cross_lead_acc                  String?     @db.VarChar
+  ped_animal_cross_spot_reason               String?     @db.VarChar
+  road_eng_sol_ped_ani                       String?     @db.VarChar
+  enforce_sol_ped_ani                        String?     @db.VarChar
+  self_acc_in_junc_freq                      String?     @db.VarChar
+  major_reason_self_acc                      String?     @db.VarChar
+  road_eng_sol_self_acc                      String?     @db.VarChar
+  enf_sol_self_acc                           String?     @db.VarChar
+  acc_hitting_parked_veh                     String?     @db.VarChar
+  parked_veh_acc_reason                      String?     @db.VarChar
+  road_eng_sol_parked_veh_acc                String?     @db.VarChar
+  enforce_sol_parked_veh_acc                 String?     @db.VarChar
+  acc_due_small_t_join_roads                 String?     @db.VarChar
+  veh_slow_down_small_t_or_join_roads        String?     @db.VarChar
+  acc_due_small_t_join_roads_reason          String?     @db.VarChar
+  road_eng_sol_for_small_t_join_roads        String?     @db.VarChar

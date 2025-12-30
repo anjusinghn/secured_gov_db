@@ -133,3 +133,30 @@ async function main() {
       admin_role: 'Super Admin',
       login_status: false,
       user_status: true,
+      state_name: 'Odisha',
+      district_name: 'Khurda',
+      state_code: '21',
+      district_code: '05',
+      created_by: 'System',
+      phone_no: '+91-9000000001',
+      last_login: new Date().toISOString(),
+    },
+  });
+  console.log('✓ Seeded fsa_admin_table');
+
+  // 5. Seed gen_details
+  // jsonb fields (rep_name, designation, etc.) are encrypted by trigger
+  const detail = await prisma.gen_details.create({
+    data: {
+      userid: user1.userid,
+      rep_name: { '0': 'Rajesh Kumar' },
+      designation: { '0': 'Assistant Engineer' },
+      department: { '0': 'Public Works Department' },
+      phone_no: { '0': '+91-9876543210' },
+      email: { '0': 'rajesh.kumar@gov.in' },
+      state: { '0': 'Odisha' },
+      district: { '0': 'Khurda' },
+      state_code: { '0': '21' },
+      district_code: { '0': '05' },
+      edited: false,
+      start_date: '2025-01-15',

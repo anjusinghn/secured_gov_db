@@ -115,3 +115,32 @@
 --
 -- HOW THE APP SHOULD CONNECT:
 --   The application must connect as role fsa_app and set session variables
+--   before executing any query so that Row Level Security filters correctly:
+--
+--     SET ROLE fsa_app;
+--     SET app.current_state_code    = '21';   -- e.g. Odisha
+--     SET app.current_district_code = '05';   -- e.g. Khurda
+--     SET app.current_user_id       = '42';   -- fsa_user_table.userid
+--     SET app.encryption_key        = '<32-byte app secret>';
+--
+--   For reporting/dashboards connect as fsa_readonly with the same session vars.
+--   fsa_admin bypasses RLS entirely (BYPASSRLS privilege).
+-- =============================================================================
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'SQL_ASCII';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+-- =============================================================================
+-- SECTION 1: EXTENSIONS
+-- =============================================================================
+
+CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
+

@@ -98,3 +98,27 @@ async function main() {
 
   await compareTable(prisma, 'status_of_implementation', 'v_status_of_implementation_decrypted',
     ['admin_name', 'admin_email', 'admin_role'], 'id');
+
+  await compareTable(prisma, 'fsa_light', 'v_fsa_light_decrypted',
+    ['light_photos'], 'light_id');
+
+  await compareTable(prisma, 'fsa_traff_status', 'v_fsa_traff_status_decrypted',
+    ['signal_photos', 'signboards_photos', 'road_markings_photos'], 'traff_status_id');
+
+  await compareTable(prisma, 'fsa_visible', 'v_fsa_visible_decrypted',
+    ['visib_photos'], 'visible_id');
+
+  await compareTable(prisma, 'fsa_roadcnd', 'v_fsa_roadcnd_decrypted',
+    ['road_photos'], 'roadcnd_id');
+
+  await prisma.$disconnect();
+
+  console.log('\n✅ All 18 encrypted tables verified.');
+  console.log('   Base tables → ciphertext (enc:chacha20:v1:...)');
+  console.log('   Decrypted views → original plaintext');
+}
+
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});

@@ -111,3 +111,31 @@ CREATE TABLE public.fsa_user_table (
 );
 
 CREATE TABLE public.fsa_admin_table (
+    admin_pwd character varying
+        CONSTRAINT admin_pwd_must_be_bcrypt CHECK (admin_pwd LIKE '$2%'),
+    ...
+);
+```
+
+#### after — helper functions
+```sql
+-- hash a plaintext password (bcrypt, cost 10)
+CREATE OR REPLACE FUNCTION public.hash_password(plaintext text)
+RETURNS text LANGUAGE sql STRICT SECURITY DEFINER AS $$
+    SELECT crypt(plaintext, gen_salt('bf', 10));
+$$;
+
+-- check password at login time
+CREATE OR REPLACE FUNCTION public.verify_password(plaintext text, hashed text)
+RETURNS boolean LANGUAGE sql STRICT SECURITY DEFINER AS $$
+    SELECT crypt(plaintext, hashed) = hashed;
+$$;
+```
+
+#### after — auto-hash triggers
+```sql
+CREATE OR REPLACE FUNCTION public.trg_hash_user_password()
+RETURNS trigger LANGUAGE plpgsql SECURITY DEFINER AS $$
+BEGIN
+    -- only hash if value doesn't already look like a bcrypt hash ($2a$, $2b$, $2y$)
+    IF NEW.pwd IS NOT NULL AND NEW.pwd NOT LIKE '$2%' THEN

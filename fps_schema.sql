@@ -142,3 +142,32 @@ ALTER TABLE master.age_range OWNER TO postgres;
 
 --
 -- Name: defects; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.defects (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.defects OWNER TO postgres;
+
+--
+-- Name: enforcement_solutions_parked_vehicle_accidents; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.enforcement_solutions_parked_vehicle_accidents (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.enforcement_solutions_parked_vehicle_accidents OWNER TO postgres;
+
+--
+-- Name: enforcement_solutions_pedestrian_animal_crossing; Type: TABLE; Schema: master; Owner: postgres
+--

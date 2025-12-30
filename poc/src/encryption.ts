@@ -100,3 +100,28 @@ function parseEncryptedFields(): Map<string, Set<string>> {
 }
 
 function encryptFields(data: unknown, encryptedFieldSet: Set<string>): unknown {
+  if (data === null || data === undefined) return data;
+
+  if (Array.isArray(data)) {
+    return data.map((item) => encryptFields(item, encryptedFieldSet));
+  }
+
+  if (typeof data === 'object') {
+    const result: Record<string, unknown> = { ...(data as Record<string, unknown>) };
+    for (const field of encryptedFieldSet) {
+      if (field in result && typeof result[field] === 'string') {
+        result[field] = encrypt(result[field] as string);
+      }
+    }
+    return result;
+  }
+
+  return data;
+}
+
+function decryptFields(result: unknown, encryptedFieldSet: Set<string>): unknown {
+  if (result === null || result === undefined) return result;
+
+  if (Array.isArray(result)) {
+    return result.map((item) => decryptFields(item, encryptedFieldSet));
+  }

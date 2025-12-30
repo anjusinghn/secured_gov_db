@@ -137,3 +137,31 @@ If you want the fastest review path, use this order instead of reading top to bo
 
 ## Table-by-Table Diff
 
+### Authentication Tables
+
+#### `fsa_user_table`
+
+- refs:
+  - original: `fps_schema.sql:1053`
+  - secure: `fps_schema_secure.sql:1015`
+
+- new column: `email_hash`
+- `pwd` now has bcrypt format `CHECK`
+- new columns: `created_at`, `updated_at`
+- encrypted columns:
+  - `email`
+  - `rep_name`
+  - `designation`
+  - `department`
+  - `phone_no`
+  - `state_name`
+  - `district_name`
+  - `police_station`
+  - `last_login`
+  - `user_file`
+- unchanged business columns:
+  - `userid`, `user_type`, `user_role`, `terms_cond`, `admin_id`, `user_status`, `state_code`, `district_code`, `ps_code`
+
+#### `fsa_admin_table`
+
+- refs:

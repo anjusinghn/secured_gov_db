@@ -139,3 +139,31 @@ RETURNS trigger LANGUAGE plpgsql SECURITY DEFINER AS $$
 BEGIN
     -- only hash if value doesn't already look like a bcrypt hash ($2a$, $2b$, $2y$)
     IF NEW.pwd IS NOT NULL AND NEW.pwd NOT LIKE '$2%' THEN
+        NEW.pwd := public.hash_password(NEW.pwd);
+    END IF;
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER trg_hash_user_pwd
+    BEFORE INSERT OR UPDATE OF pwd ON public.fsa_user_table
+    FOR EACH ROW EXECUTE FUNCTION public.trg_hash_user_password();
+
+-- same pattern for fsa_admin_table.admin_pwd via trg_hash_admin_password()
+CREATE TRIGGER trg_hash_admin_pwd
+    BEFORE INSERT OR UPDATE OF admin_pwd ON public.fsa_admin_table
+    FOR EACH ROW EXECUTE FUNCTION public.trg_hash_admin_password();
+```
+
+even if the app sends plaintext on INSERT or UPDATE, the trigger intercepts and stores the bcrypt hash. the CHECK constraint is a second layer — any value not starting with `$2` is rejected outright.
+
+at login time the app now does:
+```sql
+SELECT userid FROM fsa_user_table
+WHERE email = 'user@example.com'
+  AND verify_password('submitted_password', pwd) = true;
+```
+
+---
+
+### 5. removed fsa_user_table_bak

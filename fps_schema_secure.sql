@@ -144,3 +144,32 @@ SET row_security = off;
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
 
+-- =============================================================================
+-- SECTION 2: ROLE CREATION (idempotent via DO blocks)
+-- =============================================================================
+
+-- fsa_admin: manages users and admin accounts; bypasses RLS; owns all tables
+DO $$
+BEGIN
+    CREATE ROLE fsa_admin WITH LOGIN NOINHERIT BYPASSRLS;
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END
+$$;
+
+-- fsa_app: used by the application for all CRUD operations
+DO $$
+BEGIN
+    CREATE ROLE fsa_app WITH LOGIN NOINHERIT;
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END
+$$;
+
+-- fsa_readonly: used by reporting tools and dashboards; SELECT only
+DO $$
+BEGIN
+    CREATE ROLE fsa_readonly WITH LOGIN NOINHERIT;
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END

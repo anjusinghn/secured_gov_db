@@ -125,3 +125,29 @@ function decryptFields(result: unknown, encryptedFieldSet: Set<string>): unknown
   if (Array.isArray(result)) {
     return result.map((item) => decryptFields(item, encryptedFieldSet));
   }
+
+  if (typeof result === 'object') {
+    const obj = result as Record<string, unknown>;
+    for (const field of encryptedFieldSet) {
+      if (field in obj && typeof obj[field] === 'string') {
+        obj[field] = decrypt(obj[field] as string);
+      }
+    }
+    return obj;
+  }
+
+  return result;
+}
+
+function createEncryptionExtension() {
+  const encryptedFieldsMap = parseEncryptedFields();
+
+  console.log('[encryption] Loaded encrypted field map:');
+  for (const [model, fields] of encryptedFieldsMap) {
+    console.log(`  ${model}: ${[...fields].join(', ')}`);
+  }
+
+  return Prisma.defineExtension({
+    name: 'chacha20-poly1305-encryption',
+    query: {
+      $allModels: {

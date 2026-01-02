@@ -165,3 +165,31 @@ If you want the fastest review path, use this order instead of reading top to bo
 #### `fsa_admin_table`
 
 - refs:
+  - original: `fps_schema.sql:801`
+  - secure: `fps_schema_secure.sql:1060`
+
+- new column: `admin_email_hash`
+- `admin_pwd` now has bcrypt format `CHECK`
+- new columns: `created_at`, `updated_at`
+- encrypted columns:
+  - `admin_email`
+  - `admin_role`
+  - `admin_name`
+  - `last_login`
+  - `state_name`
+  - `district_name`
+  - `created_by`
+  - `phone_no`
+- not encrypted:
+  - `admin_pwd` (bcrypt only)
+
+### Core Data Tables
+
+#### `gen_details`
+
+- refs:
+  - original: `fps_schema.sql:1186`
+  - secure: `fps_schema_secure.sql:1089`
+
+- new columns: `created_at`, `updated_at`
+- encrypted columns:

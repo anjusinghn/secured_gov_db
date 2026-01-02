@@ -151,3 +151,28 @@ function createEncryptionExtension() {
     name: 'chacha20-poly1305-encryption',
     query: {
       $allModels: {
+        async $allOperations({ model, operation, args, query }) {
+          const fields = model ? encryptedFieldsMap.get(model) : undefined;
+
+          if (!fields || fields.size === 0) {
+            return query(args);
+          }
+
+          const a = args as Record<string, unknown>;
+          const WRITE_OPS = ['create', 'update', 'upsert', 'createMany', 'updateMany'];
+
+          if (WRITE_OPS.includes(operation)) {
+            if (a.data) {
+              if (operation === 'createMany' && Array.isArray(a.data)) {
+                a.data = (a.data as unknown[]).map((item) => encryptFields(item, fields));
+              } else {
+                a.data = encryptFields(a.data, fields);
+              }
+            }
+            if (operation === 'upsert') {
+              if (a.create) a.create = encryptFields(a.create, fields);
+              if (a.update) a.update = encryptFields(a.update, fields);
+            }
+          }
+
+          const result = await query(args);

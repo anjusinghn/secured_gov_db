@@ -173,3 +173,32 @@ BEGIN
 EXCEPTION
     WHEN duplicate_object THEN NULL;
 END
+$$;
+
+-- =============================================================================
+-- SECTION 3: SCHEMA CREATION
+-- =============================================================================
+
+CREATE SCHEMA IF NOT EXISTS master;
+ALTER SCHEMA master OWNER TO fsa_admin;
+
+CREATE SCHEMA IF NOT EXISTS audit;
+ALTER SCHEMA audit OWNER TO fsa_admin;
+
+-- public schema is already present; transfer ownership of schema objects
+-- (individual table ALTER OWNER statements appear after CREATE TABLE)
+
+-- =============================================================================
+-- SECTION 4: UTILITY FUNCTIONS
+-- =============================================================================
+
+-- ---------------------------------------------------------------------------
+-- 4a. Password hashing helpers (pgcrypto / bcrypt cost 10)
+-- ---------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION public.hash_password(plaintext text)
+RETURNS text
+LANGUAGE sql
+STRICT
+SECURITY DEFINER
+AS $$

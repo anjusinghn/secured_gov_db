@@ -163,3 +163,30 @@ model fsa_ped_cross {
 
   @@index([detail_id], map: "idx_fsa_ped_cross_detail_id")
 }
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model fsa_roadcnd {
+  roadcnd_id                String      @db.VarChar
+  detail_id                 BigInt
+  road_issue                String?     @db.VarChar
+  road_defects              String?     @db.VarChar
+  road_photos               Json?
+  road_eng_sol_roadcnd      String?     @db.VarChar
+  road_defects_others       String?     @db.VarChar
+  road_eng_sol_rdcnd_others String?     @db.VarChar
+  delete_status             Boolean?
+  created_at                DateTime    @default(now()) @db.Timestamptz(6)
+  updated_at                DateTime    @default(now()) @db.Timestamptz(6)
+  gen_details               gen_details @relation(fields: [detail_id], references: [detail_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([detail_id], map: "idx_fsa_roadcnd_detail_id")
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model fsa_state_district_table {
+  state_admin_id      BigInt?
+  state_admin_name    String?  @db.VarChar
+  state_code          String?  @db.VarChar
+  district_admin_id   BigInt?

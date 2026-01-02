@@ -160,3 +160,29 @@ async function main() {
       district_code: { '0': '05' },
       edited: false,
       start_date: '2025-01-15',
+      end_date: '2025-03-15',
+      delete_status: false,
+      police_station: 'Chandrasekharpur PS',
+      ps_code: 'PS001',
+    },
+  });
+  console.log(`✓ Seeded gen_details: detail_id=${detail.detail_id}`);
+
+  // 6. Seed fsa_onspot
+  await prisma.fsa_onspot.create({
+    data: {
+      detail_id: detail.detail_id,
+      onspot_id: `ONSPOT-${detail.detail_id}-001`,
+      lat: '20.2961',
+      long: '85.8245',
+      highway_no: 'NH-16',
+      land_use_pattern: 'Urban',
+      hotspot_type: 'Black Spot',
+      junction_type: 'T-Junction',
+      junction_name: 'Rasulgarh Square',
+      junction_formation: 'Signalized',
+      stretch_type: 'Straight',
+      stretch_shape: 'Flat',
+      no_of_lanes: '4',
+      median_presence: 'Yes',
+      median_opening: 'Yes',

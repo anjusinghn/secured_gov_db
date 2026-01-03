@@ -167,3 +167,32 @@ WHERE email = 'user@example.com'
 ---
 
 ### 5. removed fsa_user_table_bak
+
+a backup copy of `fsa_user_table` with no constraints, no primary key, and plaintext passwords. it had no production value and was a direct security liability.
+
+#### before
+```sql
+CREATE TABLE public.fsa_user_table_bak (
+    pwd          character varying,  -- plaintext, no constraint
+    email        character varying,  -- no UNIQUE constraint
+    userid       bigint,             -- no PRIMARY KEY
+    ...
+);
+ALTER TABLE public.fsa_user_table_bak OWNER TO postgres;
+```
+
+#### after
+table removed entirely. if historical data from it is needed, import through the secure `fsa_user_table` after hashing passwords with `hash_password()`.
+
+---
+
+### 6. created_at and updated_at timestamps
+
+no timestamps existed on any operational table. there was no way to know when a record was created or last modified.
+
+`created_at` and `updated_at` columns added to all 22 public schema tables, plus a trigger that keeps `updated_at` current automatically.
+
+#### before — example: fsa_acc
+```sql
+CREATE TABLE public.fsa_acc (
+    detail_id          bigint            NOT NULL,

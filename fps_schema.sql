@@ -199,3 +199,32 @@ ALTER TABLE master.enforcement_solutions_rash_driving OWNER TO postgres;
 --
 -- Name: enforcement_solutions_self_accidents; Type: TABLE; Schema: master; Owner: postgres
 --
+
+CREATE TABLE master.enforcement_solutions_self_accidents (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.enforcement_solutions_self_accidents OWNER TO postgres;
+
+--
+-- Name: enforcement_solutions_small_t_junction_accidents; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.enforcement_solutions_small_t_junction_accidents (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.enforcement_solutions_small_t_junction_accidents OWNER TO postgres;
+
+--
+-- Name: enforcement_solutions_vehicles_overspeeding; Type: TABLE; Schema: master; Owner: postgres
+--
+

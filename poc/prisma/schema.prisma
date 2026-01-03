@@ -190,3 +190,31 @@ model fsa_state_district_table {
   state_admin_name    String?  @db.VarChar
   state_code          String?  @db.VarChar
   district_admin_id   BigInt?
+  district_admin_name String?  @db.VarChar
+  district_code       String?  @db.VarChar
+  state_roa_id        BigInt?
+  state_roa_name      String?  @db.VarChar
+  roa_state_code      String[] @db.VarChar
+  roa_district_code   String[] @db.VarChar
+  district_roa_id     BigInt?
+  district_roa_name   String?  @db.VarChar
+  multiple_districts  String[]
+  created_at          DateTime @default(now()) @db.Timestamptz(6)
+  updated_at          DateTime @default(now()) @db.Timestamptz(6)
+
+  @@index([state_code], map: "idx_fsa_sdt_state_code")
+  @@ignore
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model fsa_traff_status {
+  detail_id            BigInt
+  traff_status_id      String      @id @db.VarChar
+  signal_avail         String?     @db.VarChar
+  signal_visible       String?     @db.VarChar
+  signal_working       String?     @db.VarChar
+  signal_timer_work    String?     @db.VarChar
+  signal_need          String?     @db.VarChar
+  signal_photos        Json?
+  signboards_avail     String?     @db.VarChar
+  signboards_visible   String?     @db.VarChar

@@ -186,3 +186,30 @@ async function main() {
       no_of_lanes: '4',
       median_presence: 'Yes',
       median_opening: 'Yes',
+      speed_of_all_vehicles: '50-60 km/h',
+      adjoining_or_junction_no: 'JN-16-A',
+      landmark_name: 'Rasulgarh Bus Stand',
+      landmark_type: 'Bus Stop',
+      landmark_dist: '200m',
+      name_of_stretch: 'Rasulgarh to Vani Vihar',
+      onspot_images: { '0': '/images/onspot_001.jpg', '1': '/images/onspot_002.jpg' },
+      edited: false,
+      delete_status: false,
+    },
+  });
+  console.log('✓ Seeded fsa_onspot');
+
+  // 7. Seed fsa_acc
+  await prisma.fsa_acc.create({
+    data: {
+      detail_id: detail.detail_id,
+      acc_id: `ACC-${detail.detail_id}-001`,
+      acc_pattern_onspot: 'Head-on collision',
+      no_of_injuries: '3',
+      no_of_deaths: '1',
+      no_of_accidents: '5',
+      nearest_hosp: 'Capital Hospital, Bhubaneswar',
+      start_age_range: 20,
+      end_age_range: 40,
+      age_range: '20-40',
+      time_frame_acc: '18:00-21:00',

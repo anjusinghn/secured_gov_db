@@ -176,3 +176,28 @@ function createEncryptionExtension() {
           }
 
           const result = await query(args);
+          return decryptFields(result, fields);
+        },
+      },
+    },
+  });
+}
+
+export function createEncryptedClient() {
+  const connectionString = process.env.DATABASE_URL;
+  if (!connectionString) throw new Error('DATABASE_URL env var is required');
+  const pool = new Pool({ connectionString });
+  const adapter = new PrismaPg(pool);
+  const prisma = new PrismaClient({ adapter });
+  return prisma.$extends(createEncryptionExtension());
+}
+
+export function createRawClient() {
+  const connectionString = process.env.DATABASE_URL;
+  if (!connectionString) throw new Error('DATABASE_URL env var is required');
+  const pool = new Pool({ connectionString });
+  const adapter = new PrismaPg(pool);
+  return new PrismaClient({ adapter });
+}
+
+export { encrypt, decrypt, parseEncryptedFields };

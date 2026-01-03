@@ -202,3 +202,32 @@ LANGUAGE sql
 STRICT
 SECURITY DEFINER
 AS $$
+    SELECT public.crypt(plaintext, public.gen_salt('bf', 10));
+$$;
+
+ALTER FUNCTION public.hash_password(text) OWNER TO fsa_admin;
+COMMENT ON FUNCTION public.hash_password(text) IS
+    'Hash a plaintext password with bcrypt (cost 10). Never store the result; '
+    'it is returned to the trigger and stored in the password column automatically.';
+
+CREATE OR REPLACE FUNCTION public.verify_password(plaintext text, hashed text)
+RETURNS boolean
+LANGUAGE sql
+STRICT
+SECURITY DEFINER
+AS $$
+    SELECT public.crypt(plaintext, hashed) = hashed;
+$$;
+
+ALTER FUNCTION public.verify_password(text, text) OWNER TO fsa_admin;
+COMMENT ON FUNCTION public.verify_password(text, text) IS
+    'Return TRUE if plaintext matches the stored bcrypt hash.';
+
+-- ---------------------------------------------------------------------------
+-- 4b. Auto-hash trigger function — fires on INSERT/UPDATE of password columns
+-- ---------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION public.trg_hash_admin_password()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY DEFINER

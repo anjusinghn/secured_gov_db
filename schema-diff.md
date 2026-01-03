@@ -193,3 +193,31 @@ If you want the fastest review path, use this order instead of reading top to bo
 
 - new columns: `created_at`, `updated_at`
 - encrypted columns:
+  - `rep_name`
+  - `designation`
+  - `department`
+  - `phone_no`
+  - `email`
+  - `state`
+  - `district`
+  - `state_code`
+  - `district_code`
+  - `police_station`
+
+#### `fsa_acc`
+
+- refs:
+  - original: `fps_schema.sql:779`
+  - secure: `fps_schema_secure.sql:1124`
+
+- `no_of_injuries`: `integer -> character varying`
+- `no_of_deaths`: `integer -> character varying`
+- new columns: `created_at`, `updated_at`
+- encrypted columns:
+  - `acc_pattern_onspot`
+  - `nearest_hosp`
+  - `age_range`
+  - `time_frame_acc`
+  - `no_of_injuries`
+  - `no_of_deaths`
+

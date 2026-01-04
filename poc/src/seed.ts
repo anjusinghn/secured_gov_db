@@ -213,3 +213,30 @@ async function main() {
       end_age_range: 40,
       age_range: '20-40',
       time_frame_acc: '18:00-21:00',
+      edited: false,
+    },
+  });
+  console.log('✓ Seeded fsa_acc');
+
+  const detailId = Number(detail.detail_id);
+
+  await prisma.fsa_ped_cross.create({
+    data: {
+      ped_self_park_t_rash_id: `PED-${detailId}-001`,
+      detail_id: detail.detail_id,
+      ped_animal_cross_lead_acc: 'Yes',
+      ped_animal_cross_spot_reason: 'No zebra crossing',
+      road_eng_sol_ped_ani: 'Install pedestrian crossing',
+      rash_drivers: 'Yes',
+      remarks: 'High pedestrian traffic area near bus stand, needs immediate attention',
+      edited: false,
+      delete_status: false,
+    },
+  });
+  console.log('✓ Seeded fsa_ped_cross');
+
+  // 9. Seed fsa_light (Prisma client — has @id)
+  await prisma.fsa_light.create({
+    data: {
+      light_id: `LIGHT-${detailId}-001`,
+      detail_id: detail.detail_id,

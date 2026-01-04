@@ -231,3 +231,32 @@ CREATE OR REPLACE FUNCTION public.trg_hash_admin_password()
 RETURNS trigger
 LANGUAGE plpgsql
 SECURITY DEFINER
+AS $$
+BEGIN
+    -- Only re-hash if the value changed and does not already look like a bcrypt hash
+    -- bcrypt hashes start with $2a$, $2b$, or $2y$
+    IF NEW.admin_pwd IS NOT NULL AND NEW.admin_pwd NOT LIKE '$2%' THEN
+        NEW.admin_pwd := public.hash_password(NEW.admin_pwd);
+    END IF;
+    RETURN NEW;
+END;
+$$;
+
+ALTER FUNCTION public.trg_hash_admin_password() OWNER TO fsa_admin;
+
+CREATE OR REPLACE FUNCTION public.trg_hash_user_password()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+BEGIN
+    IF NEW.pwd IS NOT NULL AND NEW.pwd NOT LIKE '$2%' THEN
+        NEW.pwd := public.hash_password(NEW.pwd);
+    END IF;
+    RETURN NEW;
+END;
+$$;
+
+ALTER FUNCTION public.trg_hash_user_password() OWNER TO fsa_admin;
+
+-- ---------------------------------------------------------------------------

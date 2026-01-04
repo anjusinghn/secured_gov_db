@@ -196,3 +196,31 @@ no timestamps existed on any operational table. there was no way to know when a 
 ```sql
 CREATE TABLE public.fsa_acc (
     detail_id          bigint            NOT NULL,
+    acc_pattern_onspot character varying,
+    no_of_injuries     integer,
+    no_of_deaths       integer,
+    no_of_accidents    character varying,
+    nearest_hosp       character varying,
+    acc_id             character varying NOT NULL,
+    start_age_range    integer,
+    end_age_range      integer,
+    age_range          character varying,
+    time_frame_acc     character varying,
+    edited             boolean DEFAULT false
+);
+```
+
+#### after
+```sql
+CREATE TABLE public.fsa_acc (
+    detail_id          bigint            NOT NULL,
+    acc_pattern_onspot character varying,
+    no_of_injuries     integer,
+    no_of_deaths       integer,
+    no_of_accidents    character varying,
+    nearest_hosp       character varying,
+    acc_id             character varying NOT NULL,
+    start_age_range    integer,
+    end_age_range      integer,
+    age_range          character varying,
+    time_frame_acc     character varying,

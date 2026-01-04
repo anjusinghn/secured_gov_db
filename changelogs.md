@@ -224,3 +224,31 @@ CREATE TABLE public.fsa_acc (
     end_age_range      integer,
     age_range          character varying,
     time_frame_acc     character varying,
+    edited             boolean DEFAULT false,
+    created_at         timestamptz NOT NULL DEFAULT now(),
+    updated_at         timestamptz NOT NULL DEFAULT now()
+);
+```
+
+#### after — auto-update trigger
+```sql
+CREATE OR REPLACE FUNCTION public.update_timestamp()
+RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+    NEW.updated_at := now();
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER trg_ts_fsa_acc
+    BEFORE UPDATE ON public.fsa_acc
+    FOR EACH ROW EXECUTE FUNCTION public.update_timestamp();
+```
+
+applied to all 22 tables: `fsa_user_table`, `fsa_admin_table`, `gen_details`, `fsa_acc`, `fsa_onspot`, `fsa_light`, `fsa_ped_cross`, `fsa_roadcnd`, `fsa_traff_status`, `fsa_traffic_condt`, `fsa_violations`, `fsa_visible`, `fsa_wrngway`, `fsa_state_district_table`, `fsa_user_roles`, `intervention`, `remarks_by_engg`, `stages_table`, `state_district_master_table`, `status_field_inspection`, `status_of_approval`, `status_of_estimate`, `status_of_implementation`.
+
+---
+
+### 7. audit logging
+
+no record of who changed what. if an admin deleted a field inspection record, there was no trace of it anywhere.

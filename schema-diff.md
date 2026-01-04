@@ -221,3 +221,30 @@ If you want the fastest review path, use this order instead of reading top to bo
   - `no_of_injuries`
   - `no_of_deaths`
 
+#### `fsa_onspot`
+
+- refs:
+  - original: `fps_schema.sql:858`
+  - secure: `fps_schema_secure.sql:1151`
+
+- `lat`: `double precision -> character varying`
+- `long`: `double precision -> character varying`
+- new columns: `created_at`, `updated_at`
+- encrypted columns:
+  - `lat`
+  - `long`
+  - `junction_name`
+  - `adjoining_or_junction_no`
+  - `landmark_name`
+  - `landmark_dist`
+  - `name_of_stretch`
+  - `onspot_images`
+
+### Survey / Observation Tables
+
+#### `fsa_light`
+
+- refs:
+  - original: `fps_schema.sql:840`
+  - secure: `fps_schema_secure.sql:1190`
+

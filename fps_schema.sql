@@ -257,3 +257,31 @@ ALTER TABLE master.enforcement_solutions_wrong_way_driving OWNER TO postgres;
 --
 
 CREATE TABLE master.formation_of_junction (
+    english character varying,
+    hindi character varying,
+    odia character varying,
+    id character varying
+);
+
+
+ALTER TABLE master.formation_of_junction OWNER TO postgres;
+
+--
+-- Name: has_caused_accident_at_spot; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.has_caused_accident_at_spot (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.has_caused_accident_at_spot OWNER TO postgres;
+
+--
+-- Name: interventions; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.interventions (

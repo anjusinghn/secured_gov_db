@@ -228,3 +228,32 @@ ALTER TABLE master.enforcement_solutions_small_t_junction_accidents OWNER TO pos
 -- Name: enforcement_solutions_vehicles_overspeeding; Type: TABLE; Schema: master; Owner: postgres
 --
 
+CREATE TABLE master.enforcement_solutions_vehicles_overspeeding (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.enforcement_solutions_vehicles_overspeeding OWNER TO postgres;
+
+--
+-- Name: enforcement_solutions_wrong_way_driving; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.enforcement_solutions_wrong_way_driving (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.enforcement_solutions_wrong_way_driving OWNER TO postgres;
+
+--
+-- Name: formation_of_junction; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.formation_of_junction (

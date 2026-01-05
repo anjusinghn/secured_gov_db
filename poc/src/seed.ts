@@ -240,3 +240,30 @@ async function main() {
     data: {
       light_id: `LIGHT-${detailId}-001`,
       detail_id: detail.detail_id,
+      light_avail: 'Yes',
+      switch_type: 'Automatic Timer',
+      non_avail_light: null,
+      light_photos: { '0': '/images/light_001.jpg', '1': '/images/light_002.jpg' },
+      edited: false,
+      delete_status: false,
+    },
+  });
+  console.log('✓ Seeded fsa_light');
+
+  // 10. Seed fsa_traff_status (Prisma client — has @id)
+  await prisma.fsa_traff_status.create({
+    data: {
+      traff_status_id: `TRAFF-${detailId}-001`,
+      detail_id: detail.detail_id,
+      signal_avail: 'Yes',
+      signal_visible: 'Partially',
+      signal_working: 'Yes',
+      signal_timer_work: 'Yes',
+      signal_need: 'No',
+      signal_photos: { '0': '/images/signal_001.jpg' },
+      signboards_avail: 'Yes',
+      signboards_visible: 'Yes',
+      signboards_photos: { '0': '/images/signboard_001.jpg', '1': '/images/signboard_002.jpg' },
+      road_markings_avail: 'Partial',
+      road_markings_photos: { '0': '/images/road_marking_001.jpg' },
+      edited: false,

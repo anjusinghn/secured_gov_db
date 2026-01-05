@@ -285,3 +285,32 @@ ALTER TABLE master.has_caused_accident_at_spot OWNER TO postgres;
 --
 
 CREATE TABLE master.interventions (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.interventions OWNER TO postgres;
+
+--
+-- Name: landmark_type; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.landmark_type (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.landmark_type OWNER TO postgres;
+
+--
+-- Name: landuse_pattern; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.landuse_pattern (
+    id character varying,

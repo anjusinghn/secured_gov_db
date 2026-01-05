@@ -260,3 +260,32 @@ $$;
 ALTER FUNCTION public.trg_hash_user_password() OWNER TO fsa_admin;
 
 -- ---------------------------------------------------------------------------
+-- 4c. Reversible field encryption helpers (ChaCha20 stream cipher)
+-- ---------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION public.require_encryption_key()
+RETURNS text
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+DECLARE
+    v_key text;
+BEGIN
+    v_key := current_setting('app.encryption_key', true);
+    IF v_key IS NULL OR btrim(v_key) = '' THEN
+        RAISE EXCEPTION 'app.encryption_key must be set before reading/writing encrypted fields';
+    END IF;
+    RETURN v_key;
+END;
+$$;
+
+ALTER FUNCTION public.require_encryption_key() OWNER TO fsa_admin;
+
+CREATE OR REPLACE FUNCTION public.hash_lookup_value(plaintext text)
+RETURNS text
+LANGUAGE sql
+IMMUTABLE
+RETURNS NULL ON NULL INPUT
+AS $$
+    SELECT encode(public.digest(lower(btrim(plaintext)), 'sha256'), 'hex');
+$$;

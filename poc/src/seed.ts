@@ -267,3 +267,30 @@ async function main() {
       road_markings_avail: 'Partial',
       road_markings_photos: { '0': '/images/road_marking_001.jpg' },
       edited: false,
+      delete_status: false,
+    },
+  });
+  console.log('✓ Seeded fsa_traff_status');
+
+  // 11. Seed fsa_visible (Prisma client — has @id)
+  await prisma.fsa_visible.create({
+    data: {
+      visible_id: `VIS-${detailId}-001`,
+      detail_id: detail.detail_id,
+      visib_obstruct_by_objs: 'Trees and Billboards',
+      atspot_accident_cause: 'Limited sight distance',
+      road_eng_sol: 'Remove obstructions, install mirrors',
+      visib_photos: { '0': '/images/visibility_001.jpg', '1': '/images/visibility_002.jpg' },
+      is_visib_obstructed: 'Yes',
+      delete_status: false,
+    },
+  });
+  console.log('✓ Seeded fsa_visible');
+
+  // 12. Seed fsa_roadcnd (@@ignore — raw SQL required)
+  await prisma.$executeRaw`
+    INSERT INTO fsa_roadcnd
+      (roadcnd_id, detail_id, road_issue, road_defects, road_photos, road_eng_sol_roadcnd, delete_status)
+    VALUES
+      (${`ROAD-${detailId}-001`}, ${detailId}, 'Pothole cluster', 'Surface cracks and potholes',
+       ${JSON.stringify({ '0': '/images/road_damage_001.jpg', '1': '/images/road_damage_002.jpg' })}::jsonb,

@@ -276,3 +276,31 @@ If you want the fastest review path, use this order instead of reading top to bo
 
 - refs:
   - original: `fps_schema.sql:986`
+  - secure: `fps_schema_secure.sql:1282`
+
+- new columns: `created_at`, `updated_at`
+- encrypted columns:
+  - `signal_photos`
+  - `signboards_photos`
+  - `road_markings_photos`
+
+#### `fsa_traffic_condt`
+
+- refs:
+  - original: `fps_schema.sql:1011`
+  - secure: `fps_schema_secure.sql:1309`
+
+- new columns: `created_at`, `updated_at`
+- no encrypted columns
+
+#### `fsa_violations`
+
+- refs:
+  - original: `fps_schema.sql:1113`
+  - secure: `fps_schema_secure.sql:1327`
+
+- new columns: `created_at`, `updated_at`
+- no encrypted columns
+
+#### `fsa_visible`
+

@@ -252,3 +252,31 @@ applied to all 22 tables: `fsa_user_table`, `fsa_admin_table`, `gen_details`, `f
 ### 7. audit logging
 
 no record of who changed what. if an admin deleted a field inspection record, there was no trace of it anywhere.
+
+a dedicated `audit` schema added with a `change_log` table. triggers on all 21 operational tables capture every INSERT, UPDATE, and DELETE as jsonb snapshots.
+
+#### before
+nothing. no audit schema, no audit table, no triggers.
+
+#### after — audit schema and table
+```sql
+CREATE SCHEMA IF NOT EXISTS audit;
+
+CREATE TABLE audit.change_log (
+    id          bigserial    NOT NULL,
+    table_name  text         NOT NULL,
+    operation   text         NOT NULL CHECK (operation IN ('INSERT','UPDATE','DELETE')),
+    row_id      text,
+    old_data    jsonb,                          -- full row before change (null for INSERT)
+    new_data    jsonb,                          -- full row after change (null for DELETE)
+    changed_by  text         NOT NULL DEFAULT current_user,
+    changed_at  timestamptz  NOT NULL DEFAULT now(),
+    app_user_id text         DEFAULT current_setting('app.current_user_id', true),
+    CONSTRAINT change_log_pkey PRIMARY KEY (id)
+);
+```
+
+#### after — trigger function
+```sql
+CREATE OR REPLACE FUNCTION audit.log_changes()
+RETURNS trigger LANGUAGE plpgsql SECURITY DEFINER AS $$

@@ -308,3 +308,31 @@ $$;
 CREATE TRIGGER audit_gen_details
     AFTER INSERT OR UPDATE OR DELETE ON public.gen_details
     FOR EACH ROW EXECUTE FUNCTION audit.log_changes();
+
+-- same for: fsa_acc, fsa_onspot, fsa_light, fsa_ped_cross, fsa_roadcnd,
+-- fsa_traff_status, fsa_traffic_condt, fsa_violations, fsa_visible,
+-- fsa_wrngway, fsa_user_table, fsa_admin_table, stages_table,
+-- intervention, remarks_by_engg, status_field_inspection,
+-- status_of_approval, status_of_estimate, status_of_implementation,
+-- fsa_state_district_table
+```
+
+a row in `audit.change_log` after an UPDATE looks like:
+```
+table_name  | public.gen_details
+operation   | UPDATE
+row_id      | 55
+old_data    | {"detail_id": 55, "district_code": {"0": "05"}, ...}
+new_data    | {"detail_id": 55, "district_code": {"0": "08"}, ...}
+changed_by  | fsa_app
+changed_at  | 2026-03-07 04:30:00+05:30
+app_user_id | 42
+```
+
+`fsa_app` can INSERT into `audit.change_log` (the trigger needs it) but cannot SELECT from it — so the app cannot read or tamper with the audit trail. only `fsa_admin` and `fsa_readonly` can read it.
+
+---
+
+### 8. row level security (rls)
+
+`SET row_security = off` was at the top of the original file, meaning any connected user could query any row in any table. a state admin in maharashtra could freely read odisha's data.

@@ -318,3 +318,32 @@ AS $$
         2, ((v >> 16) & 255)::integer),
         3, ((v >> 24) & 255)::integer)
 $$;
+
+ALTER FUNCTION public.chacha20_u32le(bigint) OWNER TO fsa_admin;
+
+CREATE OR REPLACE FUNCTION public.chacha20_qr(
+    s  bigint[],
+    ai integer, bi integer, ci integer, di integer
+)
+RETURNS bigint[]
+LANGUAGE plpgsql
+IMMUTABLE
+AS $$
+DECLARE
+    M  constant bigint := 4294967295;
+    a  bigint := s[ai];
+    b  bigint := s[bi];
+    c  bigint := s[ci];
+    d  bigint := s[di];
+    t  bigint;
+BEGIN
+    a := (a + b) & M;  t := (d # a) & M;  d := ((t << 16) | (t >> 16)) & M;
+    c := (c + d) & M;  t := (b # c) & M;  b := ((t << 12) | (t >> 20)) & M;
+    a := (a + b) & M;  t := (d # a) & M;  d := ((t <<  8) | (t >> 24)) & M;
+    c := (c + d) & M;  t := (b # c) & M;  b := ((t <<  7) | (t >> 25)) & M;
+    s[ai] := a;  s[bi] := b;  s[ci] := c;  s[di] := d;
+    RETURN s;
+END;
+$$;
+
+ALTER FUNCTION public.chacha20_qr(bigint[], integer, integer, integer, integer) OWNER TO fsa_admin;

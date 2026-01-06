@@ -294,3 +294,30 @@ async function main() {
     VALUES
       (${`ROAD-${detailId}-001`}, ${detailId}, 'Pothole cluster', 'Surface cracks and potholes',
        ${JSON.stringify({ '0': '/images/road_damage_001.jpg', '1': '/images/road_damage_002.jpg' })}::jsonb,
+       'Patch repair and resurfacing', false)
+  `;
+  console.log('✓ Seeded fsa_roadcnd');
+
+  // @@ignore tables — raw SQL required
+  await prisma.$executeRaw`
+    INSERT INTO fsa_state_district_table
+      (state_admin_id, state_admin_name, state_code, district_admin_id, district_admin_name, district_code,
+       state_roa_id, state_roa_name, roa_state_code, roa_district_code, district_roa_id, district_roa_name, multiple_districts)
+    VALUES
+      (1, 'Suresh Patel', '21', 1, 'Amit Verma', '05',
+       1, 'Road Safety Officer Odisha', ARRAY['21'], ARRAY['05','06'], 1, 'Khurda RO', ARRAY['Khurda','Cuttack'])
+  `;
+  console.log('✓ Seeded fsa_state_district_table');
+
+  await prisma.stages_table.create({
+    data: {
+      detail_id: detail.detail_id,
+      status_field_inspection: 'Completed',
+      intervention: 'In Progress',
+      status_of_estimate: 'Pending',
+      status_of_approval: 'Pending',
+      status_of_implementation: 'Not Started',
+      remarks_by_engg: 'Site inspection completed, intervention measures identified',
+      time_updated: new Date().toISOString(),
+      admin_name: 'Suresh Patel',
+      admin_role: 'Super Admin',

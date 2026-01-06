@@ -280,3 +280,31 @@ CREATE TABLE audit.change_log (
 ```sql
 CREATE OR REPLACE FUNCTION audit.log_changes()
 RETURNS trigger LANGUAGE plpgsql SECURITY DEFINER AS $$
+DECLARE v_row_id text;
+BEGIN
+    v_row_id := row_to_json(COALESCE(NEW, OLD))::jsonb ->> 'detail_id';
+    IF v_row_id IS NULL THEN
+        v_row_id := row_to_json(COALESCE(NEW, OLD))::jsonb ->> 'id';
+    END IF;
+
+    INSERT INTO audit.change_log (table_name, operation, row_id, old_data, new_data, app_user_id)
+    VALUES (
+        TG_TABLE_SCHEMA || '.' || TG_TABLE_NAME,
+        TG_OP,
+        v_row_id,
+        CASE WHEN TG_OP IN ('UPDATE','DELETE') THEN to_jsonb(OLD) ELSE NULL END,
+        CASE WHEN TG_OP IN ('UPDATE','INSERT') THEN to_jsonb(NEW) ELSE NULL END,
+        current_setting('app.current_user_id', true)
+    );
+
+    IF TG_OP = 'DELETE' THEN RETURN OLD; END IF;
+    RETURN NEW;
+END;
+$$;
+```
+
+#### after — attached to all 21 operational tables
+```sql
+CREATE TRIGGER audit_gen_details
+    AFTER INSERT OR UPDATE OR DELETE ON public.gen_details
+    FOR EACH ROW EXECUTE FUNCTION audit.log_changes();

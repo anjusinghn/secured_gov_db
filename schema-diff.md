@@ -304,3 +304,31 @@ If you want the fastest review path, use this order instead of reading top to bo
 
 #### `fsa_visible`
 
+- refs:
+  - original: `fps_schema.sql:1140`
+  - secure: `fps_schema_secure.sql:1356`
+
+- new columns: `created_at`, `updated_at`
+- encrypted columns:
+  - `visib_photos`
+
+#### `fsa_wrngway`
+
+- refs:
+  - original: `fps_schema.sql:1160`
+  - secure: `fps_schema_secure.sql:1378`
+
+- new columns: `created_at`, `updated_at`
+- no encrypted columns
+
+### Admin / Workflow Tables
+
+#### `fsa_state_district_table`
+
+- refs:
+  - original: `fps_schema.sql:963`
+  - secure: `fps_schema_secure.sql:1407`
+
+- new columns: `created_at`, `updated_at`
+- encrypted columns:
+  - `state_admin_name`

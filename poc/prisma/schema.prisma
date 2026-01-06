@@ -273,3 +273,30 @@ model fsa_user_table {
   user_role      String?       @db.VarChar
   terms_cond     Boolean?
   user_file      Json?
+  admin_id       BigInt?
+  user_status    Boolean?
+  state_code     String?       @db.VarChar
+  district_code  String?       @db.VarChar
+  /// @encrypted
+  state_name     String?       @db.VarChar
+  /// @encrypted
+  district_name  String?       @db.VarChar
+  ps_code        String?       @db.VarChar
+  /// @encrypted
+  police_station String?       @db.VarChar
+  created_at     DateTime      @default(now()) @db.Timestamptz(6)
+  updated_at     DateTime      @default(now()) @db.Timestamptz(6)
+  gen_details    gen_details[]
+
+  @@index([district_code], map: "idx_fsa_user_district_code")
+  @@index([state_code], map: "idx_fsa_user_state_code")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model fsa_violations {
+  violations_id                    String      @id @db.VarChar
+  detail_id                        BigInt
+  road_user_vio_cause_acc          String?     @db.VarChar
+  overspeeding_onspot              String?     @db.VarChar
+  avg_speed_range                  String?     @db.VarChar
+  m2w                              String?     @db.VarChar

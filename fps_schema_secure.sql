@@ -289,3 +289,32 @@ RETURNS NULL ON NULL INPUT
 AS $$
     SELECT encode(public.digest(lower(btrim(plaintext)), 'sha256'), 'hex');
 $$;
+
+ALTER FUNCTION public.hash_lookup_value(text) OWNER TO fsa_admin;
+
+CREATE OR REPLACE FUNCTION public.chacha20_le32(data bytea, off integer)
+RETURNS bigint
+LANGUAGE sql
+IMMUTABLE
+RETURNS NULL ON NULL INPUT
+AS $$
+    SELECT get_byte(data, off)::bigint
+         | (get_byte(data, off + 1)::bigint <<  8)
+         | (get_byte(data, off + 2)::bigint << 16)
+         | (get_byte(data, off + 3)::bigint << 24)
+$$;
+
+ALTER FUNCTION public.chacha20_le32(bytea, integer) OWNER TO fsa_admin;
+
+CREATE OR REPLACE FUNCTION public.chacha20_u32le(v bigint)
+RETURNS bytea
+LANGUAGE sql
+IMMUTABLE
+AS $$
+    SELECT set_byte(set_byte(set_byte(set_byte(
+        '\x00000000'::bytea,
+        0, ( v        & 255)::integer),
+        1, ((v >>  8) & 255)::integer),
+        2, ((v >> 16) & 255)::integer),
+        3, ((v >> 24) & 255)::integer)
+$$;

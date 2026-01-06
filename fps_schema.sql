@@ -314,3 +314,32 @@ ALTER TABLE master.landmark_type OWNER TO postgres;
 
 CREATE TABLE master.landuse_pattern (
     id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.landuse_pattern OWNER TO postgres;
+
+--
+-- Name: light_availability; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.light_availability (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.light_availability OWNER TO postgres;
+
+--
+-- Name: major_reasons_for_self_accidents; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.major_reasons_for_self_accidents (
+    id character varying,
+    english character varying,

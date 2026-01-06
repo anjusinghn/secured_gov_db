@@ -343,3 +343,32 @@ ALTER TABLE master.light_availability OWNER TO postgres;
 CREATE TABLE master.major_reasons_for_self_accidents (
     id character varying,
     english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.major_reasons_for_self_accidents OWNER TO postgres;
+
+--
+-- Name: master_data; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.master_data (
+    id character varying,
+    type character varying,
+    page_name character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.master_data OWNER TO postgres;
+
+--
+-- Name: no_of_lanes; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.no_of_lanes (
+    id character varying,

@@ -348,3 +348,29 @@ async function main() {
   console.log('✓ Seeded status_field_inspection');
 
   await prisma.$executeRaw`
+    INSERT INTO status_of_approval (detail_id, time_updated, admin_name, admin_role, admin_email, admin_id)
+    VALUES (${detailId}, ${new Date().toISOString()}, 'Suresh Patel', 'Super Admin', 'admin@fsaroadindia.gov.in', '1')
+  `;
+  console.log('✓ Seeded status_of_approval');
+
+  await prisma.$executeRaw`
+    INSERT INTO status_of_estimate (detail_id, time_updated, admin_name, admin_role, admin_email, admin_id, uploaded_docs)
+    VALUES (${detailId}, ${new Date().toISOString()}, 'Suresh Patel', 'Super Admin', 'admin@fsaroadindia.gov.in', '1', '/docs/cost_estimate_001.pdf')
+  `;
+  console.log('✓ Seeded status_of_estimate');
+
+  await prisma.$executeRaw`
+    INSERT INTO status_of_implementation (detail_id, time_updated, admin_name, admin_role, admin_email, admin_id)
+    VALUES (${detailId}, ${new Date().toISOString()}, 'Suresh Patel', 'Super Admin', 'admin@fsaroadindia.gov.in', '1')
+  `;
+  console.log('✓ Seeded status_of_implementation');
+
+  await prisma.$disconnect();
+  console.log('\n🎉 All seed data inserted! DB triggers handle encryption automatically.');
+  console.log('   Run "npx tsx src/read-test.ts" to verify encrypted vs decrypted data.');
+}
+
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});

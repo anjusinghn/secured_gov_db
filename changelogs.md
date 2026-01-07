@@ -336,3 +336,31 @@ app_user_id | 42
 ### 8. row level security (rls)
 
 `SET row_security = off` was at the top of the original file, meaning any connected user could query any row in any table. a state admin in maharashtra could freely read odisha's data.
+
+rls enabled on 12 tables with state/district-scoped policies. the filter is driven by session variables the app sets at the start of every transaction.
+
+#### before
+```sql
+SET row_security = off;
+-- no ALTER TABLE ENABLE ROW LEVEL SECURITY anywhere
+-- no policies
+```
+
+#### after — gen_details (root table)
+```sql
+SET row_security = on;
+
+ALTER TABLE public.gen_details ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY gen_details_app_policy ON public.gen_details
+    AS PERMISSIVE FOR ALL TO fsa_app
+    USING (
+        (state_code->>'0') = current_setting('app.current_state_code', true)
+        AND (
+            current_setting('app.current_district_code', true) = ''
+            OR (district_code->>'0') = current_setting('app.current_district_code', true)
+        )
+    )
+    WITH CHECK (
+        (state_code->>'0') = current_setting('app.current_state_code', true)
+        AND (

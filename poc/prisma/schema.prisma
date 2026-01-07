@@ -327,3 +327,31 @@ model fsa_visible {
   road_eng_sol               String?     @db.VarChar
   visib_photos               Json?
   is_visib_obstructed        String?     @db.VarChar
+  is_visib_obstructed_others String?     @db.VarChar
+  road_eng_sol_others        String?     @db.VarChar
+  delete_status              Boolean?
+  created_at                 DateTime    @default(now()) @db.Timestamptz(6)
+  updated_at                 DateTime    @default(now()) @db.Timestamptz(6)
+  gen_details                gen_details @relation(fields: [detail_id], references: [detail_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([detail_id], map: "idx_fsa_visible_detail_id")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model fsa_wrngway {
+  wrgnway_id                       String      @id(map: "fsa_wrngway_overtake_pkey") @db.VarChar
+  detail_id                        BigInt
+  veh_wrngway_roadside_junct       String?     @db.VarChar
+  wrgnway_driving_reason           String?     @db.VarChar
+  nearest_opening_to_cross         String?     @db.VarChar
+  road_engg_sol_for_wrngway        String?     @db.VarChar
+  enforce_sol_for_wrngway          String?     @db.VarChar
+  overtaking_acc                   String?     @db.VarChar
+  median_avail                     String?     @db.VarChar
+  space_to_overtake                String?     @db.VarChar
+  enforce_sol_for_wrngway_other    String?     @db.VarChar
+  road_engg_sol_for_wrngway_others String?     @db.VarChar
+  wrgnway_driving_reason_others    String?     @db.VarChar
+  reason_for_not_slowing_others    String?     @db.VarChar
+  edited                           Boolean?    @default(false)
+  delete_status                    Boolean?

@@ -347,3 +347,32 @@ END;
 $$;
 
 ALTER FUNCTION public.chacha20_qr(bigint[], integer, integer, integer, integer) OWNER TO fsa_admin;
+
+CREATE OR REPLACE FUNCTION public.chacha20_block(key bytea, nonce bytea, ctr bigint)
+RETURNS bytea
+LANGUAGE plpgsql
+IMMUTABLE
+AS $$
+DECLARE
+    M  constant bigint := 4294967295;
+    s  bigint[];
+    w  bigint[];
+    i  integer;
+    out bytea := '';
+BEGIN
+    s[1]  := 1634760805;
+    s[2]  := 857760878;
+    s[3]  := 2036477234;
+    s[4]  := 1797285236;
+    FOR i IN 0..7 LOOP
+        s[5 + i] := public.chacha20_le32(key, i * 4);
+    END LOOP;
+    s[13] := ctr & M;
+    s[14] := public.chacha20_le32(nonce, 0);
+    s[15] := public.chacha20_le32(nonce, 4);
+    s[16] := public.chacha20_le32(nonce, 8);
+    w := s;
+    FOR i IN 1..10 LOOP
+        w := public.chacha20_qr(w,  1,  5,  9, 13);
+        w := public.chacha20_qr(w,  2,  6, 10, 14);
+        w := public.chacha20_qr(w,  3,  7, 11, 15);

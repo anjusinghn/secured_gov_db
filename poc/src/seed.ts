@@ -321,3 +321,30 @@ async function main() {
       time_updated: new Date().toISOString(),
       admin_name: 'Suresh Patel',
       admin_role: 'Super Admin',
+      admin_email: 'admin@fsaroadindia.gov.in',
+      admin_id: '1',
+      upload_docs_intervention: '/docs/intervention_report_001.pdf',
+      upload_docs_estimation: '/docs/estimation_draft_001.pdf',
+    },
+  });
+  console.log('✓ Seeded stages_table');
+
+  await prisma.$executeRaw`
+    INSERT INTO intervention (detail_id, time_updated, admin_name, admin_role, admin_email, admin_id, uploaded_docs)
+    VALUES (${detailId}, ${new Date().toISOString()}, 'Suresh Patel', 'Super Admin', 'admin@fsaroadindia.gov.in', '1', '/docs/intervention_photo_001.jpg')
+  `;
+  console.log('✓ Seeded intervention');
+
+  await prisma.$executeRaw`
+    INSERT INTO remarks_by_engg (detail_id, time_updated, admin_name, admin_role, admin_email, admin_id)
+    VALUES (${detailId}, ${new Date().toISOString()}, 'Amit Verma', 'District Engineer', 'amit.verma@gov.in', '2')
+  `;
+  console.log('✓ Seeded remarks_by_engg');
+
+  await prisma.$executeRaw`
+    INSERT INTO status_field_inspection (detail_id, time_updated, admin_name, admin_role, admin_email, admin_id)
+    VALUES (${detailId}, ${new Date().toISOString()}, 'Suresh Patel', 'Super Admin', 'admin@fsaroadindia.gov.in', '1')
+  `;
+  console.log('✓ Seeded status_field_inspection');
+
+  await prisma.$executeRaw`

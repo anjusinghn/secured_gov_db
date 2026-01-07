@@ -372,3 +372,31 @@ ALTER TABLE master.master_data OWNER TO postgres;
 
 CREATE TABLE master.no_of_lanes (
     id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.no_of_lanes OWNER TO postgres;
+
+--
+-- Name: parked_vehicle_accidents_reasons; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.parked_vehicle_accidents_reasons (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.parked_vehicle_accidents_reasons OWNER TO postgres;
+
+--
+-- Name: pattern_of_accidents; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.pattern_of_accidents (
+    id character varying,

@@ -359,3 +359,31 @@ If you want the fastest review path, use this order instead of reading top to bo
 - encrypted columns:
   - `admin_name`
   - `admin_email`
+  - `admin_role`
+
+#### `stages_table`
+
+- refs:
+  - original: `fps_schema.sql:1334`
+  - secure: `fps_schema_secure.sql:1516`
+
+- new columns: `created_at`, `updated_at`
+- encrypted columns:
+  - `remarks_by_engg`
+  - `admin_name`
+  - `admin_email`
+  - `upload_docs_intervention`
+  - `upload_docs_estimation`
+  - `admin_role`
+
+#### `status_field_inspection`
+
+- refs:
+  - original: `fps_schema.sql:1388`
+  - secure: `fps_schema_secure.sql:1560`
+
+- new columns: `created_at`, `updated_at`
+- encrypted columns:
+  - `admin_name`
+  - `admin_email`
+  - `admin_role`

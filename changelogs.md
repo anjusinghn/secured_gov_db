@@ -393,3 +393,31 @@ CREATE POLICY fsa_acc_app_policy ON public.fsa_acc
               AND (
                   current_setting('app.current_district_code', true) = ''
                   OR (district_code->>'0') = current_setting('app.current_district_code', true)
+              )
+        )
+    );
+
+-- same pattern for: fsa_onspot, fsa_light, fsa_ped_cross, fsa_roadcnd,
+-- fsa_traff_status, fsa_traffic_condt, fsa_violations, fsa_visible,
+-- fsa_wrngway, stages_table
+```
+
+app usage:
+```sql
+BEGIN;
+  SET LOCAL app.current_state_code    = '21';   -- odisha
+  SET LOCAL app.current_district_code = '05';   -- khurda
+  SET LOCAL app.current_user_id       = '42';
+
+  SELECT * FROM gen_details;
+  -- returns only khurda rows. other states/districts are invisible.
+COMMIT;
+-- SET LOCAL values are cleared automatically on commit
+```
+
+`fsa_admin` has `BYPASSRLS` so admin operations skip all policies.
+
+---
+
+### 9. foreign key enforcement
+

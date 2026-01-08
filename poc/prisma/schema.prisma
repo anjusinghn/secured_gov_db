@@ -355,3 +355,30 @@ model fsa_wrngway {
   reason_for_not_slowing_others    String?     @db.VarChar
   edited                           Boolean?    @default(false)
   delete_status                    Boolean?
+  created_at                       DateTime    @default(now()) @db.Timestamptz(6)
+  updated_at                       DateTime    @default(now()) @db.Timestamptz(6)
+  gen_details                      gen_details @relation(fields: [detail_id], references: [detail_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([detail_id], map: "idx_fsa_wrngway_detail_id")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+/// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
+model gen_details {
+  detail_id                BigInt                     @id(map: "fsa_details_pkey") @default(autoincrement())
+  rep_name                 Json?
+  designation              Json?
+  department               Json?
+  phone_no                 Json?
+  email                    Json?
+  userid                   BigInt
+  state                    Json?
+  district                 Json?
+  state_code               Json?
+  district_code            Json?
+  edited                   Boolean?                   @default(false)
+  start_date               String?                    @db.VarChar
+  end_date                 String?                    @db.VarChar
+  delete_status            Boolean?
+  /// @encrypted
+  police_station           String?                    @db.VarChar

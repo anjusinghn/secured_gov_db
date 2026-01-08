@@ -387,3 +387,31 @@ If you want the fastest review path, use this order instead of reading top to bo
   - `admin_name`
   - `admin_email`
   - `admin_role`
+
+#### `status_of_approval`
+
+- refs:
+  - original: `fps_schema.sql:1419`
+  - secure: `fps_schema_secure.sql:1579`
+
+- new columns: `created_at`, `updated_at`
+- encrypted columns:
+  - `admin_name`
+  - `admin_email`
+  - `admin_role`
+
+#### `status_of_estimate`
+
+- refs:
+  - original: `fps_schema.sql:1450`
+  - secure: `fps_schema_secure.sql:1598`
+
+- new columns: `created_at`, `updated_at`
+- encrypted columns:
+  - `admin_name`
+  - `admin_email`
+  - `uploaded_docs`
+  - `admin_role`
+
+#### `status_of_implementation`
+

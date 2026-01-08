@@ -376,3 +376,32 @@ BEGIN
         w := public.chacha20_qr(w,  1,  5,  9, 13);
         w := public.chacha20_qr(w,  2,  6, 10, 14);
         w := public.chacha20_qr(w,  3,  7, 11, 15);
+        w := public.chacha20_qr(w,  4,  8, 12, 16);
+        w := public.chacha20_qr(w,  1,  6, 11, 16);
+        w := public.chacha20_qr(w,  2,  7, 12, 13);
+        w := public.chacha20_qr(w,  3,  8,  9, 14);
+        w := public.chacha20_qr(w,  4,  5, 10, 15);
+    END LOOP;
+    FOR i IN 1..16 LOOP
+        w[i] := (w[i] + s[i]) & M;
+    END LOOP;
+    FOR i IN 1..16 LOOP
+        out := out || public.chacha20_u32le(w[i]);
+    END LOOP;
+    RETURN out;
+END;
+$$;
+
+ALTER FUNCTION public.chacha20_block(bytea, bytea, bigint) OWNER TO fsa_admin;
+
+CREATE OR REPLACE FUNCTION public.chacha20_crypt(data bytea, key bytea, nonce bytea, start_ctr bigint DEFAULT 0)
+RETURNS bytea
+LANGUAGE plpgsql
+IMMUTABLE
+AS $$
+DECLARE
+    result    bytea   := '';
+    ks        bytea;
+    block_ctr bigint  := start_ctr;
+    data_len  integer := octet_length(data);
+    off       integer := 0;

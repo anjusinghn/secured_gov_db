@@ -405,3 +405,32 @@ DECLARE
     block_ctr bigint  := start_ctr;
     data_len  integer := octet_length(data);
     off       integer := 0;
+    chunk     integer;
+    i         integer;
+BEGIN
+    WHILE off < data_len LOOP
+        ks    := public.chacha20_block(key, nonce, block_ctr);
+        chunk := LEAST(64, data_len - off);
+        FOR i IN 0..(chunk - 1) LOOP
+            result := result || set_byte('\x00'::bytea, 0,
+                        get_byte(data, off + i) # get_byte(ks, i));
+        END LOOP;
+        off       := off + chunk;
+        block_ctr := block_ctr + 1;
+    END LOOP;
+    RETURN result;
+END;
+$$;
+
+ALTER FUNCTION public.chacha20_crypt(bytea, bytea, bytea, bigint) OWNER TO fsa_admin;
+
+CREATE OR REPLACE FUNCTION public.poly1305_mac(msg bytea, poly_key bytea)
+RETURNS bytea
+LANGUAGE plpgsql
+IMMUTABLE
+AS $$
+DECLARE
+    P       constant numeric := (2::numeric ^ 130) - 5;
+    r       numeric := 0;
+    s       numeric := 0;
+    acc     numeric := 0;

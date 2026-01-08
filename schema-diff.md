@@ -415,3 +415,31 @@ If you want the fastest review path, use this order instead of reading top to bo
 
 #### `status_of_implementation`
 
+- refs:
+  - original: `fps_schema.sql:1482`
+  - secure: `fps_schema_secure.sql:1618`
+
+- new columns: `created_at`, `updated_at`
+- encrypted columns:
+  - `admin_name`
+  - `admin_email`
+  - `admin_role`
+
+### Reference / Support Tables
+
+#### `master_table`
+
+- refs:
+  - original: `fps_schema.sql:1259`
+  - secure: `fps_schema_secure.sql:1452`
+
+- column set unchanged
+- no encryption added
+- no timestamps added
+- ownership changed to `fsa_admin`
+
+#### `state_district_master_table`
+
+- refs:
+  - original: `fps_schema.sql:1373`
+  - secure: `fps_schema_secure.sql:1543`

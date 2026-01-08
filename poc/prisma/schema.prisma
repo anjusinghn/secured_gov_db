@@ -382,3 +382,31 @@ model gen_details {
   delete_status            Boolean?
   /// @encrypted
   police_station           String?                    @db.VarChar
+  ps_code                  String?                    @db.VarChar
+  created_at               DateTime                   @default(now()) @db.Timestamptz(6)
+  updated_at               DateTime                   @default(now()) @db.Timestamptz(6)
+  fsa_acc                  fsa_acc[]
+  fsa_light                fsa_light[]
+  fsa_onspot               fsa_onspot[]
+  fsa_ped_cross            fsa_ped_cross[]
+  fsa_roadcnd              fsa_roadcnd[]              @ignore
+  fsa_traff_status         fsa_traff_status[]
+  fsa_traffic_condt        fsa_traffic_condt[]
+  fsa_violations           fsa_violations[]
+  fsa_visible              fsa_visible[]
+  fsa_wrngway              fsa_wrngway[]
+  fsa_user_table           fsa_user_table             @relation(fields: [userid], references: [userid], onDelete: NoAction, onUpdate: NoAction)
+  intervention             intervention[]             @ignore
+  remarks_by_engg          remarks_by_engg[]          @ignore
+  stages_table             stages_table?
+  status_field_inspection  status_field_inspection[]  @ignore
+  status_of_approval       status_of_approval[]       @ignore
+  status_of_estimate       status_of_estimate[]       @ignore
+  status_of_implementation status_of_implementation[] @ignore
+
+  @@index([userid], map: "idx_gen_details_userid")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model intervention {
+  id            BigInt       @default(autoincrement())

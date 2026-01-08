@@ -364,3 +364,32 @@ CREATE POLICY gen_details_app_policy ON public.gen_details
     WITH CHECK (
         (state_code->>'0') = current_setting('app.current_state_code', true)
         AND (
+            current_setting('app.current_district_code', true) = ''
+            OR (district_code->>'0') = current_setting('app.current_district_code', true)
+        )
+    );
+
+CREATE POLICY gen_details_readonly_policy ON public.gen_details
+    AS PERMISSIVE FOR SELECT TO fsa_readonly
+    USING (
+        (state_code->>'0') = current_setting('app.current_state_code', true)
+        AND (
+            current_setting('app.current_district_code', true) = ''
+            OR (district_code->>'0') = current_setting('app.current_district_code', true)
+        )
+    );
+```
+
+#### after — child tables (policy checks via the fk chain)
+```sql
+ALTER TABLE public.fsa_acc ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY fsa_acc_app_policy ON public.fsa_acc
+    AS PERMISSIVE FOR ALL TO fsa_app
+    USING (
+        detail_id IN (
+            SELECT detail_id FROM public.gen_details
+            WHERE (state_code->>'0') = current_setting('app.current_state_code', true)
+              AND (
+                  current_setting('app.current_district_code', true) = ''
+                  OR (district_code->>'0') = current_setting('app.current_district_code', true)

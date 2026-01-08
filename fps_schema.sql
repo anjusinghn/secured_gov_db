@@ -429,3 +429,32 @@ ALTER TABLE master.pedestrain_animal_crossing_the_spot_reasons OWNER TO postgres
 CREATE TABLE master.prevalent_vehicle_type (
     id character varying,
     english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.prevalent_vehicle_type OWNER TO postgres;
+
+--
+-- Name: rash_drivers; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.rash_drivers (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.rash_drivers OWNER TO postgres;
+
+--
+-- Name: reason_for_visibility_obstruction; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.reason_for_visibility_obstruction (
+    id character varying,
+    english character varying,
+    hindi character varying,

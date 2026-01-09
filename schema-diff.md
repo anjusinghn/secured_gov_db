@@ -470,3 +470,31 @@ If you want the fastest review path, use this order instead of reading top to bo
   - `stages_table.detail_id`
   - `intervention.detail_id`
   - `remarks_by_engg.detail_id`
+  - `status_field_inspection.detail_id`
+  - `status_of_approval.detail_id`
+  - `status_of_estimate.detail_id`
+  - `status_of_implementation.detail_id`
+
+### Indexes
+
+- refs:
+  - secure index section: `fps_schema_secure.sql:1864`
+
+- original file had no indexes
+- secure file adds:
+  - FK indexes on child tables
+  - expression indexes for `gen_details.state_code` and `gen_details.district_code`
+  - state/district indexes used by RLS filters
+
+### Triggers
+
+#### New password hashing triggers
+
+- refs:
+  - `trg_hash_admin_pwd`: `fps_schema_secure.sql:1905`
+  - `trg_hash_user_pwd`: `fps_schema_secure.sql:1910`
+
+- `trg_hash_admin_pwd`
+- `trg_hash_user_pwd`
+
+#### New field encryption triggers

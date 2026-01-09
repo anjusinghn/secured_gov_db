@@ -463,3 +463,32 @@ BEGIN
     msg_len := octet_length(msg);
     WHILE i < msg_len LOOP
         chunk_len := LEAST(16, msg_len - i);
+        block_val := 0;
+        FOR j IN REVERSE (chunk_len - 1)..0 LOOP
+            block_val := block_val * 256 + get_byte(msg, i + j);
+        END LOOP;
+        block_val := block_val + (2::numeric ^ (8 * chunk_len));
+        acc := ((acc + block_val) * r) % P;
+        i := i + chunk_len;
+    END LOOP;
+
+    tag := (acc + s) % (2::numeric ^ 128);
+
+    FOR j IN 0..15 LOOP
+        result := result || set_byte('\x00'::bytea, 0, (tag % 256)::integer);
+        tag := trunc(tag / 256);
+    END LOOP;
+
+    RETURN result;
+END;
+$$;
+
+ALTER FUNCTION public.poly1305_mac(bytea, bytea) OWNER TO fsa_admin;
+
+CREATE OR REPLACE FUNCTION public.encrypt_text_value(plaintext text)
+RETURNS text
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+DECLARE
+    v_key      text;

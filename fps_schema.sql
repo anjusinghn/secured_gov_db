@@ -486,3 +486,32 @@ CREATE TABLE master.road_engineering_solutions_parked_vehicle_accidents (
     id character varying,
     english character varying,
     hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.road_engineering_solutions_parked_vehicle_accidents OWNER TO postgres;
+
+--
+-- Name: road_engineering_solutions_pedestrain_animal_crossing; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.road_engineering_solutions_pedestrain_animal_crossing (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.road_engineering_solutions_pedestrain_animal_crossing OWNER TO postgres;
+
+--
+-- Name: road_engineering_solutions_road_condition; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.road_engineering_solutions_road_condition (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying

@@ -449,3 +449,31 @@ ALTER TABLE ONLY public.fsa_light
     ADD CONSTRAINT fsa_light_detail_id_fkey
         FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id);
 ```
+
+#### after — 7 missing fks added
+```sql
+ALTER TABLE ONLY public.stages_table
+    ADD CONSTRAINT stages_table_detail_id_fkey
+        FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id);
+
+ALTER TABLE ONLY public.intervention
+    ADD CONSTRAINT intervention_detail_id_fkey
+        FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id);
+
+-- same for remaining 5 tables
+```
+
+---
+
+### 10. indexes on fk columns
+
+no indexes existed anywhere. every join the app does (e.g. `gen_details JOIN fsa_acc`) was a full table scan.
+
+#### before
+no indexes.
+
+#### after — 18 fk column indexes
+```sql
+CREATE INDEX idx_fsa_acc_detail_id           ON public.fsa_acc           (detail_id);
+CREATE INDEX idx_fsa_light_detail_id         ON public.fsa_light         (detail_id);
+CREATE INDEX idx_fsa_onspot_detail_id        ON public.fsa_onspot        (detail_id);

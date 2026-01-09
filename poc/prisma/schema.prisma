@@ -437,3 +437,30 @@ model master_table {
   landmark_type                                                   String? @db.VarChar
   prevalent_vehicle_type                                          String? @db.VarChar
   reason_for_visibility_obstruction                               String? @db.VarChar
+  road_engineering_suggestions_to_avoid_the_accident_visibility   String? @db.VarChar
+  defects                                                         String? @db.VarChar
+  road_engineering_solutions_road_condition                       String? @db.VarChar
+  pattern_of_accidents                                            String? @db.VarChar
+  road_user_violations_causing_accidents                          String? @db.VarChar
+  reasons_for_vehicles_not_slowing_down                           String? @db.VarChar
+  road_engineering_solutions_vehicles_overspeeding                String? @db.VarChar
+  enforcement_solutions_vehicles_overspeeding                     String? @db.VarChar
+  wrong_way_driving_reasons                                       String? @db.VarChar
+  road_engineering_solutions_wrong_way_driving                    String? @db.VarChar
+  enforcement_solutions_wrong_way_driving                         String? @db.VarChar
+  pedestrain_animal_crossing_the_spot_reasons                     String? @db.VarChar
+  road_engineering_solutions_pedestrain_animal_crossing           String? @db.VarChar
+  enforcement_solutions_pedestrian_animal_crossing                String? @db.VarChar
+  major_reasons_for_self_accidents                                String? @db.VarChar
+  road_engineering_solutions_self_accidents                       String? @db.VarChar
+  enforcement_solutions_self_accidents                            String? @db.VarChar
+  parked_vehicle_accidents_reasons                                String? @db.VarChar
+  road_engineering_solutions_parked_vehicle_accidents             String? @db.VarChar
+  enforcement_solutions_parked_vehicle_accidents                  String? @db.VarChar
+  accidents_due_to_small_t_junction_accidents_or_nearby_joining_r String? @db.VarChar
+  road_engineering_solutions_small_t_junction_accidents           String? @db.VarChar
+  enforcement_solutions_small_t_junction_accidents                String? @db.VarChar
+  rash_drivers                                                    String? @db.VarChar
+  enforcement_solutions_rash_driving                              String? @db.VarChar
+  age_range                                                       String? @db.VarChar(255)
+

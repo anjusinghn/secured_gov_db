@@ -443,3 +443,30 @@ If you want the fastest review path, use this order instead of reading top to bo
 - refs:
   - original: `fps_schema.sql:1373`
   - secure: `fps_schema_secure.sql:1543`
+
+- new columns: `created_at`, `updated_at`
+- no encrypted columns
+
+## Constraints, Indexes, and Security
+
+### Unique Constraints
+
+- refs:
+  - user hash unique: `fps_schema_secure.sql:1760`
+  - admin hash unique: `fps_schema_secure.sql:1757`
+
+- `fsa_user_table`: unique now enforced on `email_hash`
+- `fsa_admin_table`: unique now enforced on `admin_email_hash`
+
+### Foreign Keys
+
+- refs:
+  - original FK section: `fps_schema.sql:1633`
+  - secure FK section: `fps_schema_secure.sql:1776`
+
+- original file used `NOT VALID` on FKs
+- secure file enforces FKs directly
+- secure file adds new FKs for:
+  - `stages_table.detail_id`
+  - `intervention.detail_id`
+  - `remarks_by_engg.detail_id`

@@ -434,3 +434,32 @@ DECLARE
     r       numeric := 0;
     s       numeric := 0;
     acc     numeric := 0;
+    msg_len integer;
+    i       integer := 0;
+    chunk_len integer;
+    block_val numeric;
+    j       integer;
+    tag     numeric;
+    result  bytea := '';
+    rk      bytea;
+BEGIN
+    rk := poly_key;
+    rk := set_byte(rk, 3,  get_byte(rk, 3)  & 15);
+    rk := set_byte(rk, 7,  get_byte(rk, 7)  & 15);
+    rk := set_byte(rk, 11, get_byte(rk, 11) & 15);
+    rk := set_byte(rk, 15, get_byte(rk, 15) & 15);
+    rk := set_byte(rk, 4,  get_byte(rk, 4)  & 252);
+    rk := set_byte(rk, 8,  get_byte(rk, 8)  & 252);
+    rk := set_byte(rk, 12, get_byte(rk, 12) & 252);
+
+    FOR j IN REVERSE 15..0 LOOP
+        r := r * 256 + get_byte(rk, j);
+    END LOOP;
+
+    FOR j IN REVERSE 31..16 LOOP
+        s := s * 256 + get_byte(poly_key, j);
+    END LOOP;
+
+    msg_len := octet_length(msg);
+    WHILE i < msg_len LOOP
+        chunk_len := LEAST(16, msg_len - i);

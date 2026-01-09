@@ -421,3 +421,31 @@ COMMIT;
 
 ### 9. foreign key enforcement
 
+every fk in the original schema was marked `NOT VALID`. this means postgresql accepted the constraint definition but did not enforce it on existing data. additionally 7 tables had a `detail_id` column with no fk constraint at all.
+
+#### before — all fks had NOT VALID
+```sql
+ALTER TABLE ONLY public.fsa_acc
+    ADD CONSTRAINT detail_id
+        FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id) NOT VALID;
+
+ALTER TABLE ONLY public.fsa_light
+    ADD CONSTRAINT fsa_light_detail_id_fkey
+        FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id) NOT VALID;
+
+-- all 10 FKs: NOT VALID
+```
+
+#### before — these tables had no fk at all despite having a detail_id column  
+`stages_table`, `intervention`, `remarks_by_engg`, `status_field_inspection`, `status_of_approval`, `status_of_estimate`, `status_of_implementation`
+
+#### after — NOT VALID removed everywhere
+```sql
+ALTER TABLE ONLY public.fsa_acc
+    ADD CONSTRAINT detail_id
+        FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id);
+
+ALTER TABLE ONLY public.fsa_light
+    ADD CONSTRAINT fsa_light_detail_id_fkey
+        FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id);
+```

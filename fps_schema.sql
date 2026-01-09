@@ -458,3 +458,31 @@ CREATE TABLE master.reason_for_visibility_obstruction (
     id character varying,
     english character varying,
     hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.reason_for_visibility_obstruction OWNER TO postgres;
+
+--
+-- Name: reasons_for_vehicles_not_slowing_down; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.reasons_for_vehicles_not_slowing_down (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.reasons_for_vehicles_not_slowing_down OWNER TO postgres;
+
+--
+-- Name: road_engineering_solutions_parked_vehicle_accidents; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.road_engineering_solutions_parked_vehicle_accidents (
+    id character varying,
+    english character varying,
+    hindi character varying,

@@ -492,3 +492,32 @@ SECURITY DEFINER
 AS $$
 DECLARE
     v_key      text;
+    key_bytes  bytea;
+    nonce      bytea;
+    ciphertext bytea;
+    poly_key   bytea;
+    tag        bytea;
+BEGIN
+    IF plaintext IS NULL OR plaintext LIKE 'enc:chacha20:v1:%' THEN
+        RETURN plaintext;
+    END IF;
+
+    v_key     := public.require_encryption_key();
+    key_bytes := decode(v_key, 'hex');
+    nonce     := public.gen_random_bytes(12);
+
+    poly_key   := substring(public.chacha20_block(key_bytes, nonce, 0) from 1 for 32);
+    ciphertext := public.chacha20_crypt(convert_to(plaintext, 'UTF8'), key_bytes, nonce, 1);
+    tag        := public.poly1305_mac(ciphertext, poly_key);
+
+    RETURN 'enc:chacha20:v1:' || replace(encode(nonce || tag || ciphertext, 'base64'), E'\n', '');
+END;
+$$;
+
+ALTER FUNCTION public.encrypt_text_value(text) OWNER TO fsa_admin;
+
+CREATE OR REPLACE FUNCTION public.decrypt_text_value(ciphertext text)
+RETURNS text
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$

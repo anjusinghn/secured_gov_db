@@ -492,3 +492,30 @@ model stages_table {
   detail_id                BigInt      @id
   status_field_inspection  String?     @db.VarChar
   intervention             String?     @db.VarChar
+  status_of_estimate       String?     @db.VarChar
+  status_of_approval       String?     @db.VarChar
+  status_of_implementation String?     @db.VarChar
+  remarks_by_engg          String?     @db.VarChar
+  time_updated             String?     @db.VarChar
+  /// @encrypted
+  admin_name               String?     @db.VarChar
+  admin_role               String?     @db.VarChar
+  /// @encrypted
+  admin_email              String?     @db.VarChar
+  admin_id                 String?     @db.VarChar
+  upload_docs_intervention String?     @db.VarChar
+  upload_docs_estimation   String?     @db.VarChar
+  created_at               DateTime    @default(now()) @db.Timestamptz(6)
+  updated_at               DateTime    @default(now()) @db.Timestamptz(6)
+  gen_details              gen_details @relation(fields: [detail_id], references: [detail_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([detail_id], map: "idx_stages_table_detail_id")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model state_district_master_table {
+  state_name    String?  @db.VarChar
+  district_name String?  @db.VarChar
+  state_code    String?  @db.VarChar
+  district_code String?  @db.VarChar
+  s_no          BigInt?

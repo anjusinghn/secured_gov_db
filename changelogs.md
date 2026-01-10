@@ -477,3 +477,31 @@ no indexes.
 CREATE INDEX idx_fsa_acc_detail_id           ON public.fsa_acc           (detail_id);
 CREATE INDEX idx_fsa_light_detail_id         ON public.fsa_light         (detail_id);
 CREATE INDEX idx_fsa_onspot_detail_id        ON public.fsa_onspot        (detail_id);
+CREATE INDEX idx_fsa_ped_cross_detail_id     ON public.fsa_ped_cross     (detail_id);
+CREATE INDEX idx_fsa_roadcnd_detail_id       ON public.fsa_roadcnd       (detail_id);
+CREATE INDEX idx_fsa_traff_status_detail_id  ON public.fsa_traff_status  (detail_id);
+CREATE INDEX idx_fsa_traffic_condt_detail_id ON public.fsa_traffic_condt (detail_id);
+CREATE INDEX idx_fsa_violations_detail_id    ON public.fsa_violations    (detail_id);
+CREATE INDEX idx_fsa_visible_detail_id       ON public.fsa_visible       (detail_id);
+CREATE INDEX idx_fsa_wrngway_detail_id       ON public.fsa_wrngway       (detail_id);
+CREATE INDEX idx_gen_details_userid          ON public.gen_details       (userid);
+CREATE INDEX idx_stages_table_detail_id      ON public.stages_table      (detail_id);
+-- + 6 more for workflow tables
+```
+
+#### after — 7 state/district indexes for rls policy evaluation
+```sql
+-- RLS policies on child tables do a subquery into gen_details on every query.
+-- without these, every query scans the full gen_details table just to evaluate the policy.
+CREATE INDEX idx_gen_details_state_code    ON public.gen_details (((state_code->>'0')::text));
+CREATE INDEX idx_gen_details_district_code ON public.gen_details (((district_code->>'0')::text));
+CREATE INDEX idx_fsa_user_state_code       ON public.fsa_user_table (state_code);
+CREATE INDEX idx_fsa_user_district_code    ON public.fsa_user_table (district_code);
+CREATE INDEX idx_fsa_admin_state_code      ON public.fsa_admin_table (state_code);
+CREATE INDEX idx_fsa_admin_district_code   ON public.fsa_admin_table (district_code);
+CREATE INDEX idx_fsa_sdt_state_code        ON public.fsa_state_district_table (state_code);
+```
+
+---
+
+### 11. grant statements

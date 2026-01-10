@@ -464,3 +464,31 @@ model master_table {
   enforcement_solutions_rash_driving                              String? @db.VarChar
   age_range                                                       String? @db.VarChar(255)
 
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model remarks_by_engg {
+  id           BigInt       @default(autoincrement())
+  detail_id    BigInt?
+  time_updated String?      @db.VarChar
+  /// @encrypted
+  admin_name   String?      @db.VarChar
+  admin_role   String?      @db.VarChar
+  /// @encrypted
+  admin_email  String?      @db.VarChar
+  admin_id     String?      @db.VarChar
+  created_at   DateTime     @default(now()) @db.Timestamptz(6)
+  updated_at   DateTime     @default(now()) @db.Timestamptz(6)
+  gen_details  gen_details? @relation(fields: [detail_id], references: [detail_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([detail_id], map: "idx_remarks_by_engg_detail_id")
+  @@ignore
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model stages_table {
+  id                       BigInt      @default(autoincrement())
+  detail_id                BigInt      @id
+  status_field_inspection  String?     @db.VarChar
+  intervention             String?     @db.VarChar

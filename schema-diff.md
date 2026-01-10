@@ -498,3 +498,31 @@ If you want the fastest review path, use this order instead of reading top to bo
 - `trg_hash_user_pwd`
 
 #### New field encryption triggers
+
+- refs:
+  - trigger section start: `fps_schema_secure.sql:1916`
+
+- `trg_encrypt_fsa_user_table`
+- `trg_encrypt_fsa_admin_table`
+- `trg_encrypt_gen_details`
+- `trg_encrypt_fsa_acc`
+- `trg_encrypt_fsa_onspot`
+- `trg_encrypt_fsa_ped_cross`
+- `trg_encrypt_fsa_state_district_table`
+- `trg_encrypt_intervention`
+- `trg_encrypt_remarks_by_engg`
+- `trg_encrypt_stages_table`
+- `trg_encrypt_status_field_inspection`
+- `trg_encrypt_status_of_approval`
+- `trg_encrypt_status_of_estimate`
+- `trg_encrypt_status_of_implementation`
+- `trg_encrypt_fsa_light`
+- `trg_encrypt_fsa_traff_status`
+- `trg_encrypt_fsa_visible`
+- `trg_encrypt_fsa_roadcnd`
+
+#### New timestamp triggers
+
+- refs:
+  - trigger section start: `fps_schema_secure.sql:1992`
+

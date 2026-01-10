@@ -521,3 +521,32 @@ RETURNS text
 LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
+DECLARE
+    v_key        text;
+    key_bytes    bytea;
+    raw_bytes    bytea;
+    nonce        bytea;
+    tag          bytea;
+    ct           bytea;
+    pt           bytea;
+    poly_key     bytea;
+    computed_tag bytea;
+BEGIN
+    IF ciphertext IS NULL OR ciphertext NOT LIKE 'enc:chacha20:v1:%' THEN
+        RETURN ciphertext;
+    END IF;
+
+    v_key     := public.require_encryption_key();
+    key_bytes := decode(v_key, 'hex');
+
+    raw_bytes := decode(
+        replace(replace(substring(ciphertext from 17), E'\n', ''), '\n', ''),
+        'base64'
+    );
+
+    nonce := substring(raw_bytes from 1 for 12);
+    tag   := substring(raw_bytes from 13 for 16);
+    ct    := substring(raw_bytes from 29);
+
+    poly_key     := substring(public.chacha20_block(key_bytes, nonce, 0) from 1 for 32);
+    computed_tag := public.poly1305_mac(ct, poly_key);

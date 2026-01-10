@@ -505,3 +505,31 @@ CREATE INDEX idx_fsa_sdt_state_code        ON public.fsa_state_district_table (s
 ---
 
 ### 11. grant statements
+
+no GRANT statements existed. everyone connected as `postgres` and had implicit full access to everything.
+
+#### before
+no grants.
+
+#### after — explicit privilege matrix for all three roles
+```sql
+-- schema access
+GRANT USAGE ON SCHEMA public  TO fsa_app, fsa_readonly;
+GRANT USAGE ON SCHEMA master  TO fsa_app, fsa_readonly;
+GRANT USAGE ON SCHEMA audit   TO fsa_app, fsa_readonly;
+
+-- fsa_app: full CRUD on operational tables
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.gen_details  TO fsa_app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.fsa_acc      TO fsa_app;
+-- ... all 24 tables
+
+-- fsa_app: sequence usage (needed for auto-increment IDs)
+GRANT USAGE ON SEQUENCE public.fsa_user_id               TO fsa_app;
+GRANT USAGE ON SEQUENCE public.gen_details_detail_id_seq TO fsa_app;
+-- ... all 10 sequences
+
+-- fsa_app: INSERT only on audit log (cannot read or tamper with audit trail)
+GRANT INSERT ON audit.change_log TO fsa_app;
+
+-- fsa_readonly: SELECT only
+GRANT SELECT ON public.gen_details TO fsa_readonly;

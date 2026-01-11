@@ -550,3 +550,32 @@ BEGIN
 
     poly_key     := substring(public.chacha20_block(key_bytes, nonce, 0) from 1 for 32);
     computed_tag := public.poly1305_mac(ct, poly_key);
+
+    IF tag <> computed_tag THEN
+        RAISE EXCEPTION 'Ciphertext integrity check failed (Poly1305 MAC mismatch)';
+    END IF;
+
+    pt := public.chacha20_crypt(ct, key_bytes, nonce, 1);
+    RETURN convert_from(pt, 'UTF8');
+END;
+$$;
+
+ALTER FUNCTION public.decrypt_text_value(text) OWNER TO fsa_admin;
+
+CREATE OR REPLACE FUNCTION public.encrypt_jsonb_value(plaintext jsonb)
+RETURNS jsonb
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+BEGIN
+    IF plaintext IS NULL THEN
+        RETURN NULL;
+    END IF;
+
+    IF jsonb_typeof(plaintext) = 'string' AND trim(both '"' from plaintext::text) LIKE 'enc:chacha20:v1:%' THEN
+        RETURN plaintext;
+    END IF;
+
+    RETURN to_jsonb(public.encrypt_text_value(plaintext::text));
+END;
+$$;

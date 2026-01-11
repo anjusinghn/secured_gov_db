@@ -526,3 +526,31 @@ If you want the fastest review path, use this order instead of reading top to bo
 - refs:
   - trigger section start: `fps_schema_secure.sql:1992`
 
+- `trg_ts_*` across operational tables
+
+#### New audit triggers
+
+- refs:
+  - trigger section start: `fps_schema_secure.sql:2112`
+
+- `audit_*` across operational tables
+
+### RLS
+
+- refs:
+  - RLS section start: `fps_schema_secure.sql:2204`
+  - `gen_details` RLS start: `fps_schema_secure.sql:2233`
+
+- original file had no RLS
+- secure file enables RLS on operational tables
+- policies depend on session vars:
+  - `app.current_state_code`
+  - `app.current_district_code`
+  - `app.current_user_id`
+- encryption/decryption also depends on:
+  - `app.encryption_key`
+
+## Decrypted Views
+
+These exist only in `fps_schema_secure.sql`:
+

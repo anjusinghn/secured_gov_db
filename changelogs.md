@@ -533,3 +533,31 @@ GRANT INSERT ON audit.change_log TO fsa_app;
 
 -- fsa_readonly: SELECT only
 GRANT SELECT ON public.gen_details TO fsa_readonly;
+GRANT SELECT ON public.fsa_acc     TO fsa_readonly;
+-- ... all tables
+
+-- fsa_readonly: can read audit log for compliance reporting
+GRANT SELECT ON audit.change_log TO fsa_readonly;
+
+-- helper functions
+GRANT EXECUTE ON FUNCTION public.hash_password(text)         TO fsa_admin, fsa_app;
+GRANT EXECUTE ON FUNCTION public.verify_password(text, text) TO fsa_admin, fsa_app;
+```
+
+---
+
+### quick reference
+
+| # | change | problem it fixed |
+|---|--------|-----------------|
+| 1 | removed `\restrict`/`\unrestrict` | script failed on standard postgresql |
+| 2 | added pgcrypto | no hashing capability |
+| 3 | role separation | everything ran as postgres superuser |
+| 4 | password hashing | plaintext passwords stored in db |
+| 5 | removed fsa_user_table_bak | plaintext passwords, no constraints, no purpose |
+| 6 | timestamps | no record of when data was created or changed |
+| 7 | audit logging | no tamper trail, no visibility into who changed what |
+| 8 | row level security | any user could read any state's data |
+| 9 | fk enforcement | constraints not enforced; 7 tables missing fks entirely |
+| 10 | indexes | full table scans on every join and rls evaluation |
+| 11 | grant statements | no privilege control, implicit full access for everyone |

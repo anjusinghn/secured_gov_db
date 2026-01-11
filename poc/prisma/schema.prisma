@@ -519,3 +519,31 @@ model state_district_master_table {
   state_code    String?  @db.VarChar
   district_code String?  @db.VarChar
   s_no          BigInt?
+  created_at    DateTime @default(now()) @db.Timestamptz(6)
+  updated_at    DateTime @default(now()) @db.Timestamptz(6)
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model status_field_inspection {
+  id           BigInt       @default(autoincrement())
+  detail_id    BigInt?
+  time_updated String?      @db.VarChar
+  /// @encrypted
+  admin_name   String?      @db.VarChar
+  admin_role   String?      @db.VarChar
+  /// @encrypted
+  admin_email  String?      @db.VarChar
+  admin_id     String?      @db.VarChar
+  created_at   DateTime     @default(now()) @db.Timestamptz(6)
+  updated_at   DateTime     @default(now()) @db.Timestamptz(6)
+  gen_details  gen_details? @relation(fields: [detail_id], references: [detail_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([detail_id], map: "idx_status_fi_detail_id")
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model status_of_approval {
+  id           BigInt       @default(autoincrement())

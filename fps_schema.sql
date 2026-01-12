@@ -659,3 +659,31 @@ CREATE TABLE master.status_of_approval (
 
 
 ALTER TABLE master.status_of_approval OWNER TO postgres;
+
+--
+-- Name: status_of_estimate; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.status_of_estimate (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.status_of_estimate OWNER TO postgres;
+
+--
+-- Name: status_of_implementation; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.status_of_implementation (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.status_of_implementation OWNER TO postgres;

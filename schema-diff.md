@@ -554,3 +554,30 @@ If you want the fastest review path, use this order instead of reading top to bo
 
 These exist only in `fps_schema_secure.sql`:
 
+- refs:
+  - decrypted views section start: `fps_schema_secure.sql:2634`
+  - first view: `fps_schema_secure.sql:2650`
+
+- `v_fsa_user_table_decrypted`
+- `v_fsa_admin_table_decrypted`
+- `v_gen_details_decrypted`
+- `v_fsa_acc_decrypted`
+- `v_fsa_onspot_decrypted`
+- `v_fsa_light_decrypted`
+- `v_fsa_traff_status_decrypted`
+- `v_fsa_visible_decrypted`
+- `v_fsa_roadcnd_decrypted`
+- `v_fsa_ped_cross_decrypted`
+- `v_fsa_state_district_table_decrypted`
+- `v_intervention_decrypted`
+- `v_remarks_by_engg_decrypted`
+- `v_stages_table_decrypted`
+- `v_status_field_inspection_decrypted`
+- `v_status_of_approval_decrypted`
+- `v_status_of_estimate_decrypted`
+- `v_status_of_implementation_decrypted`
+
+## Reviewer Notes
+
+Use `Review in This Order` near the top as the primary review flow.
+The rest of this document stays grouped by schema area for reference.

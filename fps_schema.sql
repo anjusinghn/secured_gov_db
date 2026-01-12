@@ -687,3 +687,32 @@ CREATE TABLE master.status_of_implementation (
 
 
 ALTER TABLE master.status_of_implementation OWNER TO postgres;
+
+--
+-- Name: stretch_shape; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.stretch_shape (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.stretch_shape OWNER TO postgres;
+
+--
+-- Name: stretch_type; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.stretch_type (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.stretch_type OWNER TO postgres;
+

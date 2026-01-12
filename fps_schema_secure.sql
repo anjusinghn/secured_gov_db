@@ -608,3 +608,32 @@ LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
 BEGIN
+    IF TG_TABLE_NAME = 'fsa_user_table' THEN
+        IF NEW.email IS NOT NULL AND NEW.email NOT LIKE 'enc:chacha20:v1:%' THEN
+            NEW.email_hash := public.hash_lookup_value(NEW.email);
+            NEW.email := public.encrypt_text_value(NEW.email);
+        END IF;
+        NEW.rep_name := public.encrypt_text_value(NEW.rep_name);
+        NEW.designation := public.encrypt_text_value(NEW.designation);
+        NEW.department := public.encrypt_text_value(NEW.department);
+        NEW.phone_no := public.encrypt_text_value(NEW.phone_no);
+        NEW.state_name := public.encrypt_text_value(NEW.state_name);
+        NEW.district_name := public.encrypt_text_value(NEW.district_name);
+        NEW.police_station := public.encrypt_text_value(NEW.police_station);
+        NEW.last_login := public.encrypt_text_value(NEW.last_login);
+        NEW.user_file := public.encrypt_jsonb_value(NEW.user_file);
+    ELSIF TG_TABLE_NAME = 'fsa_admin_table' THEN
+        IF NEW.admin_email IS NOT NULL AND NEW.admin_email NOT LIKE 'enc:chacha20:v1:%' THEN
+            NEW.admin_email_hash := public.hash_lookup_value(NEW.admin_email);
+            NEW.admin_email := public.encrypt_text_value(NEW.admin_email);
+        END IF;
+        NEW.admin_name := public.encrypt_text_value(NEW.admin_name);
+        NEW.state_name := public.encrypt_text_value(NEW.state_name);
+        NEW.district_name := public.encrypt_text_value(NEW.district_name);
+        NEW.created_by := public.encrypt_text_value(NEW.created_by);
+        NEW.phone_no := public.encrypt_text_value(NEW.phone_no);
+        NEW.last_login := public.encrypt_text_value(NEW.last_login);
+        NEW.admin_role := public.encrypt_text_value(NEW.admin_role);
+    ELSIF TG_TABLE_NAME = 'gen_details' THEN
+        NEW.rep_name := public.encrypt_jsonb_value(NEW.rep_name);
+        NEW.designation := public.encrypt_jsonb_value(NEW.designation);

@@ -601,3 +601,32 @@ CREATE TABLE master.road_user_vio (
     odia character varying
 );
 
+
+ALTER TABLE master.road_user_vio OWNER TO postgres;
+
+--
+-- Name: road_user_violations_causing_accidents_junction; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.road_user_violations_causing_accidents_junction (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.road_user_violations_causing_accidents_junction OWNER TO postgres;
+
+--
+-- Name: road_user_violations_causing_accidents_stretch; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.road_user_violations_causing_accidents_stretch (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+

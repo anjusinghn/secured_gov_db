@@ -630,3 +630,32 @@ CREATE TABLE master.road_user_violations_causing_accidents_stretch (
 );
 
 
+ALTER TABLE master.road_user_violations_causing_accidents_stretch OWNER TO postgres;
+
+--
+-- Name: status_field_inspection; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.status_field_inspection (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.status_field_inspection OWNER TO postgres;
+
+--
+-- Name: status_of_approval; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.status_of_approval (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.status_of_approval OWNER TO postgres;

@@ -695,3 +695,32 @@ BEGIN
         NEW.upload_docs_estimation := public.encrypt_text_value(NEW.upload_docs_estimation);
         NEW.admin_role := public.encrypt_text_value(NEW.admin_role);
     ELSIF TG_TABLE_NAME = 'status_field_inspection' THEN
+        NEW.admin_name := public.encrypt_text_value(NEW.admin_name);
+        NEW.admin_email := public.encrypt_text_value(NEW.admin_email);
+        NEW.admin_role := public.encrypt_text_value(NEW.admin_role);
+    ELSIF TG_TABLE_NAME = 'status_of_approval' THEN
+        NEW.admin_name := public.encrypt_text_value(NEW.admin_name);
+        NEW.admin_email := public.encrypt_text_value(NEW.admin_email);
+        NEW.admin_role := public.encrypt_text_value(NEW.admin_role);
+    ELSIF TG_TABLE_NAME = 'status_of_estimate' THEN
+        NEW.admin_name := public.encrypt_text_value(NEW.admin_name);
+        NEW.admin_email := public.encrypt_text_value(NEW.admin_email);
+        NEW.uploaded_docs := public.encrypt_text_value(NEW.uploaded_docs);
+        NEW.admin_role := public.encrypt_text_value(NEW.admin_role);
+    ELSIF TG_TABLE_NAME = 'status_of_implementation' THEN
+        NEW.admin_name := public.encrypt_text_value(NEW.admin_name);
+        NEW.admin_email := public.encrypt_text_value(NEW.admin_email);
+        NEW.admin_role := public.encrypt_text_value(NEW.admin_role);
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+ALTER FUNCTION public.trg_encrypt_sensitive_fields() OWNER TO fsa_admin;
+
+-- ---------------------------------------------------------------------------
+-- 4d. Timestamp maintenance trigger function
+-- ---------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION public.update_timestamp()

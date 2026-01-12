@@ -579,3 +579,32 @@ BEGIN
     RETURN to_jsonb(public.encrypt_text_value(plaintext::text));
 END;
 $$;
+
+ALTER FUNCTION public.encrypt_jsonb_value(jsonb) OWNER TO fsa_admin;
+
+CREATE OR REPLACE FUNCTION public.decrypt_jsonb_value(ciphertext jsonb)
+RETURNS jsonb
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+BEGIN
+    IF ciphertext IS NULL THEN
+        RETURN NULL;
+    END IF;
+
+    IF jsonb_typeof(ciphertext) <> 'string' OR trim(both '"' from ciphertext::text) NOT LIKE 'enc:chacha20:v1:%' THEN
+        RETURN ciphertext;
+    END IF;
+
+    RETURN public.decrypt_text_value(trim(both '"' from ciphertext::text))::jsonb;
+END;
+$$;
+
+ALTER FUNCTION public.decrypt_jsonb_value(jsonb) OWNER TO fsa_admin;
+
+CREATE OR REPLACE FUNCTION public.trg_encrypt_sensitive_fields()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+BEGIN

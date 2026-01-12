@@ -547,3 +547,30 @@ model status_field_inspection {
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model status_of_approval {
   id           BigInt       @default(autoincrement())
+  detail_id    BigInt?
+  time_updated String?      @db.VarChar
+  /// @encrypted
+  admin_name   String?      @db.VarChar
+  admin_role   String?      @db.VarChar
+  /// @encrypted
+  admin_email  String?      @db.VarChar
+  admin_id     String?      @db.VarChar
+  created_at   DateTime     @default(now()) @db.Timestamptz(6)
+  updated_at   DateTime     @default(now()) @db.Timestamptz(6)
+  gen_details  gen_details? @relation(fields: [detail_id], references: [detail_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([detail_id], map: "idx_status_oa_detail_id")
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model status_of_estimate {
+  id            BigInt       @default(autoincrement())
+  detail_id     BigInt?
+  time_updated  String?      @db.VarChar
+  /// @encrypted
+  admin_name    String?      @db.VarChar
+  admin_role    String?      @db.VarChar
+  /// @encrypted
+  admin_email   String?      @db.VarChar
+  admin_id      String?      @db.VarChar

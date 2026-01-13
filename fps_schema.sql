@@ -773,3 +773,32 @@ CREATE TABLE master.yes_no_dropdowns (
 ALTER TABLE master.yes_no_dropdowns OWNER TO postgres;
 
 --
+-- Name: fsa_acc; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.fsa_acc (
+    detail_id bigint NOT NULL,
+    acc_pattern_onspot character varying,
+    no_of_injuries integer,
+    no_of_deaths integer,
+    no_of_accidents character varying,
+    nearest_hosp character varying,
+    acc_id character varying NOT NULL,
+    start_age_range integer,
+    end_age_range integer,
+    age_range character varying,
+    time_frame_acc character varying,
+    edited boolean DEFAULT false
+);
+
+
+ALTER TABLE public.fsa_acc OWNER TO postgres;
+
+--
+-- Name: fsa_admin_table; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.fsa_admin_table (
+    admin_email character varying NOT NULL,
+    admin_id bigint NOT NULL,
+    admin_role_id bigint,

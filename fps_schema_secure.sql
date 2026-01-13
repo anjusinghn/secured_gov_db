@@ -753,3 +753,32 @@ BEGIN
         v_row_id := row_to_json(COALESCE(NEW, OLD)) ::jsonb ->> 'detail_id';
         IF v_row_id IS NULL THEN
             v_row_id := row_to_json(COALESCE(NEW, OLD)) ::jsonb ->> 'id';
+        END IF;
+        IF v_row_id IS NULL THEN
+            v_row_id := COALESCE(NEW, OLD)::text;
+        END IF;
+    EXCEPTION WHEN OTHERS THEN
+        v_row_id := '(unknown)';
+    END;
+
+    INSERT INTO audit.change_log (
+        table_name,
+        operation,
+        row_id,
+        old_data,
+        new_data,
+        changed_by,
+        app_user_id
+    ) VALUES (
+        TG_TABLE_SCHEMA || '.' || TG_TABLE_NAME,
+        TG_OP,
+        v_row_id,
+        CASE WHEN TG_OP IN ('UPDATE','DELETE') THEN to_jsonb(OLD) ELSE NULL END,
+        CASE WHEN TG_OP IN ('UPDATE','INSERT') THEN to_jsonb(NEW) ELSE NULL END,
+        current_user,
+        current_setting('app.current_user_id', true)
+    );
+
+    -- For DELETE the trigger must return OLD; for others return NEW
+    IF TG_OP = 'DELETE' THEN
+        RETURN OLD;

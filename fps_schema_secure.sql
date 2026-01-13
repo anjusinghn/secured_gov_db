@@ -724,3 +724,32 @@ ALTER FUNCTION public.trg_encrypt_sensitive_fields() OWNER TO fsa_admin;
 -- ---------------------------------------------------------------------------
 
 CREATE OR REPLACE FUNCTION public.update_timestamp()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    NEW.updated_at := now();
+    RETURN NEW;
+END;
+$$;
+
+ALTER FUNCTION public.update_timestamp() OWNER TO fsa_admin;
+
+-- ---------------------------------------------------------------------------
+-- 4d. Audit log trigger function
+-- ---------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION audit.log_changes()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+DECLARE
+    v_row_id text;
+BEGIN
+    -- Derive a row identifier from the primary key columns if available,
+    -- otherwise use ctid as a fallback.
+    BEGIN
+        v_row_id := row_to_json(COALESCE(NEW, OLD)) ::jsonb ->> 'detail_id';
+        IF v_row_id IS NULL THEN
+            v_row_id := row_to_json(COALESCE(NEW, OLD)) ::jsonb ->> 'id';

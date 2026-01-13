@@ -716,3 +716,32 @@ CREATE TABLE master.stretch_type (
 
 ALTER TABLE master.stretch_type OWNER TO postgres;
 
+--
+-- Name: switching_type; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.switching_type (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.switching_type OWNER TO postgres;
+
+--
+-- Name: type_of_junction; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.type_of_junction (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.type_of_junction OWNER TO postgres;
+
+--

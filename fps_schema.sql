@@ -745,3 +745,31 @@ CREATE TABLE master.type_of_junction (
 ALTER TABLE master.type_of_junction OWNER TO postgres;
 
 --
+-- Name: wrong_way_driving_reasons; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.wrong_way_driving_reasons (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.wrong_way_driving_reasons OWNER TO postgres;
+
+--
+-- Name: yes_no_dropdowns; Type: TABLE; Schema: master; Owner: postgres
+--
+
+CREATE TABLE master.yes_no_dropdowns (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+
+
+ALTER TABLE master.yes_no_dropdowns OWNER TO postgres;
+
+--

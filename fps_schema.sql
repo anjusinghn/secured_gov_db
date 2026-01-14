@@ -917,3 +917,32 @@ CREATE TABLE public.fsa_ped_cross (
     remarks character varying,
     types_of_rash_drivers character varying,
     others_major_reason_self_acc character varying,
+    others_road_eng_sol_self_acc character varying,
+    types_of_rash_drivers_others character varying,
+    enforce_sol_rash_drive_others character varying,
+    enforce_sol_ped_ani_others character varying,
+    ped_animal_cross_spot_reason_others character varying,
+    road_eng_sol_ped_ani_others character varying,
+    enf_sol_self_acc_others character varying,
+    enforce_sol_parked_veh_acc_others character varying,
+    parked_veh_acc_reason_others character varying,
+    road_eng_sol_parked_veh_acc_others character varying,
+    acc_due_small_t_join_roads_reason_others character varying,
+    enforce_sol_for_small_t_join_roads_others character varying,
+    road_eng_sol_for_small_t_join_roads_others character varying,
+    edited boolean DEFAULT false,
+    delete_status boolean
+);
+
+
+ALTER TABLE public.fsa_ped_cross OWNER TO postgres;
+
+--
+-- Name: fsa_roadcnd; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.fsa_roadcnd (
+    roadcnd_id character varying NOT NULL,
+    detail_id bigint NOT NULL,
+    road_issue character varying,
+    road_defects character varying,

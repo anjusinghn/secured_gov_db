@@ -782,3 +782,32 @@ BEGIN
     -- For DELETE the trigger must return OLD; for others return NEW
     IF TG_OP = 'DELETE' THEN
         RETURN OLD;
+    END IF;
+    RETURN NEW;
+END;
+$$;
+
+ALTER FUNCTION audit.log_changes() OWNER TO fsa_admin;
+
+-- =============================================================================
+-- SECTION 5: MASTER SCHEMA TABLES (lookup / reference data, no timestamps)
+-- =============================================================================
+
+CREATE TABLE master.accidents_due_to_small_t_junction_accidents_or_nearby_joining_r (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.accidents_due_to_small_t_junction_accidents_or_nearby_joining_r OWNER TO fsa_admin;
+
+CREATE TABLE master.age_range (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.age_range OWNER TO fsa_admin;
+
+CREATE TABLE master.defects (
+    id character varying,

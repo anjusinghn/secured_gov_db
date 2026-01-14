@@ -898,3 +898,32 @@ CREATE TABLE master.interventions (
 ALTER TABLE master.interventions OWNER TO fsa_admin;
 
 CREATE TABLE master.landmark_type (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.landmark_type OWNER TO fsa_admin;
+
+CREATE TABLE master.landuse_pattern (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.landuse_pattern OWNER TO fsa_admin;
+
+CREATE TABLE master.light_availability (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.light_availability OWNER TO fsa_admin;
+
+CREATE TABLE master.major_reasons_for_self_accidents (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);

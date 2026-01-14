@@ -859,3 +859,32 @@ CREATE TABLE public.fsa_onspot (
     detail_id bigint NOT NULL,
     onspot_id character varying NOT NULL,
     lat double precision,
+    long double precision,
+    highway_no character varying,
+    land_use_pattern character varying,
+    hotspot_type character varying,
+    junction_type character varying,
+    junction_name character varying,
+    junction_formation character varying,
+    stretch_type character varying,
+    stretch_shape character varying,
+    no_of_lanes character varying,
+    median_presence character varying,
+    median_opening character varying,
+    speed_of_all_vehicles character varying,
+    adjoining_or_junction_no character varying,
+    landmark_name character varying,
+    landmark_type character varying,
+    landmark_dist character varying,
+    onspot_images jsonb,
+    landmark_type_other character varying,
+    edited boolean DEFAULT false,
+    junction_formation_others character varying,
+    no_of_lanes_others character varying,
+    name_of_stretch character varying,
+    delete_status boolean
+);
+
+
+ALTER TABLE public.fsa_onspot OWNER TO postgres;
+

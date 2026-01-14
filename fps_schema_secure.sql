@@ -840,3 +840,32 @@ CREATE TABLE master.enforcement_solutions_rash_driving (
     odia character varying
 );
 ALTER TABLE master.enforcement_solutions_rash_driving OWNER TO fsa_admin;
+
+CREATE TABLE master.enforcement_solutions_self_accidents (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.enforcement_solutions_self_accidents OWNER TO fsa_admin;
+
+CREATE TABLE master.enforcement_solutions_small_t_junction_accidents (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.enforcement_solutions_small_t_junction_accidents OWNER TO fsa_admin;
+
+CREATE TABLE master.enforcement_solutions_vehicles_overspeeding (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.enforcement_solutions_vehicles_overspeeding OWNER TO fsa_admin;
+
+CREATE TABLE master.enforcement_solutions_wrong_way_driving (
+    id character varying,
+    english character varying,
+    hindi character varying,

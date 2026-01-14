@@ -811,3 +811,32 @@ ALTER TABLE master.age_range OWNER TO fsa_admin;
 
 CREATE TABLE master.defects (
     id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.defects OWNER TO fsa_admin;
+
+CREATE TABLE master.enforcement_solutions_parked_vehicle_accidents (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.enforcement_solutions_parked_vehicle_accidents OWNER TO fsa_admin;
+
+CREATE TABLE master.enforcement_solutions_pedestrian_animal_crossing (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.enforcement_solutions_pedestrian_animal_crossing OWNER TO fsa_admin;
+
+CREATE TABLE master.enforcement_solutions_rash_driving (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.enforcement_solutions_rash_driving OWNER TO fsa_admin;

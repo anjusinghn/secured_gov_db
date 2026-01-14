@@ -888,3 +888,32 @@ CREATE TABLE public.fsa_onspot (
 
 ALTER TABLE public.fsa_onspot OWNER TO postgres;
 
+--
+-- Name: fsa_ped_cross; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.fsa_ped_cross (
+    ped_self_park_t_rash_id character varying NOT NULL,
+    detail_id bigint NOT NULL,
+    ped_animal_cross_lead_acc character varying,
+    ped_animal_cross_spot_reason character varying,
+    road_eng_sol_ped_ani character varying,
+    enforce_sol_ped_ani character varying,
+    self_acc_in_junc_freq character varying,
+    major_reason_self_acc character varying,
+    road_eng_sol_self_acc character varying,
+    enf_sol_self_acc character varying,
+    acc_hitting_parked_veh character varying,
+    parked_veh_acc_reason character varying,
+    road_eng_sol_parked_veh_acc character varying,
+    enforce_sol_parked_veh_acc character varying,
+    acc_due_small_t_join_roads character varying,
+    veh_slow_down_small_t_or_join_roads character varying,
+    acc_due_small_t_join_roads_reason character varying,
+    road_eng_sol_for_small_t_join_roads character varying,
+    enforce_sol_for_small_t_join_roads character varying,
+    rash_drivers character varying,
+    enforce_sol_rash_drive character varying,
+    remarks character varying,
+    types_of_rash_drivers character varying,
+    others_major_reason_self_acc character varying,

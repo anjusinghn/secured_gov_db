@@ -869,3 +869,32 @@ CREATE TABLE master.enforcement_solutions_wrong_way_driving (
     id character varying,
     english character varying,
     hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.enforcement_solutions_wrong_way_driving OWNER TO fsa_admin;
+
+CREATE TABLE master.formation_of_junction (
+    english character varying,
+    hindi character varying,
+    odia character varying,
+    id character varying
+);
+ALTER TABLE master.formation_of_junction OWNER TO fsa_admin;
+
+CREATE TABLE master.has_caused_accident_at_spot (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.has_caused_accident_at_spot OWNER TO fsa_admin;
+
+CREATE TABLE master.interventions (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.interventions OWNER TO fsa_admin;
+
+CREATE TABLE master.landmark_type (

@@ -802,3 +802,32 @@ CREATE TABLE public.fsa_admin_table (
     admin_email character varying NOT NULL,
     admin_id bigint NOT NULL,
     admin_role_id bigint,
+    admin_role character varying,
+    admin_name character varying,
+    admin_pwd character varying,
+    login_status boolean,
+    last_login character varying,
+    user_status boolean,
+    state_name character varying,
+    district_name character varying,
+    state_code character varying,
+    district_code character varying,
+    created_by character varying,
+    phone_no character varying
+);
+
+
+ALTER TABLE public.fsa_admin_table OWNER TO postgres;
+
+--
+-- Name: fsa_admin_table_admin_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.fsa_admin_table ALTER COLUMN admin_id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.fsa_admin_table_admin_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);

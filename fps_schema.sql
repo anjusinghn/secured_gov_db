@@ -831,3 +831,31 @@ ALTER TABLE public.fsa_admin_table ALTER COLUMN admin_id ADD GENERATED ALWAYS AS
     NO MAXVALUE
     CACHE 1
 );
+
+
+--
+-- Name: fsa_light; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.fsa_light (
+    light_id character varying NOT NULL,
+    detail_id bigint NOT NULL,
+    light_avail character varying,
+    switch_type character varying,
+    non_avail_light character varying,
+    light_photos jsonb,
+    edited boolean DEFAULT false,
+    delete_status boolean
+);
+
+
+ALTER TABLE public.fsa_light OWNER TO postgres;
+
+--
+-- Name: fsa_onspot; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.fsa_onspot (
+    detail_id bigint NOT NULL,
+    onspot_id character varying NOT NULL,
+    lat double precision,

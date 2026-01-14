@@ -927,3 +927,32 @@ CREATE TABLE master.major_reasons_for_self_accidents (
     hindi character varying,
     odia character varying
 );
+ALTER TABLE master.major_reasons_for_self_accidents OWNER TO fsa_admin;
+
+CREATE TABLE master.master_data (
+    id character varying,
+    type character varying,
+    page_name character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.master_data OWNER TO fsa_admin;
+
+CREATE TABLE master.no_of_lanes (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.no_of_lanes OWNER TO fsa_admin;
+
+CREATE TABLE master.parked_vehicle_accidents_reasons (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.parked_vehicle_accidents_reasons OWNER TO fsa_admin;
+
+CREATE TABLE master.pattern_of_accidents (

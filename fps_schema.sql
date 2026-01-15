@@ -1032,3 +1032,31 @@ CREATE SEQUENCE public.fsa_user_id
     CACHE 1;
 
 
+ALTER SEQUENCE public.fsa_user_id OWNER TO postgres;
+
+--
+-- Name: fsa_user_roles; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.fsa_user_roles (
+    user_type character varying NOT NULL,
+    user_role character varying
+);
+
+
+ALTER TABLE public.fsa_user_roles OWNER TO postgres;
+
+--
+-- Name: fsa_user_table; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.fsa_user_table (
+    pwd character varying NOT NULL,
+    last_login character varying,
+    login_status boolean,
+    email character varying NOT NULL,
+    rep_name character varying,
+    designation character varying,
+    department character varying,
+    phone_no character varying,
+    userid bigint DEFAULT nextval('public.fsa_user_id'::regclass) NOT NULL,

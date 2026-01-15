@@ -1015,3 +1015,32 @@ CREATE TABLE master.road_engineering_solutions_pedestrain_animal_crossing (
     id character varying,
     english character varying,
     hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.road_engineering_solutions_pedestrain_animal_crossing OWNER TO fsa_admin;
+
+CREATE TABLE master.road_engineering_solutions_road_condition (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.road_engineering_solutions_road_condition OWNER TO fsa_admin;
+
+CREATE TABLE master.road_engineering_solutions_self_accidents (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.road_engineering_solutions_self_accidents OWNER TO fsa_admin;
+
+CREATE TABLE master.road_engineering_solutions_small_t_junction_accidents (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.road_engineering_solutions_small_t_junction_accidents OWNER TO fsa_admin;
+
+CREATE TABLE master.road_engineering_solutions_vehicles_overspeeding (

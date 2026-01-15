@@ -946,3 +946,31 @@ CREATE TABLE public.fsa_roadcnd (
     detail_id bigint NOT NULL,
     road_issue character varying,
     road_defects character varying,
+    road_photos jsonb,
+    road_eng_sol_roadcnd character varying,
+    road_defects_others character varying,
+    road_eng_sol_rdcnd_others character varying,
+    delete_status boolean
+);
+
+
+ALTER TABLE public.fsa_roadcnd OWNER TO postgres;
+
+--
+-- Name: fsa_state_district_table; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.fsa_state_district_table (
+    state_admin_id bigint,
+    state_admin_name character varying,
+    state_code character varying,
+    district_admin_id bigint,
+    district_admin_name character varying,
+    district_code character varying,
+    state_roa_id bigint,
+    state_roa_name character varying,
+    roa_state_code character varying[],
+    roa_district_code character varying[],
+    district_roa_id bigint,
+    district_roa_name character varying,
+    multiple_districts text[]

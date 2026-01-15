@@ -956,3 +956,33 @@ CREATE TABLE master.parked_vehicle_accidents_reasons (
 ALTER TABLE master.parked_vehicle_accidents_reasons OWNER TO fsa_admin;
 
 CREATE TABLE master.pattern_of_accidents (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.pattern_of_accidents OWNER TO fsa_admin;
+
+CREATE TABLE master.pedestrain_animal_crossing_the_spot_reasons (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.pedestrain_animal_crossing_the_spot_reasons OWNER TO fsa_admin;
+
+CREATE TABLE master.prevalent_vehicle_type (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.prevalent_vehicle_type OWNER TO fsa_admin;
+
+CREATE TABLE master.rash_drivers (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.rash_drivers OWNER TO fsa_admin;

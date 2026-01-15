@@ -1003,3 +1003,32 @@ CREATE TABLE public.fsa_traff_status (
 
 
 ALTER TABLE public.fsa_traff_status OWNER TO postgres;
+
+--
+-- Name: fsa_traffic_condt; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.fsa_traffic_condt (
+    traffic_id character varying NOT NULL,
+    detail_id bigint NOT NULL,
+    prevalent_veh_type character varying,
+    start_time character varying,
+    end_time character varying,
+    delete_status boolean
+);
+
+
+ALTER TABLE public.fsa_traffic_condt OWNER TO postgres;
+
+--
+-- Name: fsa_user_id; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.fsa_user_id
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+

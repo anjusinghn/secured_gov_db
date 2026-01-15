@@ -974,3 +974,32 @@ CREATE TABLE public.fsa_state_district_table (
     district_roa_id bigint,
     district_roa_name character varying,
     multiple_districts text[]
+);
+
+
+ALTER TABLE public.fsa_state_district_table OWNER TO postgres;
+
+--
+-- Name: fsa_traff_status; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.fsa_traff_status (
+    detail_id bigint NOT NULL,
+    traff_status_id character varying NOT NULL,
+    signal_avail character varying,
+    signal_visible character varying,
+    signal_working character varying,
+    signal_timer_work character varying,
+    signal_need character varying,
+    signal_photos jsonb,
+    signboards_avail character varying,
+    signboards_visible character varying,
+    signboards_photos jsonb,
+    road_markings_avail character varying,
+    road_markings_photos jsonb,
+    edited boolean DEFAULT false,
+    delete_status boolean
+);
+
+
+ALTER TABLE public.fsa_traff_status OWNER TO postgres;

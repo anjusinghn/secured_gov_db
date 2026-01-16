@@ -1073,3 +1073,32 @@ CREATE TABLE master.road_user_vio (
     hindi character varying,
     odia character varying
 );
+ALTER TABLE master.road_user_vio OWNER TO fsa_admin;
+
+CREATE TABLE master.road_user_violations_causing_accidents_junction (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.road_user_violations_causing_accidents_junction OWNER TO fsa_admin;
+
+CREATE TABLE master.road_user_violations_causing_accidents_stretch (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.road_user_violations_causing_accidents_stretch OWNER TO fsa_admin;
+
+CREATE TABLE master.status_field_inspection (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.status_field_inspection OWNER TO fsa_admin;
+
+CREATE TABLE master.status_of_approval (
+    id character varying,
+    english character varying,

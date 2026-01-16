@@ -1060,3 +1060,32 @@ CREATE TABLE public.fsa_user_table (
     department character varying,
     phone_no character varying,
     userid bigint DEFAULT nextval('public.fsa_user_id'::regclass) NOT NULL,
+    user_type character varying,
+    user_role character varying,
+    terms_cond boolean,
+    user_file jsonb,
+    admin_id bigint,
+    user_status boolean,
+    state_code character varying,
+    district_code character varying,
+    state_name character varying,
+    district_name character varying,
+    ps_code character varying,
+    police_station character varying
+);
+
+
+ALTER TABLE public.fsa_user_table OWNER TO postgres;
+
+--
+-- Name: fsa_user_table_bak; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.fsa_user_table_bak (
+    pwd character varying,
+    last_login character varying,
+    login_status boolean,
+    email character varying,
+    rep_name character varying,
+    designation character varying,
+    department character varying,

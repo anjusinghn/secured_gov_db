@@ -1160,3 +1160,32 @@ CREATE TABLE master.wrong_way_driving_reasons (
     english character varying,
     hindi character varying,
     odia character varying
+);
+ALTER TABLE master.wrong_way_driving_reasons OWNER TO fsa_admin;
+
+CREATE TABLE master.yes_no_dropdowns (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.yes_no_dropdowns OWNER TO fsa_admin;
+
+-- =============================================================================
+-- SECTION 6: AUDIT SCHEMA TABLE
+-- =============================================================================
+
+CREATE TABLE audit.change_log (
+    id             bigserial                NOT NULL,
+    table_name     text                     NOT NULL,
+    operation      text                     NOT NULL CHECK (operation IN ('INSERT','UPDATE','DELETE')),
+    row_id         text,
+    old_data       jsonb,
+    new_data       jsonb,
+    changed_by     text                     NOT NULL DEFAULT current_user,
+    changed_at     timestamptz              NOT NULL DEFAULT now(),
+    app_user_id    text                     DEFAULT current_setting('app.current_user_id', true),
+    CONSTRAINT change_log_pkey PRIMARY KEY (id)
+);
+
+ALTER TABLE audit.change_log OWNER TO fsa_admin;

@@ -1089,3 +1089,32 @@ CREATE TABLE public.fsa_user_table_bak (
     rep_name character varying,
     designation character varying,
     department character varying,
+    phone_no character varying,
+    userid bigint,
+    user_type character varying,
+    user_role character varying,
+    terms_cond boolean,
+    user_file jsonb,
+    admin_id bigint,
+    user_status boolean,
+    state_code character varying,
+    district_code character varying,
+    state_name character varying,
+    district_name character varying
+);
+
+
+ALTER TABLE public.fsa_user_table_bak OWNER TO postgres;
+
+--
+-- Name: fsa_violations; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.fsa_violations (
+    violations_id character varying NOT NULL,
+    detail_id bigint NOT NULL,
+    road_user_vio_cause_acc character varying,
+    overspeeding_onspot character varying,
+    avg_speed_range character varying,
+    m2w character varying,
+    lmv character varying,

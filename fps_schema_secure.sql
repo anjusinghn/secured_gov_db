@@ -1102,3 +1102,32 @@ ALTER TABLE master.status_field_inspection OWNER TO fsa_admin;
 CREATE TABLE master.status_of_approval (
     id character varying,
     english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.status_of_approval OWNER TO fsa_admin;
+
+CREATE TABLE master.status_of_estimate (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.status_of_estimate OWNER TO fsa_admin;
+
+CREATE TABLE master.status_of_implementation (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.status_of_implementation OWNER TO fsa_admin;
+
+CREATE TABLE master.stretch_shape (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.stretch_shape OWNER TO fsa_admin;
+

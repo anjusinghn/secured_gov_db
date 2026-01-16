@@ -1131,3 +1131,32 @@ CREATE TABLE master.stretch_shape (
 );
 ALTER TABLE master.stretch_shape OWNER TO fsa_admin;
 
+CREATE TABLE master.stretch_type (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.stretch_type OWNER TO fsa_admin;
+
+CREATE TABLE master.switching_type (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.switching_type OWNER TO fsa_admin;
+
+CREATE TABLE master.type_of_junction (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.type_of_junction OWNER TO fsa_admin;
+
+CREATE TABLE master.wrong_way_driving_reasons (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying

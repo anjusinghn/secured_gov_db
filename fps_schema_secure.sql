@@ -1044,3 +1044,32 @@ CREATE TABLE master.road_engineering_solutions_small_t_junction_accidents (
 ALTER TABLE master.road_engineering_solutions_small_t_junction_accidents OWNER TO fsa_admin;
 
 CREATE TABLE master.road_engineering_solutions_vehicles_overspeeding (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.road_engineering_solutions_vehicles_overspeeding OWNER TO fsa_admin;
+
+CREATE TABLE master.road_engineering_solutions_wrong_way_driving (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.road_engineering_solutions_wrong_way_driving OWNER TO fsa_admin;
+
+CREATE TABLE master.road_engineering_suggestions_to_avoid_the_accident_visibility (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);
+ALTER TABLE master.road_engineering_suggestions_to_avoid_the_accident_visibility OWNER TO fsa_admin;
+
+CREATE TABLE master.road_user_vio (
+    id character varying,
+    english character varying,
+    hindi character varying,
+    odia character varying
+);

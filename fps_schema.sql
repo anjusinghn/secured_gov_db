@@ -1118,3 +1118,31 @@ CREATE TABLE public.fsa_violations (
     avg_speed_range character varying,
     m2w character varying,
     lmv character varying,
+    hmv character varying,
+    reason_for_not_slowing character varying,
+    road_eng_sol_vehoverspeed character varying,
+    enf_sol_veh_over_speed character varying,
+    others_road_user_vio_cause_acc character varying,
+    reason_for_not_slowing_others character varying,
+    enf_sol_veh_over_speed_others character varying,
+    road_eng_sol_vehoverspeed_others character varying,
+    edited boolean DEFAULT false,
+    delete_status boolean
+);
+
+
+ALTER TABLE public.fsa_violations OWNER TO postgres;
+
+--
+-- Name: fsa_visible; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.fsa_visible (
+    detail_id bigint NOT NULL,
+    visible_id character varying NOT NULL,
+    visib_obstruct_by_objs character varying,
+    atspot_accident_cause character varying,
+    road_eng_sol character varying,
+    visib_photos jsonb,
+    is_visib_obstructed character varying,
+    is_visib_obstructed_others character varying,

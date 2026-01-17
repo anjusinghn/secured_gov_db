@@ -1233,3 +1233,31 @@ CREATE TABLE public.intervention (
     admin_email character varying,
     admin_id character varying,
     uploaded_docs character varying
+);
+
+
+ALTER TABLE public.intervention OWNER TO postgres;
+
+--
+-- Name: intervention_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.intervention ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.intervention_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: master_table; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.master_table (
+    type_of_junction character varying,
+    formation_of_junction character varying,
+    stretch_type character varying,
+    stretch_shape character varying,

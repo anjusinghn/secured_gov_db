@@ -1175,3 +1175,32 @@ CREATE TABLE public.fsa_wrngway (
     edited boolean DEFAULT false,
     delete_status boolean
 );
+
+
+ALTER TABLE public.fsa_wrngway OWNER TO postgres;
+
+--
+-- Name: gen_details; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.gen_details (
+    detail_id bigint NOT NULL,
+    rep_name jsonb,
+    designation jsonb,
+    department jsonb,
+    phone_no jsonb,
+    email jsonb,
+    userid bigint NOT NULL,
+    state jsonb,
+    district jsonb,
+    state_code jsonb,
+    district_code jsonb,
+    edited boolean DEFAULT false,
+    start_date character varying,
+    end_date character varying,
+    delete_status boolean,
+    police_station character varying,
+    ps_code character varying
+);
+
+

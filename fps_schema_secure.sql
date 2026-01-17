@@ -1189,3 +1189,32 @@ CREATE TABLE audit.change_log (
 );
 
 ALTER TABLE audit.change_log OWNER TO fsa_admin;
+
+CREATE INDEX idx_audit_change_log_table_name  ON audit.change_log (table_name);
+CREATE INDEX idx_audit_change_log_changed_at  ON audit.change_log (changed_at);
+CREATE INDEX idx_audit_change_log_app_user_id ON audit.change_log (app_user_id);
+
+-- =============================================================================
+-- SECTION 7: PUBLIC SCHEMA TABLES
+-- (All original columns preserved; created_at / updated_at added)
+-- =============================================================================
+
+SET default_tablespace = '';
+SET default_table_access_method = heap;
+
+-- ---------------------------------------------------------------------------
+-- fsa_user_roles  (lookup; fk target; no timestamps needed — rarely changes)
+-- ---------------------------------------------------------------------------
+CREATE TABLE public.fsa_user_roles (
+    user_type  character varying NOT NULL,
+    user_role  character varying,
+    created_at timestamptz       NOT NULL DEFAULT now(),
+    updated_at timestamptz       NOT NULL DEFAULT now()
+);
+ALTER TABLE public.fsa_user_roles OWNER TO fsa_admin;
+
+CREATE SEQUENCE public.fsa_user_id
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE

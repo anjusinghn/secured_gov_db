@@ -1204,3 +1204,32 @@ CREATE TABLE public.gen_details (
 );
 
 
+ALTER TABLE public.gen_details OWNER TO postgres;
+
+--
+-- Name: gen_details_detail_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.gen_details ALTER COLUMN detail_id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.gen_details_detail_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: intervention; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.intervention (
+    id bigint NOT NULL,
+    detail_id bigint,
+    time_updated character varying,
+    admin_name character varying,
+    admin_role character varying,
+    admin_email character varying,
+    admin_id character varying,
+    uploaded_docs character varying

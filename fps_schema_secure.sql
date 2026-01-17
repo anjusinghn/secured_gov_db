@@ -1218,3 +1218,32 @@ CREATE SEQUENCE public.fsa_user_id
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
+    CACHE 1;
+ALTER SEQUENCE public.fsa_user_id OWNER TO fsa_admin;
+
+-- ---------------------------------------------------------------------------
+-- fsa_user_table
+-- [CHANGED vs original] pwd now has CHECK constraint enforcing bcrypt format
+-- [NEW vs original]     email_hash column — SHA-256 of plaintext email for
+--                         lookups (email itself is AES-256 encrypted, not searchable)
+-- [NEW vs original]     created_at / updated_at timestamp columns
+-- [ENCRYPTED columns]   email, rep_name, designation, department, phone_no,
+--                         state_name, district_name, police_station, last_login,
+--                         user_file — all encrypted by trg_encrypt_fsa_user_table
+-- [UNCHANGED columns]   pwd, login_status, userid, user_type, user_role,
+--                         terms_cond, admin_id, user_status, state_code,
+--                         district_code, ps_code — same as original
+-- ---------------------------------------------------------------------------
+CREATE TABLE public.fsa_user_table (
+    pwd              character varying NOT NULL
+                         CONSTRAINT pwd_must_be_bcrypt CHECK (pwd LIKE '$2%'), -- [NEW] CHECK was missing in original
+    last_login       character varying,    -- [ENCRYPTED] stores ciphertext
+    login_status     boolean,
+    email            character varying NOT NULL, -- [ENCRYPTED] stores ciphertext
+    email_hash       character varying NOT NULL, -- [NEW] not in original; SHA-256 for lookups
+    rep_name         character varying,    -- [ENCRYPTED] stores ciphertext
+    designation      character varying,    -- [ENCRYPTED] stores ciphertext
+    department       character varying,    -- [ENCRYPTED] stores ciphertext
+    phone_no         character varying,    -- [ENCRYPTED] stores ciphertext
+    userid           bigint            NOT NULL DEFAULT nextval('public.fsa_user_id'::regclass),
+    user_type        character varying,

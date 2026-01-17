@@ -1247,3 +1247,32 @@ CREATE TABLE public.fsa_user_table (
     phone_no         character varying,    -- [ENCRYPTED] stores ciphertext
     userid           bigint            NOT NULL DEFAULT nextval('public.fsa_user_id'::regclass),
     user_type        character varying,
+    user_role        character varying,
+    terms_cond       boolean,
+    user_file        jsonb,               -- [ENCRYPTED] entire jsonb value encrypted
+    admin_id         bigint,
+    user_status      boolean,
+    state_code       character varying,
+    district_code    character varying,
+    state_name       character varying,   -- [ENCRYPTED] stores ciphertext
+    district_name    character varying,   -- [ENCRYPTED] stores ciphertext
+    ps_code          character varying,
+    police_station   character varying,   -- [ENCRYPTED] stores ciphertext
+    created_at       timestamptz       NOT NULL DEFAULT now(), -- [NEW] not in original
+    updated_at       timestamptz       NOT NULL DEFAULT now()  -- [NEW] not in original
+);
+ALTER TABLE public.fsa_user_table OWNER TO fsa_admin;
+COMMENT ON COLUMN public.fsa_user_table.pwd IS
+    'Must store a bcrypt hash (cost>=10). The trg_hash_user_password trigger '
+    'auto-hashes on INSERT/UPDATE if a plaintext value is supplied. '
+    'Use verify_password(plaintext, pwd) to authenticate.';
+
+-- ---------------------------------------------------------------------------
+-- fsa_admin_table
+-- [CHANGED vs original] admin_pwd now has CHECK constraint enforcing bcrypt format
+-- [NEW vs original]     admin_email_hash column — SHA-256 for lookups
+-- [NEW vs original]     created_at / updated_at timestamp columns
+-- [ENCRYPTED columns]   admin_email, admin_name, state_name, district_name,
+--                         created_by, phone_no, last_login, admin_role
+--                         — encrypted by trg_encrypt_fsa_admin_table
+-- [UNCHANGED columns]   admin_id, admin_role_id, login_status, user_status,

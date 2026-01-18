@@ -1334,3 +1334,32 @@ ALTER TABLE public.gen_details OWNER TO fsa_admin;
 -- ---------------------------------------------------------------------------
 -- fsa_acc
 -- [CHANGED vs original] no_of_injuries: integer → character varying (encrypted storage)
+-- [CHANGED vs original] no_of_deaths:   integer → character varying (encrypted storage)
+-- [NEW vs original]     created_at / updated_at timestamp columns
+-- [ENCRYPTED columns]   nearest_hosp, acc_pattern_onspot, time_frame_acc,
+--                         age_range, no_of_injuries, no_of_deaths
+-- [UNCHANGED columns]   detail_id, no_of_accidents, acc_id, start_age_range,
+--                         end_age_range, edited — same as original
+-- [NOTE] Decrypted view (v_fsa_acc_decrypted) casts no_of_injuries and
+--        no_of_deaths back to integer for application consumers
+-- ---------------------------------------------------------------------------
+CREATE TABLE public.fsa_acc (
+    detail_id         bigint            NOT NULL,
+    acc_pattern_onspot character varying, -- [ENCRYPTED] stores ciphertext
+    no_of_injuries    character varying, -- [CHANGED] was integer in original; varchar for AES-256 storage
+    no_of_deaths      character varying, -- [CHANGED] was integer in original; varchar for AES-256 storage
+    no_of_accidents   character varying,
+    nearest_hosp      character varying, -- [ENCRYPTED] stores ciphertext
+    acc_id            character varying NOT NULL,
+    start_age_range   integer,
+    end_age_range     integer,
+    age_range         character varying, -- [ENCRYPTED] stores ciphertext
+    time_frame_acc    character varying, -- [ENCRYPTED] stores ciphertext
+    edited            boolean           DEFAULT false,
+    created_at        timestamptz       NOT NULL DEFAULT now(), -- [NEW] not in original
+    updated_at        timestamptz       NOT NULL DEFAULT now()  -- [NEW] not in original
+);
+ALTER TABLE public.fsa_acc OWNER TO fsa_admin;
+
+-- ---------------------------------------------------------------------------
+-- fsa_onspot

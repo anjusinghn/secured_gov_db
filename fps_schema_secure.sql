@@ -1276,3 +1276,32 @@ COMMENT ON COLUMN public.fsa_user_table.pwd IS
 --                         created_by, phone_no, last_login, admin_role
 --                         — encrypted by trg_encrypt_fsa_admin_table
 -- [UNCHANGED columns]   admin_id, admin_role_id, login_status, user_status,
+--                         state_code, district_code — same as original
+-- [NOTE] admin_pwd is NOT encrypted (it's bcrypt hashed, which is one-way)
+-- ---------------------------------------------------------------------------
+CREATE TABLE public.fsa_admin_table (
+    admin_email   character varying NOT NULL, -- [ENCRYPTED] stores ciphertext
+    admin_email_hash character varying NOT NULL, -- [NEW] not in original; SHA-256 for lookups
+    admin_id      bigint            NOT NULL,
+    admin_role_id bigint,
+    admin_role    character varying, -- [ENCRYPTED] stores ciphertext
+    admin_name    character varying, -- [ENCRYPTED] stores ciphertext
+    admin_pwd     character varying
+                      CONSTRAINT admin_pwd_must_be_bcrypt CHECK (admin_pwd LIKE '$2%'), -- [NEW] CHECK was missing in original
+    login_status  boolean,
+    last_login    character varying, -- [ENCRYPTED] stores ciphertext
+    user_status   boolean,
+    state_name    character varying, -- [ENCRYPTED] stores ciphertext
+    district_name character varying, -- [ENCRYPTED] stores ciphertext
+    state_code    character varying,
+    district_code character varying,
+    created_by    character varying, -- [ENCRYPTED] stores ciphertext
+    phone_no      character varying, -- [ENCRYPTED] stores ciphertext
+    created_at    timestamptz       NOT NULL DEFAULT now(), -- [NEW] not in original
+    updated_at    timestamptz       NOT NULL DEFAULT now()  -- [NEW] not in original
+);
+ALTER TABLE public.fsa_admin_table OWNER TO fsa_admin;
+COMMENT ON COLUMN public.fsa_admin_table.admin_pwd IS
+    'Must store a bcrypt hash. The trg_hash_admin_password trigger auto-hashes '
+    'on INSERT/UPDATE. Use verify_password(plaintext, admin_pwd) to authenticate.';
+

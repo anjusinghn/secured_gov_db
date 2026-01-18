@@ -1290,3 +1290,32 @@ CREATE TABLE public.master_table (
     enforcement_solutions_small_t_junction_accidents character varying,
     rash_drivers character varying,
     enforcement_solutions_rash_driving character varying,
+    age_range character varying(255)
+);
+
+
+ALTER TABLE public.master_table OWNER TO postgres;
+
+--
+-- Name: remarks_by_engg; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.remarks_by_engg (
+    id bigint NOT NULL,
+    detail_id bigint,
+    time_updated character varying,
+    admin_name character varying,
+    admin_role character varying,
+    admin_email character varying,
+    admin_id character varying
+);
+
+
+ALTER TABLE public.remarks_by_engg OWNER TO postgres;
+
+--
+-- Name: remarks_by_engg_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.remarks_by_engg ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.remarks_by_engg_id_seq

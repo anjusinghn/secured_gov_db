@@ -1305,3 +1305,32 @@ COMMENT ON COLUMN public.fsa_admin_table.admin_pwd IS
     'Must store a bcrypt hash. The trg_hash_admin_password trigger auto-hashes '
     'on INSERT/UPDATE. Use verify_password(plaintext, admin_pwd) to authenticate.';
 
+-- ---------------------------------------------------------------------------
+-- gen_details  (central table — all FSA sub-tables FK to this via detail_id)
+-- ---------------------------------------------------------------------------
+CREATE TABLE public.gen_details (
+    detail_id      bigint    NOT NULL,
+    rep_name       jsonb,
+    designation    jsonb,
+    department     jsonb,
+    phone_no       jsonb,
+    email          jsonb,
+    userid         bigint    NOT NULL,
+    state          jsonb,
+    district       jsonb,
+    state_code     jsonb,
+    district_code  jsonb,
+    edited         boolean   DEFAULT false,
+    start_date     character varying,
+    end_date       character varying,
+    delete_status  boolean,
+    police_station character varying,
+    ps_code        character varying,
+    created_at     timestamptz NOT NULL DEFAULT now(),
+    updated_at     timestamptz NOT NULL DEFAULT now()
+);
+ALTER TABLE public.gen_details OWNER TO fsa_admin;
+
+-- ---------------------------------------------------------------------------
+-- fsa_acc
+-- [CHANGED vs original] no_of_injuries: integer → character varying (encrypted storage)

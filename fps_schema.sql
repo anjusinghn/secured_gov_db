@@ -1319,3 +1319,31 @@ ALTER TABLE public.remarks_by_engg OWNER TO postgres;
 
 ALTER TABLE public.remarks_by_engg ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
     SEQUENCE NAME public.remarks_by_engg_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: stages_table; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.stages_table (
+    id bigint NOT NULL,
+    detail_id bigint NOT NULL,
+    status_field_inspection character varying,
+    intervention character varying,
+    status_of_estimate character varying,
+    status_of_approval character varying,
+    status_of_implementation character varying,
+    remarks_by_engg character varying,
+    time_updated character varying,
+    admin_name character varying,
+    admin_role character varying,
+    admin_email character varying,
+    admin_id character varying,
+    upload_docs_intervention character varying,
+    upload_docs_estimation character varying

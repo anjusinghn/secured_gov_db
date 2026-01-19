@@ -1376,3 +1376,32 @@ CREATE TABLE public.state_district_master_table (
     state_code character varying,
     district_code character varying,
     s_no bigint
+);
+
+
+ALTER TABLE public.state_district_master_table OWNER TO postgres;
+
+--
+-- Name: status_field_inspection; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.status_field_inspection (
+    id bigint NOT NULL,
+    detail_id bigint,
+    time_updated character varying,
+    admin_name character varying,
+    admin_role character varying,
+    admin_email character varying,
+    admin_id character varying
+);
+
+
+ALTER TABLE public.status_field_inspection OWNER TO postgres;
+
+--
+-- Name: status_field_inspection_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.status_field_inspection ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.status_field_inspection_id_seq
+    START WITH 1

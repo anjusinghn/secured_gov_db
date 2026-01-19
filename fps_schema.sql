@@ -1347,3 +1347,32 @@ CREATE TABLE public.stages_table (
     admin_id character varying,
     upload_docs_intervention character varying,
     upload_docs_estimation character varying
+);
+
+
+ALTER TABLE public.stages_table OWNER TO postgres;
+
+--
+-- Name: stages_table_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.stages_table ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.stages_table_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: state_district_master_table; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.state_district_master_table (
+    state_name character varying,
+    district_name character varying,
+    state_code character varying,
+    district_code character varying,
+    s_no bigint

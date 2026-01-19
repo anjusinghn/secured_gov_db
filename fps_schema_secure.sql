@@ -1392,3 +1392,32 @@ CREATE TABLE public.fsa_onspot (
     landmark_type                character varying,
     landmark_dist                character varying, -- [ENCRYPTED] stores ciphertext
     onspot_images                jsonb,             -- [ENCRYPTED] entire jsonb encrypted
+    landmark_type_other          character varying,
+    edited                       boolean           DEFAULT false,
+    junction_formation_others    character varying,
+    no_of_lanes_others           character varying,
+    name_of_stretch              character varying, -- [ENCRYPTED] stores ciphertext
+    delete_status                boolean,
+    created_at                   timestamptz       NOT NULL DEFAULT now(), -- [NEW] not in original
+    updated_at                   timestamptz       NOT NULL DEFAULT now()  -- [NEW] not in original
+);
+ALTER TABLE public.fsa_onspot OWNER TO fsa_admin;
+
+-- ---------------------------------------------------------------------------
+-- fsa_light
+-- [NEW vs original]     created_at / updated_at timestamp columns
+-- [ENCRYPTED columns]   light_photos (jsonb)
+-- [UNCHANGED columns]   all other columns — same as original
+-- ---------------------------------------------------------------------------
+CREATE TABLE public.fsa_light (
+    light_id         character varying NOT NULL,
+    detail_id        bigint            NOT NULL,
+    light_avail      character varying,
+    switch_type      character varying,
+    non_avail_light  character varying,
+    light_photos     jsonb,
+    edited           boolean           DEFAULT false,
+    delete_status    boolean,
+    created_at       timestamptz       NOT NULL DEFAULT now(),
+    updated_at       timestamptz       NOT NULL DEFAULT now()
+);

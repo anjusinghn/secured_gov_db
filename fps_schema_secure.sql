@@ -1363,3 +1363,32 @@ ALTER TABLE public.fsa_acc OWNER TO fsa_admin;
 
 -- ---------------------------------------------------------------------------
 -- fsa_onspot
+-- [CHANGED vs original] lat:  double precision → character varying (encrypted storage)
+-- [CHANGED vs original] long: double precision → character varying (encrypted storage)
+-- [NEW vs original]     created_at / updated_at timestamp columns
+-- [ENCRYPTED columns]   adjoining_or_junction_no, junction_name, landmark_name,
+--                         landmark_dist, name_of_stretch, lat, long, onspot_images
+-- [UNCHANGED columns]   all other columns — same as original
+-- ---------------------------------------------------------------------------
+CREATE TABLE public.fsa_onspot (
+    detail_id                    bigint            NOT NULL,
+    onspot_id                    character varying NOT NULL,
+    lat                          character varying, -- [CHANGED] was double precision; varchar for AES-256 storage
+    long                         character varying, -- [CHANGED] was double precision; varchar for AES-256 storage
+    highway_no                   character varying,
+    land_use_pattern             character varying,
+    hotspot_type                 character varying,
+    junction_type                character varying,
+    junction_name                character varying, -- [ENCRYPTED] stores ciphertext
+    junction_formation           character varying,
+    stretch_type                 character varying,
+    stretch_shape                character varying,
+    no_of_lanes                  character varying,
+    median_presence              character varying,
+    median_opening               character varying,
+    speed_of_all_vehicles        character varying,
+    adjoining_or_junction_no     character varying, -- [ENCRYPTED] stores ciphertext
+    landmark_name                character varying, -- [ENCRYPTED] stores ciphertext
+    landmark_type                character varying,
+    landmark_dist                character varying, -- [ENCRYPTED] stores ciphertext
+    onspot_images                jsonb,             -- [ENCRYPTED] entire jsonb encrypted

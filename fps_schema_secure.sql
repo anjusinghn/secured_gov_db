@@ -1450,3 +1450,32 @@ CREATE TABLE public.fsa_ped_cross (
     road_eng_sol_for_small_t_join_roads      character varying,
     enforce_sol_for_small_t_join_roads       character varying,
     rash_drivers                             character varying,
+    enforce_sol_rash_drive                   character varying,
+    remarks                                  character varying,
+    types_of_rash_drivers                    character varying,
+    others_major_reason_self_acc             character varying,
+    others_road_eng_sol_self_acc             character varying,
+    types_of_rash_drivers_others             character varying,
+    enforce_sol_rash_drive_others            character varying,
+    enforce_sol_ped_ani_others               character varying,
+    ped_animal_cross_spot_reason_others      character varying,
+    road_eng_sol_ped_ani_others              character varying,
+    enf_sol_self_acc_others                  character varying,
+    enforce_sol_parked_veh_acc_others        character varying,
+    parked_veh_acc_reason_others             character varying,
+    road_eng_sol_parked_veh_acc_others       character varying,
+    acc_due_small_t_join_roads_reason_others character varying,
+    enforce_sol_for_small_t_join_roads_others character varying,
+    road_eng_sol_for_small_t_join_roads_others character varying,
+    edited                                   boolean           DEFAULT false,
+    delete_status                            boolean,
+    created_at                               timestamptz       NOT NULL DEFAULT now(),
+    updated_at                               timestamptz       NOT NULL DEFAULT now()
+);
+ALTER TABLE public.fsa_ped_cross OWNER TO fsa_admin;
+
+-- ---------------------------------------------------------------------------
+-- fsa_roadcnd
+-- [NEW vs original]     created_at / updated_at timestamp columns
+-- [ENCRYPTED columns]   road_photos (jsonb)
+-- [UNCHANGED columns]   all other columns — same as original

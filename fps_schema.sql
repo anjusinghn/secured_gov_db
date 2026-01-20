@@ -1462,3 +1462,32 @@ CREATE TABLE public.status_of_estimate (
 ALTER TABLE public.status_of_estimate OWNER TO postgres;
 
 --
+-- Name: status_of_estimate_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.status_of_estimate ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.status_of_estimate_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: status_of_implementation; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.status_of_implementation (
+    id bigint NOT NULL,
+    detail_id bigint,
+    time_updated character varying,
+    admin_name character varying,
+    admin_role character varying,
+    admin_email character varying,
+    admin_id character varying
+);
+
+
+ALTER TABLE public.status_of_implementation OWNER TO postgres;

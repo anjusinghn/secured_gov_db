@@ -1405,3 +1405,31 @@ ALTER TABLE public.status_field_inspection OWNER TO postgres;
 ALTER TABLE public.status_field_inspection ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
     SEQUENCE NAME public.status_field_inspection_id_seq
     START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: status_of_approval; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.status_of_approval (
+    id bigint NOT NULL,
+    detail_id bigint,
+    time_updated character varying,
+    admin_name character varying,
+    admin_role character varying,
+    admin_email character varying,
+    admin_id character varying
+);
+
+
+ALTER TABLE public.status_of_approval OWNER TO postgres;
+
+--
+-- Name: status_of_approval_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+

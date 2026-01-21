@@ -1508,3 +1508,32 @@ CREATE TABLE public.fsa_traff_status (
     signal_visible         character varying,
     signal_working         character varying,
     signal_timer_work      character varying,
+    signal_need            character varying,
+    signal_photos          jsonb,
+    signboards_avail       character varying,
+    signboards_visible     character varying,
+    signboards_photos      jsonb,
+    road_markings_avail    character varying,
+    road_markings_photos   jsonb,
+    edited                 boolean           DEFAULT false,
+    delete_status          boolean,
+    created_at             timestamptz       NOT NULL DEFAULT now(),
+    updated_at             timestamptz       NOT NULL DEFAULT now()
+);
+ALTER TABLE public.fsa_traff_status OWNER TO fsa_admin;
+
+-- ---------------------------------------------------------------------------
+-- fsa_traffic_condt
+-- [NEW vs original]     created_at / updated_at timestamp columns
+-- [ENCRYPTED columns]   none
+-- [UNCHANGED columns]   business columns match the original schema
+-- ---------------------------------------------------------------------------
+CREATE TABLE public.fsa_traffic_condt (
+    traffic_id          character varying NOT NULL,
+    detail_id           bigint            NOT NULL,
+    prevalent_veh_type  character varying,
+    start_time          character varying,
+    end_time            character varying,
+    delete_status       boolean,
+    created_at          timestamptz       NOT NULL DEFAULT now(),
+    updated_at          timestamptz       NOT NULL DEFAULT now()

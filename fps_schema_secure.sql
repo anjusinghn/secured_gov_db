@@ -1479,3 +1479,32 @@ ALTER TABLE public.fsa_ped_cross OWNER TO fsa_admin;
 -- [NEW vs original]     created_at / updated_at timestamp columns
 -- [ENCRYPTED columns]   road_photos (jsonb)
 -- [UNCHANGED columns]   all other columns — same as original
+-- ---------------------------------------------------------------------------
+CREATE TABLE public.fsa_roadcnd (
+    roadcnd_id                  character varying NOT NULL,
+    detail_id                   bigint            NOT NULL,
+    road_issue                  character varying,
+    road_defects                character varying,
+    road_photos                 jsonb,
+    road_eng_sol_roadcnd        character varying,
+    road_defects_others         character varying,
+    road_eng_sol_rdcnd_others   character varying,
+    delete_status               boolean,
+    created_at                  timestamptz       NOT NULL DEFAULT now(),
+    updated_at                  timestamptz       NOT NULL DEFAULT now()
+);
+ALTER TABLE public.fsa_roadcnd OWNER TO fsa_admin;
+
+-- ---------------------------------------------------------------------------
+-- fsa_traff_status
+-- [NEW vs original]     created_at / updated_at timestamp columns
+-- [ENCRYPTED columns]   signal_photos, signboards_photos, road_markings_photos (all jsonb)
+-- [UNCHANGED columns]   all other columns — same as original
+-- ---------------------------------------------------------------------------
+CREATE TABLE public.fsa_traff_status (
+    detail_id              bigint            NOT NULL,
+    traff_status_id        character varying NOT NULL,
+    signal_avail           character varying,
+    signal_visible         character varying,
+    signal_working         character varying,
+    signal_timer_work      character varying,

@@ -1595,3 +1595,32 @@ ALTER TABLE public.fsa_visible OWNER TO fsa_admin;
 -- fsa_wrngway
 -- [NEW vs original]     created_at / updated_at timestamp columns
 -- [ENCRYPTED columns]   none
+-- [UNCHANGED columns]   business columns match the original schema
+-- ---------------------------------------------------------------------------
+CREATE TABLE public.fsa_wrngway (
+    wrgnway_id                          character varying NOT NULL,
+    detail_id                           bigint            NOT NULL,
+    veh_wrngway_roadside_junct          character varying,
+    wrgnway_driving_reason              character varying,
+    nearest_opening_to_cross            character varying,
+    road_engg_sol_for_wrngway           character varying,
+    enforce_sol_for_wrngway             character varying,
+    overtaking_acc                      character varying,
+    median_avail                        character varying,
+    space_to_overtake                   character varying,
+    enforce_sol_for_wrngway_other       character varying,
+    road_engg_sol_for_wrngway_others    character varying,
+    wrgnway_driving_reason_others       character varying,
+    reason_for_not_slowing_others       character varying,
+    edited                              boolean           DEFAULT false,
+    delete_status                       boolean,
+    created_at                          timestamptz       NOT NULL DEFAULT now(),
+    updated_at                          timestamptz       NOT NULL DEFAULT now()
+);
+ALTER TABLE public.fsa_wrngway OWNER TO fsa_admin;
+
+-- ---------------------------------------------------------------------------
+-- fsa_state_district_table
+-- [NEW vs original]     created_at / updated_at timestamp columns
+-- [ENCRYPTED columns]   state_admin_name, district_admin_name, state_roa_name,
+--                         district_roa_name

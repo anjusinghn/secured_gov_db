@@ -1537,3 +1537,32 @@ CREATE TABLE public.fsa_traffic_condt (
     delete_status       boolean,
     created_at          timestamptz       NOT NULL DEFAULT now(),
     updated_at          timestamptz       NOT NULL DEFAULT now()
+);
+ALTER TABLE public.fsa_traffic_condt OWNER TO fsa_admin;
+
+-- ---------------------------------------------------------------------------
+-- fsa_violations
+-- [NEW vs original]     created_at / updated_at timestamp columns
+-- [ENCRYPTED columns]   none
+-- [UNCHANGED columns]   business columns match the original schema
+-- ---------------------------------------------------------------------------
+CREATE TABLE public.fsa_violations (
+    violations_id                       character varying NOT NULL,
+    detail_id                           bigint            NOT NULL,
+    road_user_vio_cause_acc             character varying,
+    overspeeding_onspot                 character varying,
+    avg_speed_range                     character varying,
+    m2w                                 character varying,
+    lmv                                 character varying,
+    hmv                                 character varying,
+    reason_for_not_slowing              character varying,
+    road_eng_sol_vehoverspeed           character varying,
+    enf_sol_veh_over_speed              character varying,
+    others_road_user_vio_cause_acc      character varying,
+    reason_for_not_slowing_others       character varying,
+    enf_sol_veh_over_speed_others       character varying,
+    road_eng_sol_vehoverspeed_others    character varying,
+    edited                              boolean           DEFAULT false,
+    delete_status                       boolean,
+    created_at                          timestamptz       NOT NULL DEFAULT now(),
+    updated_at                          timestamptz       NOT NULL DEFAULT now()

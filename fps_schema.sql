@@ -1606,3 +1606,31 @@ ALTER TABLE ONLY public.fsa_violations
 -- Name: fsa_visible fsa_visible_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
+ALTER TABLE ONLY public.fsa_visible
+    ADD CONSTRAINT fsa_visible_pkey PRIMARY KEY (visible_id);
+
+
+--
+-- Name: fsa_wrngway fsa_wrngway_overtake_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fsa_wrngway
+    ADD CONSTRAINT fsa_wrngway_overtake_pkey PRIMARY KEY (wrgnway_id);
+
+
+--
+-- Name: stages_table stages_table_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.stages_table
+    ADD CONSTRAINT stages_table_pkey PRIMARY KEY (detail_id);
+
+
+--
+-- Name: fsa_acc detail_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fsa_acc
+    ADD CONSTRAINT detail_id FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id) NOT VALID;
+
+

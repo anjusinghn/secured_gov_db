@@ -1491,3 +1491,32 @@ CREATE TABLE public.status_of_implementation (
 
 
 ALTER TABLE public.status_of_implementation OWNER TO postgres;
+
+--
+-- Name: status_of_implementation_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.status_of_implementation ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.status_of_implementation_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: fsa_acc acc_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fsa_acc
+    ADD CONSTRAINT acc_pkey PRIMARY KEY (acc_id);
+
+
+--
+-- Name: fsa_admin_table admin_email; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fsa_admin_table
+    ADD CONSTRAINT admin_email UNIQUE (admin_email);

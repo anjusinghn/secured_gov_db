@@ -1566,3 +1566,32 @@ CREATE TABLE public.fsa_violations (
     delete_status                       boolean,
     created_at                          timestamptz       NOT NULL DEFAULT now(),
     updated_at                          timestamptz       NOT NULL DEFAULT now()
+);
+ALTER TABLE public.fsa_violations OWNER TO fsa_admin;
+
+-- ---------------------------------------------------------------------------
+-- fsa_visible
+-- [NEW vs original]     created_at / updated_at timestamp columns
+-- [ENCRYPTED columns]   visib_photos (jsonb)
+-- [UNCHANGED columns]   all other columns — same as original
+-- ---------------------------------------------------------------------------
+CREATE TABLE public.fsa_visible (
+    detail_id                    bigint            NOT NULL,
+    visible_id                   character varying NOT NULL,
+    visib_obstruct_by_objs       character varying,
+    atspot_accident_cause        character varying,
+    road_eng_sol                 character varying,
+    visib_photos                 jsonb,
+    is_visib_obstructed          character varying,
+    is_visib_obstructed_others   character varying,
+    road_eng_sol_others          character varying,
+    delete_status                boolean,
+    created_at                   timestamptz       NOT NULL DEFAULT now(),
+    updated_at                   timestamptz       NOT NULL DEFAULT now()
+);
+ALTER TABLE public.fsa_visible OWNER TO fsa_admin;
+
+-- ---------------------------------------------------------------------------
+-- fsa_wrngway
+-- [NEW vs original]     created_at / updated_at timestamp columns
+-- [ENCRYPTED columns]   none

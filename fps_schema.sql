@@ -1548,3 +1548,32 @@ ALTER TABLE ONLY public.fsa_light
 
 --
 -- Name: fsa_onspot fsa_onspot_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fsa_onspot
+    ADD CONSTRAINT fsa_onspot_pkey PRIMARY KEY (onspot_id);
+
+
+--
+-- Name: fsa_ped_cross fsa_ped_self_park_t_rash_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fsa_ped_cross
+    ADD CONSTRAINT fsa_ped_self_park_t_rash_pkey PRIMARY KEY (ped_self_park_t_rash_id);
+
+
+--
+-- Name: fsa_traff_status fsa_traff_status_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fsa_traff_status
+    ADD CONSTRAINT fsa_traff_status_pkey PRIMARY KEY (traff_status_id);
+
+
+--
+-- Name: fsa_traffic_condt fsa_traffic_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fsa_traffic_condt
+    ADD CONSTRAINT fsa_traffic_pkey PRIMARY KEY (traffic_id);
+

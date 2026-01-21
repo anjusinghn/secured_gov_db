@@ -1520,3 +1520,31 @@ ALTER TABLE ONLY public.fsa_acc
 
 ALTER TABLE ONLY public.fsa_admin_table
     ADD CONSTRAINT admin_email UNIQUE (admin_email);
+
+
+--
+-- Name: fsa_user_table email; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fsa_user_table
+    ADD CONSTRAINT email UNIQUE (email);
+
+
+--
+-- Name: gen_details fsa_details_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.gen_details
+    ADD CONSTRAINT fsa_details_pkey PRIMARY KEY (detail_id);
+
+
+--
+-- Name: fsa_light fsa_light_visib_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fsa_light
+    ADD CONSTRAINT fsa_light_visib_pkey PRIMARY KEY (light_id);
+
+
+--
+-- Name: fsa_onspot fsa_onspot_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres

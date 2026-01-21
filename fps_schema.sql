@@ -1577,3 +1577,32 @@ ALTER TABLE ONLY public.fsa_traff_status
 ALTER TABLE ONLY public.fsa_traffic_condt
     ADD CONSTRAINT fsa_traffic_pkey PRIMARY KEY (traffic_id);
 
+
+--
+-- Name: fsa_user_roles fsa_user_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fsa_user_roles
+    ADD CONSTRAINT fsa_user_roles_pkey PRIMARY KEY (user_type);
+
+
+--
+-- Name: fsa_user_table fsa_user_table_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fsa_user_table
+    ADD CONSTRAINT fsa_user_table_pkey PRIMARY KEY (userid);
+
+
+--
+-- Name: fsa_violations fsa_violations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fsa_violations
+    ADD CONSTRAINT fsa_violations_pkey PRIMARY KEY (violations_id);
+
+
+--
+-- Name: fsa_visible fsa_visible_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+

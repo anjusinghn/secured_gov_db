@@ -1624,3 +1624,32 @@ ALTER TABLE public.fsa_wrngway OWNER TO fsa_admin;
 -- [NEW vs original]     created_at / updated_at timestamp columns
 -- [ENCRYPTED columns]   state_admin_name, district_admin_name, state_roa_name,
 --                         district_roa_name
+-- [UNCHANGED columns]   all id/code columns — same as original
+-- ---------------------------------------------------------------------------
+CREATE TABLE public.fsa_state_district_table (
+    state_admin_id      bigint,
+    state_admin_name    character varying,
+    state_code          character varying,
+    district_admin_id   bigint,
+    district_admin_name character varying,
+    district_code       character varying,
+    state_roa_id        bigint,
+    state_roa_name      character varying,
+    roa_state_code      character varying[],
+    roa_district_code   character varying[],
+    district_roa_id     bigint,
+    district_roa_name   character varying,
+    multiple_districts  text[],
+    created_at          timestamptz NOT NULL DEFAULT now(),
+    updated_at          timestamptz NOT NULL DEFAULT now()
+);
+ALTER TABLE public.fsa_state_district_table OWNER TO fsa_admin;
+
+-- ---------------------------------------------------------------------------
+-- intervention
+-- [NEW vs original]     created_at / updated_at timestamp columns
+-- [ENCRYPTED columns]   admin_name, admin_email, uploaded_docs, admin_role
+-- [UNCHANGED columns]   id, detail_id, time_updated, admin_id — same as original
+-- ---------------------------------------------------------------------------
+CREATE TABLE public.intervention (
+    id            bigint            NOT NULL,

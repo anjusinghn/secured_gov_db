@@ -1682,3 +1682,32 @@ CREATE TABLE public.master_table (
     reason_for_visibility_obstruction                                  character varying,
     road_engineering_suggestions_to_avoid_the_accident_visibility      character varying,
     defects                                                            character varying,
+    road_engineering_solutions_road_condition                          character varying,
+    pattern_of_accidents                                               character varying,
+    road_user_violations_causing_accidents                             character varying,
+    reasons_for_vehicles_not_slowing_down                              character varying,
+    road_engineering_solutions_vehicles_overspeeding                   character varying,
+    enforcement_solutions_vehicles_overspeeding                        character varying,
+    wrong_way_driving_reasons                                          character varying,
+    road_engineering_solutions_wrong_way_driving                       character varying,
+    enforcement_solutions_wrong_way_driving                            character varying,
+    pedestrain_animal_crossing_the_spot_reasons                        character varying,
+    road_engineering_solutions_pedestrain_animal_crossing              character varying,
+    enforcement_solutions_pedestrian_animal_crossing                   character varying,
+    major_reasons_for_self_accidents                                   character varying,
+    road_engineering_solutions_self_accidents                          character varying,
+    enforcement_solutions_self_accidents                               character varying,
+    parked_vehicle_accidents_reasons                                   character varying,
+    road_engineering_solutions_parked_vehicle_accidents                character varying,
+    enforcement_solutions_parked_vehicle_accidents                     character varying,
+    accidents_due_to_small_t_junction_accidents_or_nearby_joining_r    character varying,
+    road_engineering_solutions_small_t_junction_accidents              character varying,
+    enforcement_solutions_small_t_junction_accidents                   character varying,
+    rash_drivers                                                       character varying,
+    enforcement_solutions_rash_driving                                 character varying,
+    age_range                                                          character varying(255)
+);
+ALTER TABLE public.master_table OWNER TO fsa_admin;
+
+-- ---------------------------------------------------------------------------
+-- remarks_by_engg

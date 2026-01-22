@@ -1827,3 +1827,61 @@ CREATE TABLE public.status_of_estimate (
     admin_id      character varying,
     uploaded_docs character varying,
     created_at    timestamptz       NOT NULL DEFAULT now(),
+    updated_at    timestamptz       NOT NULL DEFAULT now()
+);
+ALTER TABLE public.status_of_estimate OWNER TO fsa_admin;
+
+-- ---------------------------------------------------------------------------
+-- status_of_implementation (public workflow table)
+-- [NEW vs original]     created_at / updated_at timestamp columns
+-- [ENCRYPTED columns]   admin_name, admin_email, admin_role
+-- [UNCHANGED columns]   id, detail_id, time_updated, admin_id — same as original
+-- ---------------------------------------------------------------------------
+CREATE TABLE public.status_of_implementation (
+    id           bigint            NOT NULL,
+    detail_id    bigint,
+    time_updated character varying,
+    admin_name   character varying,
+    admin_role   character varying,
+    admin_email  character varying,
+    admin_id     character varying,
+    created_at   timestamptz       NOT NULL DEFAULT now(),
+    updated_at   timestamptz       NOT NULL DEFAULT now()
+);
+ALTER TABLE public.status_of_implementation OWNER TO fsa_admin;
+
+-- =============================================================================
+-- SECTION 8: SEQUENCES
+-- =============================================================================
+
+-- fsa_admin_table_admin_id_seq (identity sequence — defined inline via ALTER TABLE)
+ALTER TABLE public.fsa_admin_table ALTER COLUMN admin_id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.fsa_admin_table_admin_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+-- gen_details_detail_id_seq
+ALTER TABLE public.gen_details ALTER COLUMN detail_id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.gen_details_detail_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+-- intervention_id_seq
+ALTER TABLE public.intervention ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.intervention_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+-- remarks_by_engg_id_seq

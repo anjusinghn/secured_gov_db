@@ -1711,3 +1711,61 @@ ALTER TABLE public.master_table OWNER TO fsa_admin;
 
 -- ---------------------------------------------------------------------------
 -- remarks_by_engg
+-- [NEW vs original]     created_at / updated_at timestamp columns
+-- [ENCRYPTED columns]   admin_name, admin_email, admin_role
+-- [UNCHANGED columns]   id, detail_id, time_updated, admin_id — same as original
+-- ---------------------------------------------------------------------------
+CREATE TABLE public.remarks_by_engg (
+    id           bigint            NOT NULL,
+    detail_id    bigint,
+    time_updated character varying,
+    admin_name   character varying,
+    admin_role   character varying,
+    admin_email  character varying,
+    admin_id     character varying,
+    created_at   timestamptz       NOT NULL DEFAULT now(),
+    updated_at   timestamptz       NOT NULL DEFAULT now()
+);
+ALTER TABLE public.remarks_by_engg OWNER TO fsa_admin;
+
+-- ---------------------------------------------------------------------------
+-- stages_table
+-- [NEW vs original]     created_at / updated_at timestamp columns
+-- [ENCRYPTED columns]   remarks_by_engg, admin_name, admin_email,
+--                         upload_docs_intervention, upload_docs_estimation, admin_role
+-- [UNCHANGED columns]   id, detail_id, status_*, time_updated, admin_id — same as original
+-- ---------------------------------------------------------------------------
+CREATE TABLE public.stages_table (
+    id                          bigint            NOT NULL,
+    detail_id                   bigint            NOT NULL,
+    status_field_inspection     character varying,
+    intervention                character varying,
+    status_of_estimate          character varying,
+    status_of_approval          character varying,
+    status_of_implementation    character varying,
+    remarks_by_engg             character varying,
+    time_updated                character varying,
+    admin_name                  character varying,
+    admin_role                  character varying,
+    admin_email                 character varying,
+    admin_id                    character varying,
+    upload_docs_intervention    character varying,
+    upload_docs_estimation      character varying,
+    created_at                  timestamptz       NOT NULL DEFAULT now(),
+    updated_at                  timestamptz       NOT NULL DEFAULT now()
+);
+ALTER TABLE public.stages_table OWNER TO fsa_admin;
+
+-- ---------------------------------------------------------------------------
+-- state_district_master_table
+-- [NEW vs original]     created_at / updated_at timestamp columns
+-- [ENCRYPTED columns]   none
+-- [UNCHANGED columns]   state_name, district_name, state_code, district_code, s_no
+-- ---------------------------------------------------------------------------
+CREATE TABLE public.state_district_master_table (
+    state_name    character varying,
+    district_name character varying,
+    state_code    character varying,
+    district_code character varying,
+    s_no          bigint,
+    created_at    timestamptz NOT NULL DEFAULT now(),

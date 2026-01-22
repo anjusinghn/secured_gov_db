@@ -1634,3 +1634,32 @@ ALTER TABLE ONLY public.fsa_acc
     ADD CONSTRAINT detail_id FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id) NOT VALID;
 
 
+--
+-- Name: fsa_light fsa_light_detail_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fsa_light
+    ADD CONSTRAINT fsa_light_detail_id_fkey FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id) NOT VALID;
+
+
+--
+-- Name: fsa_onspot fsa_onspot_detail_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fsa_onspot
+    ADD CONSTRAINT fsa_onspot_detail_id_fkey FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id) NOT VALID;
+
+
+--
+-- Name: fsa_ped_cross fsa_ped_cross_detail_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fsa_ped_cross
+    ADD CONSTRAINT fsa_ped_cross_detail_id_fkey FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id) NOT VALID;
+
+
+--
+-- Name: fsa_roadcnd fsa_roadcnd_detail_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fsa_roadcnd

@@ -1663,3 +1663,32 @@ ALTER TABLE ONLY public.fsa_ped_cross
 --
 
 ALTER TABLE ONLY public.fsa_roadcnd
+    ADD CONSTRAINT fsa_roadcnd_detail_id_fkey FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id) NOT VALID;
+
+
+--
+-- Name: fsa_traff_status fsa_traff_status_detail_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fsa_traff_status
+    ADD CONSTRAINT fsa_traff_status_detail_id_fkey FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id) NOT VALID;
+
+
+--
+-- Name: fsa_traffic_condt fsa_traffic_condt_detail_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fsa_traffic_condt
+    ADD CONSTRAINT fsa_traffic_condt_detail_id_fkey FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id) NOT VALID;
+
+
+--
+-- Name: fsa_violations fsa_violations_detail_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fsa_violations
+    ADD CONSTRAINT fsa_violations_detail_id_fkey FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id) NOT VALID;
+
+
+--
+-- Name: fsa_visible fsa_visible_detail_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres

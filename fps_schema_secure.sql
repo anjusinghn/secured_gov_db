@@ -1653,3 +1653,32 @@ ALTER TABLE public.fsa_state_district_table OWNER TO fsa_admin;
 -- ---------------------------------------------------------------------------
 CREATE TABLE public.intervention (
     id            bigint            NOT NULL,
+    detail_id     bigint,
+    time_updated  character varying,
+    admin_name    character varying,
+    admin_role    character varying,
+    admin_email   character varying,
+    admin_id      character varying,
+    uploaded_docs character varying,
+    created_at    timestamptz       NOT NULL DEFAULT now(),
+    updated_at    timestamptz       NOT NULL DEFAULT now()
+);
+ALTER TABLE public.intervention OWNER TO fsa_admin;
+
+-- ---------------------------------------------------------------------------
+-- master_table  (denormalized lookup cache in public schema)
+-- [UNCHANGED vs original] column set is identical
+-- [CHANGED vs original] ownership moved to fsa_admin
+-- [NOTE] no timestamps or encryption were added here
+-- ---------------------------------------------------------------------------
+CREATE TABLE public.master_table (
+    type_of_junction                                                   character varying,
+    formation_of_junction                                              character varying,
+    stretch_type                                                       character varying,
+    stretch_shape                                                      character varying,
+    no_of_lanes                                                        character varying,
+    landmark_type                                                      character varying,
+    prevalent_vehicle_type                                             character varying,
+    reason_for_visibility_obstruction                                  character varying,
+    road_engineering_suggestions_to_avoid_the_accident_visibility      character varying,
+    defects                                                            character varying,

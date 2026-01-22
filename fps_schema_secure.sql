@@ -1798,3 +1798,32 @@ ALTER TABLE public.status_field_inspection OWNER TO fsa_admin;
 -- [ENCRYPTED columns]   admin_name, admin_email, admin_role
 -- [UNCHANGED columns]   id, detail_id, time_updated, admin_id — same as original
 -- ---------------------------------------------------------------------------
+CREATE TABLE public.status_of_approval (
+    id           bigint            NOT NULL,
+    detail_id    bigint,
+    time_updated character varying,
+    admin_name   character varying,
+    admin_role   character varying,
+    admin_email  character varying,
+    admin_id     character varying,
+    created_at   timestamptz       NOT NULL DEFAULT now(),
+    updated_at   timestamptz       NOT NULL DEFAULT now()
+);
+ALTER TABLE public.status_of_approval OWNER TO fsa_admin;
+
+-- ---------------------------------------------------------------------------
+-- status_of_estimate (public workflow table)
+-- [NEW vs original]     created_at / updated_at timestamp columns
+-- [ENCRYPTED columns]   admin_name, admin_email, uploaded_docs, admin_role
+-- [UNCHANGED columns]   id, detail_id, time_updated, admin_id — same as original
+-- ---------------------------------------------------------------------------
+CREATE TABLE public.status_of_estimate (
+    id            bigint            NOT NULL,
+    detail_id     bigint,
+    time_updated  character varying,
+    admin_name    character varying,
+    admin_role    character varying,
+    admin_email   character varying,
+    admin_id      character varying,
+    uploaded_docs character varying,
+    created_at    timestamptz       NOT NULL DEFAULT now(),

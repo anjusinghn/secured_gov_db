@@ -1692,3 +1692,31 @@ ALTER TABLE ONLY public.fsa_violations
 
 --
 -- Name: fsa_visible fsa_visible_detail_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fsa_visible
+    ADD CONSTRAINT fsa_visible_detail_id_fkey FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id) NOT VALID;
+
+
+--
+-- Name: fsa_wrngway fsa_wrngway_detail_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fsa_wrngway
+    ADD CONSTRAINT fsa_wrngway_detail_id_fkey FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id) NOT VALID;
+
+
+--
+-- Name: gen_details gen_details_userid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.gen_details
+    ADD CONSTRAINT gen_details_userid_fkey FOREIGN KEY (userid) REFERENCES public.fsa_user_table(userid) NOT VALID;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\unrestrict IwEwdQqfDDfkz2F9uQas9IkfWR64M3A7cuaWN3weNs4NKVeUpsgFbcqWnGKwJlD
+

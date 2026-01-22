@@ -1769,3 +1769,32 @@ CREATE TABLE public.state_district_master_table (
     district_code character varying,
     s_no          bigint,
     created_at    timestamptz NOT NULL DEFAULT now(),
+    updated_at    timestamptz NOT NULL DEFAULT now()
+);
+ALTER TABLE public.state_district_master_table OWNER TO fsa_admin;
+
+-- ---------------------------------------------------------------------------
+-- status_field_inspection (public workflow table — distinct from master schema copy)
+-- [NEW vs original]     created_at / updated_at timestamp columns
+-- [ENCRYPTED columns]   admin_name, admin_email, admin_role
+-- [UNCHANGED columns]   id, detail_id, time_updated, admin_id — same as original
+-- ---------------------------------------------------------------------------
+CREATE TABLE public.status_field_inspection (
+    id           bigint            NOT NULL,
+    detail_id    bigint,
+    time_updated character varying,
+    admin_name   character varying,
+    admin_role   character varying,
+    admin_email  character varying,
+    admin_id     character varying,
+    created_at   timestamptz       NOT NULL DEFAULT now(),
+    updated_at   timestamptz       NOT NULL DEFAULT now()
+);
+ALTER TABLE public.status_field_inspection OWNER TO fsa_admin;
+
+-- ---------------------------------------------------------------------------
+-- status_of_approval (public workflow table)
+-- [NEW vs original]     created_at / updated_at timestamp columns
+-- [ENCRYPTED columns]   admin_name, admin_email, admin_role
+-- [UNCHANGED columns]   id, detail_id, time_updated, admin_id — same as original
+-- ---------------------------------------------------------------------------

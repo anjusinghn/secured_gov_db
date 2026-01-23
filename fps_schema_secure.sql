@@ -1914,3 +1914,32 @@ ALTER TABLE public.status_field_inspection ALTER COLUMN id ADD GENERATED ALWAYS 
     CACHE 1
 );
 
+-- status_of_approval_id_seq
+ALTER TABLE public.status_of_approval ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.status_of_approval_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+-- status_of_estimate_id_seq
+ALTER TABLE public.status_of_estimate ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.status_of_estimate_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+-- status_of_implementation_id_seq
+ALTER TABLE public.status_of_implementation ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.status_of_implementation_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);

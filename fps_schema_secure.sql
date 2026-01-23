@@ -2002,3 +2002,32 @@ ALTER TABLE ONLY public.fsa_user_table
 
 -- =============================================================================
 -- SECTION 11: FOREIGN KEY CONSTRAINTS
+-- [CHANGED vs original] NOT VALID removed — constraints are now fully enforced.
+--   In fps_schema.sql every FK had NOT VALID which meant existing rows were
+--   never validated. Here all FKs are hard constraints from the start.
+-- [NEW vs original]     Additional FKs added: stages_table, intervention,
+--   remarks_by_engg, and all 4 status_* tables now reference gen_details.
+--   These relationships existed logically but had no FK in the original.
+-- =============================================================================
+
+ALTER TABLE ONLY public.fsa_acc
+    ADD CONSTRAINT detail_id
+        FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id);
+
+ALTER TABLE ONLY public.fsa_light
+    ADD CONSTRAINT fsa_light_detail_id_fkey
+        FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id);
+
+ALTER TABLE ONLY public.fsa_onspot
+    ADD CONSTRAINT fsa_onspot_detail_id_fkey
+        FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id);
+
+ALTER TABLE ONLY public.fsa_ped_cross
+    ADD CONSTRAINT fsa_ped_cross_detail_id_fkey
+        FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id);
+
+ALTER TABLE ONLY public.fsa_roadcnd
+    ADD CONSTRAINT fsa_roadcnd_detail_id_fkey
+        FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id);
+
+ALTER TABLE ONLY public.fsa_traff_status

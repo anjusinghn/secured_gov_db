@@ -2060,3 +2060,32 @@ ALTER TABLE ONLY public.stages_table
         FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id);
 
 ALTER TABLE ONLY public.intervention
+    ADD CONSTRAINT intervention_detail_id_fkey
+        FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id);
+
+ALTER TABLE ONLY public.remarks_by_engg
+    ADD CONSTRAINT remarks_by_engg_detail_id_fkey
+        FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id);
+
+ALTER TABLE ONLY public.status_field_inspection
+    ADD CONSTRAINT status_field_inspection_detail_id_fkey
+        FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id);
+
+ALTER TABLE ONLY public.status_of_approval
+    ADD CONSTRAINT status_of_approval_detail_id_fkey
+        FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id);
+
+ALTER TABLE ONLY public.status_of_estimate
+    ADD CONSTRAINT status_of_estimate_detail_id_fkey
+        FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id);
+
+ALTER TABLE ONLY public.status_of_implementation
+    ADD CONSTRAINT status_of_implementation_detail_id_fkey
+        FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id);
+
+-- =============================================================================
+-- SECTION 12: INDEXES
+-- [NEW vs original] fps_schema.sql had zero indexes.
+--   FK column indexes on every child table + state/district expression
+--   indexes for RLS policy evaluation performance.
+-- =============================================================================

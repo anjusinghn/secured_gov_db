@@ -2031,3 +2031,32 @@ ALTER TABLE ONLY public.fsa_roadcnd
         FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id);
 
 ALTER TABLE ONLY public.fsa_traff_status
+    ADD CONSTRAINT fsa_traff_status_detail_id_fkey
+        FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id);
+
+ALTER TABLE ONLY public.fsa_traffic_condt
+    ADD CONSTRAINT fsa_traffic_condt_detail_id_fkey
+        FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id);
+
+ALTER TABLE ONLY public.fsa_violations
+    ADD CONSTRAINT fsa_violations_detail_id_fkey
+        FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id);
+
+ALTER TABLE ONLY public.fsa_visible
+    ADD CONSTRAINT fsa_visible_detail_id_fkey
+        FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id);
+
+ALTER TABLE ONLY public.fsa_wrngway
+    ADD CONSTRAINT fsa_wrngway_detail_id_fkey
+        FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id);
+
+ALTER TABLE ONLY public.gen_details
+    ADD CONSTRAINT gen_details_userid_fkey
+        FOREIGN KEY (userid) REFERENCES public.fsa_user_table(userid);
+
+-- stages_table and status workflow tables also reference gen_details
+ALTER TABLE ONLY public.stages_table
+    ADD CONSTRAINT stages_table_detail_id_fkey
+        FOREIGN KEY (detail_id) REFERENCES public.gen_details(detail_id);
+
+ALTER TABLE ONLY public.intervention

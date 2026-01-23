@@ -1943,3 +1943,62 @@ ALTER TABLE public.status_of_implementation ALTER COLUMN id ADD GENERATED ALWAYS
     NO MAXVALUE
     CACHE 1
 );
+
+-- =============================================================================
+-- SECTION 9: PRIMARY KEY CONSTRAINTS
+-- =============================================================================
+
+ALTER TABLE ONLY public.fsa_acc
+    ADD CONSTRAINT acc_pkey PRIMARY KEY (acc_id);
+
+ALTER TABLE ONLY public.fsa_admin_table
+    ADD CONSTRAINT fsa_admin_table_pkey PRIMARY KEY (admin_id);
+
+ALTER TABLE ONLY public.fsa_light
+    ADD CONSTRAINT fsa_light_visib_pkey PRIMARY KEY (light_id);
+
+ALTER TABLE ONLY public.fsa_onspot
+    ADD CONSTRAINT fsa_onspot_pkey PRIMARY KEY (onspot_id);
+
+ALTER TABLE ONLY public.fsa_ped_cross
+    ADD CONSTRAINT fsa_ped_self_park_t_rash_pkey PRIMARY KEY (ped_self_park_t_rash_id);
+
+ALTER TABLE ONLY public.fsa_traff_status
+    ADD CONSTRAINT fsa_traff_status_pkey PRIMARY KEY (traff_status_id);
+
+ALTER TABLE ONLY public.fsa_traffic_condt
+    ADD CONSTRAINT fsa_traffic_pkey PRIMARY KEY (traffic_id);
+
+ALTER TABLE ONLY public.fsa_user_roles
+    ADD CONSTRAINT fsa_user_roles_pkey PRIMARY KEY (user_type);
+
+ALTER TABLE ONLY public.fsa_user_table
+    ADD CONSTRAINT fsa_user_table_pkey PRIMARY KEY (userid);
+
+ALTER TABLE ONLY public.fsa_violations
+    ADD CONSTRAINT fsa_violations_pkey PRIMARY KEY (violations_id);
+
+ALTER TABLE ONLY public.fsa_visible
+    ADD CONSTRAINT fsa_visible_pkey PRIMARY KEY (visible_id);
+
+ALTER TABLE ONLY public.fsa_wrngway
+    ADD CONSTRAINT fsa_wrngway_overtake_pkey PRIMARY KEY (wrgnway_id);
+
+ALTER TABLE ONLY public.gen_details
+    ADD CONSTRAINT fsa_details_pkey PRIMARY KEY (detail_id);
+
+ALTER TABLE ONLY public.stages_table
+    ADD CONSTRAINT stages_table_pkey PRIMARY KEY (detail_id);
+
+-- =============================================================================
+-- SECTION 10: UNIQUE CONSTRAINTS
+-- =============================================================================
+
+ALTER TABLE ONLY public.fsa_admin_table
+    ADD CONSTRAINT admin_email_hash_unique UNIQUE (admin_email_hash);
+
+ALTER TABLE ONLY public.fsa_user_table
+    ADD CONSTRAINT email_hash_unique UNIQUE (email_hash);
+
+-- =============================================================================
+-- SECTION 11: FOREIGN KEY CONSTRAINTS

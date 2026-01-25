@@ -2147,3 +2147,32 @@ CREATE TRIGGER trg_encrypt_fsa_user_table
     EXECUTE FUNCTION public.trg_encrypt_sensitive_fields();
 
 CREATE TRIGGER trg_encrypt_fsa_admin_table
+    BEFORE INSERT OR UPDATE ON public.fsa_admin_table
+    FOR EACH ROW
+    EXECUTE FUNCTION public.trg_encrypt_sensitive_fields();
+
+CREATE TRIGGER trg_encrypt_gen_details
+    BEFORE INSERT OR UPDATE ON public.gen_details
+    FOR EACH ROW
+    EXECUTE FUNCTION public.trg_encrypt_sensitive_fields();
+
+CREATE TRIGGER trg_encrypt_fsa_acc
+    BEFORE INSERT OR UPDATE ON public.fsa_acc
+    FOR EACH ROW
+    EXECUTE FUNCTION public.trg_encrypt_sensitive_fields();
+
+CREATE TRIGGER trg_encrypt_fsa_onspot
+    BEFORE INSERT OR UPDATE ON public.fsa_onspot
+    FOR EACH ROW
+    EXECUTE FUNCTION public.trg_encrypt_sensitive_fields();
+
+CREATE TRIGGER trg_encrypt_fsa_ped_cross
+    BEFORE INSERT OR UPDATE ON public.fsa_ped_cross
+    FOR EACH ROW
+    EXECUTE FUNCTION public.trg_encrypt_sensitive_fields();
+
+CREATE TRIGGER trg_encrypt_fsa_state_district_table
+    BEFORE INSERT OR UPDATE ON public.fsa_state_district_table
+    FOR EACH ROW
+    EXECUTE FUNCTION public.trg_encrypt_sensitive_fields();
+

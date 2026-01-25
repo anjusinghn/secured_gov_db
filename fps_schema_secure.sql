@@ -2176,3 +2176,32 @@ CREATE TRIGGER trg_encrypt_fsa_state_district_table
     FOR EACH ROW
     EXECUTE FUNCTION public.trg_encrypt_sensitive_fields();
 
+CREATE TRIGGER trg_encrypt_intervention
+    BEFORE INSERT OR UPDATE ON public.intervention
+    FOR EACH ROW
+    EXECUTE FUNCTION public.trg_encrypt_sensitive_fields();
+
+CREATE TRIGGER trg_encrypt_remarks_by_engg
+    BEFORE INSERT OR UPDATE ON public.remarks_by_engg
+    FOR EACH ROW
+    EXECUTE FUNCTION public.trg_encrypt_sensitive_fields();
+
+CREATE TRIGGER trg_encrypt_stages_table
+    BEFORE INSERT OR UPDATE ON public.stages_table
+    FOR EACH ROW
+    EXECUTE FUNCTION public.trg_encrypt_sensitive_fields();
+
+CREATE TRIGGER trg_encrypt_status_field_inspection
+    BEFORE INSERT OR UPDATE ON public.status_field_inspection
+    FOR EACH ROW
+    EXECUTE FUNCTION public.trg_encrypt_sensitive_fields();
+
+CREATE TRIGGER trg_encrypt_status_of_approval
+    BEFORE INSERT OR UPDATE ON public.status_of_approval
+    FOR EACH ROW
+    EXECUTE FUNCTION public.trg_encrypt_sensitive_fields();
+
+CREATE TRIGGER trg_encrypt_status_of_estimate
+    BEFORE INSERT OR UPDATE ON public.status_of_estimate
+    FOR EACH ROW
+    EXECUTE FUNCTION public.trg_encrypt_sensitive_fields();

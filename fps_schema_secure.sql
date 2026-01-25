@@ -2118,3 +2118,32 @@ CREATE INDEX idx_fsa_admin_state_code      ON public.fsa_admin_table (state_code
 CREATE INDEX idx_fsa_admin_district_code   ON public.fsa_admin_table (district_code);
 CREATE INDEX idx_fsa_sdt_state_code        ON public.fsa_state_district_table (state_code);
 
+-- =============================================================================
+-- SECTION 13: PASSWORD HASHING TRIGGERS
+-- [NEW vs original] fps_schema.sql had no password hashing triggers.
+--   These ensure pwd/admin_pwd are always stored as bcrypt hashes, never plaintext.
+-- =============================================================================
+
+CREATE TRIGGER trg_hash_admin_pwd
+    BEFORE INSERT OR UPDATE OF admin_pwd ON public.fsa_admin_table
+    FOR EACH ROW
+    EXECUTE FUNCTION public.trg_hash_admin_password();
+
+CREATE TRIGGER trg_hash_user_pwd
+    BEFORE INSERT OR UPDATE OF pwd ON public.fsa_user_table
+    FOR EACH ROW
+    EXECUTE FUNCTION public.trg_hash_user_password();
+
+-- =============================================================================
+-- SECTION 13A: FIELD ENCRYPTION TRIGGERS
+-- [NEW vs original] fps_schema.sql had no field-level encryption.
+--   These BEFORE triggers encrypt sensitive columns before they are written.
+--   pwd/admin_pwd are intentionally excluded because they are one-way bcrypt hashes.
+-- =============================================================================
+
+CREATE TRIGGER trg_encrypt_fsa_user_table
+    BEFORE INSERT OR UPDATE ON public.fsa_user_table
+    FOR EACH ROW
+    EXECUTE FUNCTION public.trg_encrypt_sensitive_fields();
+
+CREATE TRIGGER trg_encrypt_fsa_admin_table

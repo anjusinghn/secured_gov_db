@@ -2321,3 +2321,32 @@ CREATE TRIGGER trg_ts_status_of_approval
     FOR EACH ROW EXECUTE FUNCTION public.update_timestamp();
 
 CREATE TRIGGER trg_ts_status_of_estimate
+    BEFORE UPDATE ON public.status_of_estimate
+    FOR EACH ROW EXECUTE FUNCTION public.update_timestamp();
+
+CREATE TRIGGER trg_ts_status_of_implementation
+    BEFORE UPDATE ON public.status_of_implementation
+    FOR EACH ROW EXECUTE FUNCTION public.update_timestamp();
+
+CREATE TRIGGER trg_ts_master_table
+    BEFORE UPDATE ON public.master_table
+    FOR EACH ROW EXECUTE FUNCTION public.update_timestamp();
+
+-- =============================================================================
+-- SECTION 15: AUDIT TRIGGERS
+-- (Attached to all public schema tables that carry operational data.
+--  Master/lookup tables in the master schema are excluded to keep audit lean.)
+-- [NEW vs original] fps_schema.sql had no audit logging.
+-- =============================================================================
+
+CREATE TRIGGER audit_fsa_user_table
+    AFTER INSERT OR UPDATE OR DELETE ON public.fsa_user_table
+    FOR EACH ROW EXECUTE FUNCTION audit.log_changes();
+
+CREATE TRIGGER audit_fsa_admin_table
+    AFTER INSERT OR UPDATE OR DELETE ON public.fsa_admin_table
+    FOR EACH ROW EXECUTE FUNCTION audit.log_changes();
+
+CREATE TRIGGER audit_gen_details
+    AFTER INSERT OR UPDATE OR DELETE ON public.gen_details
+    FOR EACH ROW EXECUTE FUNCTION audit.log_changes();

@@ -2234,3 +2234,61 @@ CREATE TRIGGER trg_encrypt_fsa_roadcnd
 -- =============================================================================
 -- SECTION 14: TIMESTAMP TRIGGERS (updated_at maintenance)
 -- [NEW vs original] fps_schema.sql had no updated_at maintenance logic.
+-- =============================================================================
+
+CREATE TRIGGER trg_ts_fsa_user_roles
+    BEFORE UPDATE ON public.fsa_user_roles
+    FOR EACH ROW EXECUTE FUNCTION public.update_timestamp();
+
+CREATE TRIGGER trg_ts_fsa_user_table
+    BEFORE UPDATE ON public.fsa_user_table
+    FOR EACH ROW EXECUTE FUNCTION public.update_timestamp();
+
+CREATE TRIGGER trg_ts_fsa_admin_table
+    BEFORE UPDATE ON public.fsa_admin_table
+    FOR EACH ROW EXECUTE FUNCTION public.update_timestamp();
+
+CREATE TRIGGER trg_ts_gen_details
+    BEFORE UPDATE ON public.gen_details
+    FOR EACH ROW EXECUTE FUNCTION public.update_timestamp();
+
+CREATE TRIGGER trg_ts_fsa_acc
+    BEFORE UPDATE ON public.fsa_acc
+    FOR EACH ROW EXECUTE FUNCTION public.update_timestamp();
+
+CREATE TRIGGER trg_ts_fsa_onspot
+    BEFORE UPDATE ON public.fsa_onspot
+    FOR EACH ROW EXECUTE FUNCTION public.update_timestamp();
+
+CREATE TRIGGER trg_ts_fsa_light
+    BEFORE UPDATE ON public.fsa_light
+    FOR EACH ROW EXECUTE FUNCTION public.update_timestamp();
+
+CREATE TRIGGER trg_ts_fsa_ped_cross
+    BEFORE UPDATE ON public.fsa_ped_cross
+    FOR EACH ROW EXECUTE FUNCTION public.update_timestamp();
+
+CREATE TRIGGER trg_ts_fsa_roadcnd
+    BEFORE UPDATE ON public.fsa_roadcnd
+    FOR EACH ROW EXECUTE FUNCTION public.update_timestamp();
+
+CREATE TRIGGER trg_ts_fsa_traff_status
+    BEFORE UPDATE ON public.fsa_traff_status
+    FOR EACH ROW EXECUTE FUNCTION public.update_timestamp();
+
+CREATE TRIGGER trg_ts_fsa_traffic_condt
+    BEFORE UPDATE ON public.fsa_traffic_condt
+    FOR EACH ROW EXECUTE FUNCTION public.update_timestamp();
+
+CREATE TRIGGER trg_ts_fsa_violations
+    BEFORE UPDATE ON public.fsa_violations
+    FOR EACH ROW EXECUTE FUNCTION public.update_timestamp();
+
+CREATE TRIGGER trg_ts_fsa_visible
+    BEFORE UPDATE ON public.fsa_visible
+    FOR EACH ROW EXECUTE FUNCTION public.update_timestamp();
+
+CREATE TRIGGER trg_ts_fsa_wrngway
+    BEFORE UPDATE ON public.fsa_wrngway
+    FOR EACH ROW EXECUTE FUNCTION public.update_timestamp();
+

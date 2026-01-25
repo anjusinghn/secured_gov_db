@@ -2205,3 +2205,32 @@ CREATE TRIGGER trg_encrypt_status_of_estimate
     BEFORE INSERT OR UPDATE ON public.status_of_estimate
     FOR EACH ROW
     EXECUTE FUNCTION public.trg_encrypt_sensitive_fields();
+
+CREATE TRIGGER trg_encrypt_status_of_implementation
+    BEFORE INSERT OR UPDATE ON public.status_of_implementation
+    FOR EACH ROW
+    EXECUTE FUNCTION public.trg_encrypt_sensitive_fields();
+
+CREATE TRIGGER trg_encrypt_fsa_light
+    BEFORE INSERT OR UPDATE ON public.fsa_light
+    FOR EACH ROW
+    EXECUTE FUNCTION public.trg_encrypt_sensitive_fields();
+
+CREATE TRIGGER trg_encrypt_fsa_traff_status
+    BEFORE INSERT OR UPDATE ON public.fsa_traff_status
+    FOR EACH ROW
+    EXECUTE FUNCTION public.trg_encrypt_sensitive_fields();
+
+CREATE TRIGGER trg_encrypt_fsa_visible
+    BEFORE INSERT OR UPDATE ON public.fsa_visible
+    FOR EACH ROW
+    EXECUTE FUNCTION public.trg_encrypt_sensitive_fields();
+
+CREATE TRIGGER trg_encrypt_fsa_roadcnd
+    BEFORE INSERT OR UPDATE ON public.fsa_roadcnd
+    FOR EACH ROW
+    EXECUTE FUNCTION public.trg_encrypt_sensitive_fields();
+
+-- =============================================================================
+-- SECTION 14: TIMESTAMP TRIGGERS (updated_at maintenance)
+-- [NEW vs original] fps_schema.sql had no updated_at maintenance logic.

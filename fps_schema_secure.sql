@@ -2292,3 +2292,32 @@ CREATE TRIGGER trg_ts_fsa_wrngway
     BEFORE UPDATE ON public.fsa_wrngway
     FOR EACH ROW EXECUTE FUNCTION public.update_timestamp();
 
+CREATE TRIGGER trg_ts_fsa_state_district
+    BEFORE UPDATE ON public.fsa_state_district_table
+    FOR EACH ROW EXECUTE FUNCTION public.update_timestamp();
+
+CREATE TRIGGER trg_ts_intervention
+    BEFORE UPDATE ON public.intervention
+    FOR EACH ROW EXECUTE FUNCTION public.update_timestamp();
+
+CREATE TRIGGER trg_ts_remarks_by_engg
+    BEFORE UPDATE ON public.remarks_by_engg
+    FOR EACH ROW EXECUTE FUNCTION public.update_timestamp();
+
+CREATE TRIGGER trg_ts_stages_table
+    BEFORE UPDATE ON public.stages_table
+    FOR EACH ROW EXECUTE FUNCTION public.update_timestamp();
+
+CREATE TRIGGER trg_ts_state_district_master
+    BEFORE UPDATE ON public.state_district_master_table
+    FOR EACH ROW EXECUTE FUNCTION public.update_timestamp();
+
+CREATE TRIGGER trg_ts_status_field_inspection
+    BEFORE UPDATE ON public.status_field_inspection
+    FOR EACH ROW EXECUTE FUNCTION public.update_timestamp();
+
+CREATE TRIGGER trg_ts_status_of_approval
+    BEFORE UPDATE ON public.status_of_approval
+    FOR EACH ROW EXECUTE FUNCTION public.update_timestamp();
+
+CREATE TRIGGER trg_ts_status_of_estimate

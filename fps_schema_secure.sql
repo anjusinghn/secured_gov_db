@@ -2379,3 +2379,32 @@ CREATE TRIGGER audit_fsa_traffic_condt
     AFTER INSERT OR UPDATE OR DELETE ON public.fsa_traffic_condt
     FOR EACH ROW EXECUTE FUNCTION audit.log_changes();
 
+CREATE TRIGGER audit_fsa_violations
+    AFTER INSERT OR UPDATE OR DELETE ON public.fsa_violations
+    FOR EACH ROW EXECUTE FUNCTION audit.log_changes();
+
+CREATE TRIGGER audit_fsa_visible
+    AFTER INSERT OR UPDATE OR DELETE ON public.fsa_visible
+    FOR EACH ROW EXECUTE FUNCTION audit.log_changes();
+
+CREATE TRIGGER audit_fsa_wrngway
+    AFTER INSERT OR UPDATE OR DELETE ON public.fsa_wrngway
+    FOR EACH ROW EXECUTE FUNCTION audit.log_changes();
+
+CREATE TRIGGER audit_stages_table
+    AFTER INSERT OR UPDATE OR DELETE ON public.stages_table
+    FOR EACH ROW EXECUTE FUNCTION audit.log_changes();
+
+CREATE TRIGGER audit_intervention
+    AFTER INSERT OR UPDATE OR DELETE ON public.intervention
+    FOR EACH ROW EXECUTE FUNCTION audit.log_changes();
+
+CREATE TRIGGER audit_remarks_by_engg
+    AFTER INSERT OR UPDATE OR DELETE ON public.remarks_by_engg
+    FOR EACH ROW EXECUTE FUNCTION audit.log_changes();
+
+CREATE TRIGGER audit_status_field_inspection
+    AFTER INSERT OR UPDATE OR DELETE ON public.status_field_inspection
+    FOR EACH ROW EXECUTE FUNCTION audit.log_changes();
+
+CREATE TRIGGER audit_status_of_approval

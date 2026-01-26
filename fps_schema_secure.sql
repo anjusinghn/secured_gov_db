@@ -2582,3 +2582,32 @@ CREATE POLICY fsa_light_app_policy ON public.fsa_light
             WHERE (state_code->>'0') = current_setting('app.current_state_code', true)
               AND (current_setting('app.current_district_code', true) = ''
                   OR (district_code->>'0') = current_setting('app.current_district_code', true))
+        )
+    );
+
+CREATE POLICY fsa_light_readonly_policy ON public.fsa_light
+    AS PERMISSIVE FOR SELECT TO fsa_readonly
+    USING (
+        detail_id IN (
+            SELECT detail_id FROM public.gen_details
+            WHERE (state_code->>'0') = current_setting('app.current_state_code', true)
+              AND (current_setting('app.current_district_code', true) = ''
+                  OR (district_code->>'0') = current_setting('app.current_district_code', true))
+        )
+    );
+
+-- fsa_ped_cross
+ALTER TABLE public.fsa_ped_cross ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY fsa_ped_cross_app_policy ON public.fsa_ped_cross
+    AS PERMISSIVE FOR ALL TO fsa_app
+    USING (
+        detail_id IN (
+            SELECT detail_id FROM public.gen_details
+            WHERE (state_code->>'0') = current_setting('app.current_state_code', true)
+              AND (current_setting('app.current_district_code', true) = ''
+                  OR (district_code->>'0') = current_setting('app.current_district_code', true))
+        )
+    )
+    WITH CHECK (
+        detail_id IN (

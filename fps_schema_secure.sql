@@ -2466,3 +2466,32 @@ CREATE POLICY gen_details_app_policy ON public.gen_details
         )
     )
     WITH CHECK (
+        (state_code->>'0') = current_setting('app.current_state_code', true)
+        AND (
+            current_setting('app.current_district_code', true) = ''
+            OR (district_code->>'0') = current_setting('app.current_district_code', true)
+        )
+    );
+
+CREATE POLICY gen_details_readonly_policy ON public.gen_details
+    AS PERMISSIVE
+    FOR SELECT
+    TO fsa_readonly
+    USING (
+        (state_code->>'0') = current_setting('app.current_state_code', true)
+        AND (
+            current_setting('app.current_district_code', true) = ''
+            OR (district_code->>'0') = current_setting('app.current_district_code', true)
+        )
+    );
+
+-- ---------------------------------------------------------------------------
+-- Helper: macro for tables that join to gen_details via detail_id
+-- The policy checks that the detail_id exists in gen_details for the
+-- current session's state/district.
+-- ---------------------------------------------------------------------------
+
+-- fsa_acc
+ALTER TABLE public.fsa_acc ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY fsa_acc_app_policy ON public.fsa_acc

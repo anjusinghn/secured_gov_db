@@ -2408,3 +2408,61 @@ CREATE TRIGGER audit_status_field_inspection
     FOR EACH ROW EXECUTE FUNCTION audit.log_changes();
 
 CREATE TRIGGER audit_status_of_approval
+    AFTER INSERT OR UPDATE OR DELETE ON public.status_of_approval
+    FOR EACH ROW EXECUTE FUNCTION audit.log_changes();
+
+CREATE TRIGGER audit_status_of_estimate
+    AFTER INSERT OR UPDATE OR DELETE ON public.status_of_estimate
+    FOR EACH ROW EXECUTE FUNCTION audit.log_changes();
+
+CREATE TRIGGER audit_status_of_implementation
+    AFTER INSERT OR UPDATE OR DELETE ON public.status_of_implementation
+    FOR EACH ROW EXECUTE FUNCTION audit.log_changes();
+
+CREATE TRIGGER audit_fsa_state_district_table
+    AFTER INSERT OR UPDATE OR DELETE ON public.fsa_state_district_table
+    FOR EACH ROW EXECUTE FUNCTION audit.log_changes();
+
+-- =============================================================================
+-- SECTION 16: ROW LEVEL SECURITY (RLS)
+-- [NEW vs original] fps_schema.sql had no RLS policies or session-scoped access control.
+-- =============================================================================
+--
+-- HOW RLS WORKS IN THIS SCHEMA:
+--   The app must call the following at the start of every connection/transaction:
+--
+--     SET app.current_state_code    = '<state_code>';
+--     SET app.current_district_code = '<district_code>';
+--     SET app.current_user_id       = '<userid>';
+--
+--   gen_details stores state_code/district_code as jsonb arrays.
+--   The first element [0] (index '0' in jsonb) is used for matching because
+--   the application stores these as single-element arrays in practice.
+--
+--   fsa_admin BYPASSRLS so all admin operations skip these policies.
+--   fsa_app   can read and write rows matching the session state/district.
+--   fsa_readonly can only read, same filter.
+--
+--   Super-admins who need cross-state access should connect as fsa_admin.
+-- =============================================================================
+
+-- Turn off row_security override for subsequent table-level enablement
+SET row_security = on;
+
+-- ---------------------------------------------------------------------------
+-- 16a. gen_details — the root table; all other RLS policies reference it
+-- ---------------------------------------------------------------------------
+ALTER TABLE public.gen_details ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY gen_details_app_policy ON public.gen_details
+    AS PERMISSIVE
+    FOR ALL
+    TO fsa_app
+    USING (
+        (state_code->>'0') = current_setting('app.current_state_code', true)
+        AND (
+            current_setting('app.current_district_code', true) = ''
+            OR (district_code->>'0') = current_setting('app.current_district_code', true)
+        )
+    )
+    WITH CHECK (

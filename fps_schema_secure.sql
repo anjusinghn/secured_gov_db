@@ -2756,3 +2756,61 @@ CREATE POLICY fsa_violations_readonly_policy ON public.fsa_violations
         detail_id IN (
             SELECT detail_id FROM public.gen_details
             WHERE (state_code->>'0') = current_setting('app.current_state_code', true)
+              AND (current_setting('app.current_district_code', true) = ''
+                  OR (district_code->>'0') = current_setting('app.current_district_code', true))
+        )
+    );
+
+-- fsa_visible
+ALTER TABLE public.fsa_visible ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY fsa_visible_app_policy ON public.fsa_visible
+    AS PERMISSIVE FOR ALL TO fsa_app
+    USING (
+        detail_id IN (
+            SELECT detail_id FROM public.gen_details
+            WHERE (state_code->>'0') = current_setting('app.current_state_code', true)
+              AND (current_setting('app.current_district_code', true) = ''
+                  OR (district_code->>'0') = current_setting('app.current_district_code', true))
+        )
+    )
+    WITH CHECK (
+        detail_id IN (
+            SELECT detail_id FROM public.gen_details
+            WHERE (state_code->>'0') = current_setting('app.current_state_code', true)
+              AND (current_setting('app.current_district_code', true) = ''
+                  OR (district_code->>'0') = current_setting('app.current_district_code', true))
+        )
+    );
+
+CREATE POLICY fsa_visible_readonly_policy ON public.fsa_visible
+    AS PERMISSIVE FOR SELECT TO fsa_readonly
+    USING (
+        detail_id IN (
+            SELECT detail_id FROM public.gen_details
+            WHERE (state_code->>'0') = current_setting('app.current_state_code', true)
+              AND (current_setting('app.current_district_code', true) = ''
+                  OR (district_code->>'0') = current_setting('app.current_district_code', true))
+        )
+    );
+
+-- fsa_wrngway
+ALTER TABLE public.fsa_wrngway ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY fsa_wrngway_app_policy ON public.fsa_wrngway
+    AS PERMISSIVE FOR ALL TO fsa_app
+    USING (
+        detail_id IN (
+            SELECT detail_id FROM public.gen_details
+            WHERE (state_code->>'0') = current_setting('app.current_state_code', true)
+              AND (current_setting('app.current_district_code', true) = ''
+                  OR (district_code->>'0') = current_setting('app.current_district_code', true))
+        )
+    )
+    WITH CHECK (
+        detail_id IN (
+            SELECT detail_id FROM public.gen_details
+            WHERE (state_code->>'0') = current_setting('app.current_state_code', true)
+              AND (current_setting('app.current_district_code', true) = ''
+                  OR (district_code->>'0') = current_setting('app.current_district_code', true))
+        )

@@ -2843,3 +2843,32 @@ CREATE POLICY stages_table_app_policy ON public.stages_table
     WITH CHECK (
         detail_id IN (
             SELECT detail_id FROM public.gen_details
+            WHERE (state_code->>'0') = current_setting('app.current_state_code', true)
+              AND (current_setting('app.current_district_code', true) = ''
+                  OR (district_code->>'0') = current_setting('app.current_district_code', true))
+        )
+    );
+
+CREATE POLICY stages_table_readonly_policy ON public.stages_table
+    AS PERMISSIVE FOR SELECT TO fsa_readonly
+    USING (
+        detail_id IN (
+            SELECT detail_id FROM public.gen_details
+            WHERE (state_code->>'0') = current_setting('app.current_state_code', true)
+              AND (current_setting('app.current_district_code', true) = ''
+                  OR (district_code->>'0') = current_setting('app.current_district_code', true))
+        )
+    );
+
+ALTER TABLE public.fsa_user_table ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY fsa_user_table_app_policy ON public.fsa_user_table
+    AS PERMISSIVE FOR ALL TO fsa_app
+    USING (
+        state_code = current_setting('app.current_state_code', true)
+        AND (current_setting('app.current_district_code', true) = ''
+            OR district_code = current_setting('app.current_district_code', true))
+    )
+    WITH CHECK (
+        state_code = current_setting('app.current_state_code', true)
+        AND (current_setting('app.current_district_code', true) = ''

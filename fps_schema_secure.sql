@@ -2727,3 +2727,32 @@ CREATE POLICY fsa_traffic_condt_readonly_policy ON public.fsa_traffic_condt
                   OR (district_code->>'0') = current_setting('app.current_district_code', true))
         )
     );
+
+-- fsa_violations
+ALTER TABLE public.fsa_violations ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY fsa_violations_app_policy ON public.fsa_violations
+    AS PERMISSIVE FOR ALL TO fsa_app
+    USING (
+        detail_id IN (
+            SELECT detail_id FROM public.gen_details
+            WHERE (state_code->>'0') = current_setting('app.current_state_code', true)
+              AND (current_setting('app.current_district_code', true) = ''
+                  OR (district_code->>'0') = current_setting('app.current_district_code', true))
+        )
+    )
+    WITH CHECK (
+        detail_id IN (
+            SELECT detail_id FROM public.gen_details
+            WHERE (state_code->>'0') = current_setting('app.current_state_code', true)
+              AND (current_setting('app.current_district_code', true) = ''
+                  OR (district_code->>'0') = current_setting('app.current_district_code', true))
+        )
+    );
+
+CREATE POLICY fsa_violations_readonly_policy ON public.fsa_violations
+    AS PERMISSIVE FOR SELECT TO fsa_readonly
+    USING (
+        detail_id IN (
+            SELECT detail_id FROM public.gen_details
+            WHERE (state_code->>'0') = current_setting('app.current_state_code', true)

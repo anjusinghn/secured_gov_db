@@ -2901,3 +2901,32 @@ CREATE POLICY fsa_admin_table_app_policy ON public.fsa_admin_table
 CREATE POLICY fsa_admin_table_readonly_policy ON public.fsa_admin_table
     AS PERMISSIVE FOR SELECT TO fsa_readonly
     USING (
+        state_code = current_setting('app.current_state_code', true)
+        AND (current_setting('app.current_district_code', true) = ''
+            OR district_code = current_setting('app.current_district_code', true))
+    );
+
+ALTER TABLE public.fsa_state_district_table ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY fsa_state_district_table_app_policy ON public.fsa_state_district_table
+    AS PERMISSIVE FOR ALL TO fsa_app
+    USING (
+        state_code = current_setting('app.current_state_code', true)
+    )
+    WITH CHECK (
+        state_code = current_setting('app.current_state_code', true)
+    );
+
+CREATE POLICY fsa_state_district_table_readonly_policy ON public.fsa_state_district_table
+    AS PERMISSIVE FOR SELECT TO fsa_readonly
+    USING (
+        state_code = current_setting('app.current_state_code', true)
+    );
+
+ALTER TABLE public.intervention ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY intervention_app_policy ON public.intervention
+    AS PERMISSIVE FOR ALL TO fsa_app
+    USING (
+        detail_id IN (
+            SELECT detail_id FROM public.gen_details

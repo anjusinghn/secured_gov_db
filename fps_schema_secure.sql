@@ -3018,3 +3018,32 @@ CREATE POLICY status_field_inspection_readonly_policy ON public.status_field_ins
                   OR (district_code->>'0') = current_setting('app.current_district_code', true))
         )
     );
+
+ALTER TABLE public.status_of_approval ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY status_of_approval_app_policy ON public.status_of_approval
+    AS PERMISSIVE FOR ALL TO fsa_app
+    USING (
+        detail_id IN (
+            SELECT detail_id FROM public.gen_details
+            WHERE (state_code->>'0') = current_setting('app.current_state_code', true)
+              AND (current_setting('app.current_district_code', true) = ''
+                  OR (district_code->>'0') = current_setting('app.current_district_code', true))
+        )
+    )
+    WITH CHECK (
+        detail_id IN (
+            SELECT detail_id FROM public.gen_details
+            WHERE (state_code->>'0') = current_setting('app.current_state_code', true)
+              AND (current_setting('app.current_district_code', true) = ''
+                  OR (district_code->>'0') = current_setting('app.current_district_code', true))
+        )
+    );
+
+CREATE POLICY status_of_approval_readonly_policy ON public.status_of_approval
+    AS PERMISSIVE FOR SELECT TO fsa_readonly
+    USING (
+        detail_id IN (
+            SELECT detail_id FROM public.gen_details
+            WHERE (state_code->>'0') = current_setting('app.current_state_code', true)
+              AND (current_setting('app.current_district_code', true) = ''

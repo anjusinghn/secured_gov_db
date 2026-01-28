@@ -2872,3 +2872,32 @@ CREATE POLICY fsa_user_table_app_policy ON public.fsa_user_table
     WITH CHECK (
         state_code = current_setting('app.current_state_code', true)
         AND (current_setting('app.current_district_code', true) = ''
+            OR district_code = current_setting('app.current_district_code', true))
+    );
+
+CREATE POLICY fsa_user_table_readonly_policy ON public.fsa_user_table
+    AS PERMISSIVE FOR SELECT TO fsa_readonly
+    USING (
+        state_code = current_setting('app.current_state_code', true)
+        AND (current_setting('app.current_district_code', true) = ''
+            OR district_code = current_setting('app.current_district_code', true))
+    );
+
+ALTER TABLE public.fsa_admin_table ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY fsa_admin_table_app_policy ON public.fsa_admin_table
+    AS PERMISSIVE FOR ALL TO fsa_app
+    USING (
+        state_code = current_setting('app.current_state_code', true)
+        AND (current_setting('app.current_district_code', true) = ''
+            OR district_code = current_setting('app.current_district_code', true))
+    )
+    WITH CHECK (
+        state_code = current_setting('app.current_state_code', true)
+        AND (current_setting('app.current_district_code', true) = ''
+            OR district_code = current_setting('app.current_district_code', true))
+    );
+
+CREATE POLICY fsa_admin_table_readonly_policy ON public.fsa_admin_table
+    AS PERMISSIVE FOR SELECT TO fsa_readonly
+    USING (

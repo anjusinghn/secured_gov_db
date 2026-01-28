@@ -2930,3 +2930,33 @@ CREATE POLICY intervention_app_policy ON public.intervention
     USING (
         detail_id IN (
             SELECT detail_id FROM public.gen_details
+            WHERE (state_code->>'0') = current_setting('app.current_state_code', true)
+              AND (current_setting('app.current_district_code', true) = ''
+                  OR (district_code->>'0') = current_setting('app.current_district_code', true))
+        )
+    )
+    WITH CHECK (
+        detail_id IN (
+            SELECT detail_id FROM public.gen_details
+            WHERE (state_code->>'0') = current_setting('app.current_state_code', true)
+              AND (current_setting('app.current_district_code', true) = ''
+                  OR (district_code->>'0') = current_setting('app.current_district_code', true))
+        )
+    );
+
+CREATE POLICY intervention_readonly_policy ON public.intervention
+    AS PERMISSIVE FOR SELECT TO fsa_readonly
+    USING (
+        detail_id IN (
+            SELECT detail_id FROM public.gen_details
+            WHERE (state_code->>'0') = current_setting('app.current_state_code', true)
+              AND (current_setting('app.current_district_code', true) = ''
+                  OR (district_code->>'0') = current_setting('app.current_district_code', true))
+        )
+    );
+
+ALTER TABLE public.remarks_by_engg ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY remarks_by_engg_app_policy ON public.remarks_by_engg
+    AS PERMISSIVE FOR ALL TO fsa_app
+    USING (

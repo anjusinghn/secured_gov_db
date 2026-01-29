@@ -3279,3 +3279,32 @@ SELECT
     enforce_sol_rash_drive_others,
     enforce_sol_ped_ani_others,
     ped_animal_cross_spot_reason_others,
+    road_eng_sol_ped_ani_others,
+    enf_sol_self_acc_others,
+    enforce_sol_parked_veh_acc_others,
+    parked_veh_acc_reason_others,
+    road_eng_sol_parked_veh_acc_others,
+    edited,
+    delete_status,
+    created_at,
+    updated_at
+FROM public.fsa_ped_cross;
+
+CREATE VIEW public.v_fsa_state_district_table_decrypted WITH (security_invoker = true) AS
+SELECT
+    state_admin_id,
+    public.decrypt_text_value(state_admin_name) AS state_admin_name,
+    state_code,
+    district_admin_id,
+    public.decrypt_text_value(district_admin_name) AS district_admin_name,
+    district_code,
+    state_roa_id,
+    public.decrypt_text_value(state_roa_name) AS state_roa_name,
+    roa_state_code,
+    roa_district_code,
+    district_roa_id,
+    public.decrypt_text_value(district_roa_name) AS district_roa_name,
+    multiple_districts,
+    created_at,
+    updated_at
+FROM public.fsa_state_district_table;

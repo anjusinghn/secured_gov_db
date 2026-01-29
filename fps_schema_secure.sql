@@ -3105,3 +3105,61 @@ CREATE POLICY status_of_implementation_app_policy ON public.status_of_implementa
     );
 
 CREATE POLICY status_of_implementation_readonly_policy ON public.status_of_implementation
+    AS PERMISSIVE FOR SELECT TO fsa_readonly
+    USING (
+        detail_id IN (
+            SELECT detail_id FROM public.gen_details
+            WHERE (state_code->>'0') = current_setting('app.current_state_code', true)
+              AND (current_setting('app.current_district_code', true) = ''
+                  OR (district_code->>'0') = current_setting('app.current_district_code', true))
+        )
+    );
+
+-- =============================================================================
+-- SECTION 16A: DECRYPTED READ VIEWS
+-- [NEW vs original] Did not exist in fps_schema.sql.
+--   Each view exposes the decrypted plaintext of every encrypted column.
+--   Use these views to read data in your application or DbGate SQL editor.
+--   Format: v_<tablename>_decrypted
+--   Requires app.encryption_key session var to be set before querying.
+-- =============================================================================
+
+CREATE VIEW public.v_fsa_user_table_decrypted WITH (security_invoker = true) AS
+SELECT
+    pwd,
+    public.decrypt_text_value(last_login) AS last_login,
+    login_status,
+    public.decrypt_text_value(email) AS email,
+    email_hash,
+    public.decrypt_text_value(rep_name) AS rep_name,
+    public.decrypt_text_value(designation) AS designation,
+    public.decrypt_text_value(department) AS department,
+    public.decrypt_text_value(phone_no) AS phone_no,
+    userid,
+    user_type,
+    user_role,
+    terms_cond,
+    public.decrypt_jsonb_value(user_file) AS user_file,
+    admin_id,
+    user_status,
+    state_code,
+    district_code,
+    public.decrypt_text_value(state_name) AS state_name,
+    public.decrypt_text_value(district_name) AS district_name,
+    ps_code,
+    public.decrypt_text_value(police_station) AS police_station,
+    created_at,
+    updated_at
+FROM public.fsa_user_table;
+
+CREATE VIEW public.v_fsa_admin_table_decrypted WITH (security_invoker = true) AS
+SELECT
+    public.decrypt_text_value(admin_email) AS admin_email,
+    admin_email_hash,
+    admin_id,
+    admin_role_id,
+    public.decrypt_text_value(admin_role) AS admin_role,
+    public.decrypt_text_value(admin_name) AS admin_name,
+    admin_pwd,
+    login_status,
+    public.decrypt_text_value(last_login) AS last_login,

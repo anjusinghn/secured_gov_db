@@ -3076,3 +3076,32 @@ CREATE POLICY status_of_estimate_readonly_policy ON public.status_of_estimate
     AS PERMISSIVE FOR SELECT TO fsa_readonly
     USING (
         detail_id IN (
+            SELECT detail_id FROM public.gen_details
+            WHERE (state_code->>'0') = current_setting('app.current_state_code', true)
+              AND (current_setting('app.current_district_code', true) = ''
+                  OR (district_code->>'0') = current_setting('app.current_district_code', true))
+        )
+    );
+
+ALTER TABLE public.status_of_implementation ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY status_of_implementation_app_policy ON public.status_of_implementation
+    AS PERMISSIVE FOR ALL TO fsa_app
+    USING (
+        detail_id IN (
+            SELECT detail_id FROM public.gen_details
+            WHERE (state_code->>'0') = current_setting('app.current_state_code', true)
+              AND (current_setting('app.current_district_code', true) = ''
+                  OR (district_code->>'0') = current_setting('app.current_district_code', true))
+        )
+    )
+    WITH CHECK (
+        detail_id IN (
+            SELECT detail_id FROM public.gen_details
+            WHERE (state_code->>'0') = current_setting('app.current_state_code', true)
+              AND (current_setting('app.current_district_code', true) = ''
+                  OR (district_code->>'0') = current_setting('app.current_district_code', true))
+        )
+    );
+
+CREATE POLICY status_of_implementation_readonly_policy ON public.status_of_implementation

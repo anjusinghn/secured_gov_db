@@ -3221,3 +3221,32 @@ SELECT
     onspot_id,
     public.decrypt_text_value(lat)::double precision AS lat,
     public.decrypt_text_value(long)::double precision AS long,
+    highway_no,
+    land_use_pattern,
+    hotspot_type,
+    junction_type,
+    public.decrypt_text_value(junction_name) AS junction_name,
+    junction_formation,
+    stretch_type,
+    stretch_shape,
+    no_of_lanes,
+    median_presence,
+    median_opening,
+    speed_of_all_vehicles,
+    public.decrypt_text_value(adjoining_or_junction_no) AS adjoining_or_junction_no,
+    public.decrypt_text_value(landmark_name) AS landmark_name,
+    landmark_type,
+    public.decrypt_text_value(landmark_dist) AS landmark_dist,
+    public.decrypt_jsonb_value(onspot_images) AS onspot_images,
+    landmark_type_other,
+    edited,
+    junction_formation_others,
+    no_of_lanes_others,
+    public.decrypt_text_value(name_of_stretch) AS name_of_stretch,
+    delete_status,
+    created_at,
+    updated_at
+FROM public.fsa_onspot;
+
+CREATE VIEW public.v_fsa_ped_cross_decrypted WITH (security_invoker = true) AS
+SELECT

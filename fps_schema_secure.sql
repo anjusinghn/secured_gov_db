@@ -3192,3 +3192,32 @@ SELECT
     end_date,
     delete_status,
     public.decrypt_text_value(police_station) AS police_station,
+    ps_code,
+    created_at,
+    updated_at
+FROM public.gen_details;
+
+CREATE VIEW public.v_fsa_acc_decrypted WITH (security_invoker = true) AS
+SELECT
+    detail_id,
+    public.decrypt_text_value(acc_pattern_onspot) AS acc_pattern_onspot,
+    public.decrypt_text_value(no_of_injuries)::integer AS no_of_injuries,
+    public.decrypt_text_value(no_of_deaths)::integer AS no_of_deaths,
+    no_of_accidents,
+    public.decrypt_text_value(nearest_hosp) AS nearest_hosp,
+    acc_id,
+    start_age_range,
+    end_age_range,
+    public.decrypt_text_value(age_range) AS age_range,
+    public.decrypt_text_value(time_frame_acc) AS time_frame_acc,
+    edited,
+    created_at,
+    updated_at
+FROM public.fsa_acc;
+
+CREATE VIEW public.v_fsa_onspot_decrypted WITH (security_invoker = true) AS
+SELECT
+    detail_id,
+    onspot_id,
+    public.decrypt_text_value(lat)::double precision AS lat,
+    public.decrypt_text_value(long)::double precision AS long,

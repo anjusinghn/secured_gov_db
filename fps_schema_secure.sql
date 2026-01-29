@@ -3163,3 +3163,32 @@ SELECT
     admin_pwd,
     login_status,
     public.decrypt_text_value(last_login) AS last_login,
+    user_status,
+    public.decrypt_text_value(state_name) AS state_name,
+    public.decrypt_text_value(district_name) AS district_name,
+    state_code,
+    district_code,
+    public.decrypt_text_value(created_by) AS created_by,
+    public.decrypt_text_value(phone_no) AS phone_no,
+    created_at,
+    updated_at
+FROM public.fsa_admin_table;
+
+CREATE VIEW public.v_gen_details_decrypted WITH (security_invoker = true) AS
+SELECT
+    detail_id,
+    public.decrypt_jsonb_value(rep_name) AS rep_name,
+    public.decrypt_jsonb_value(designation) AS designation,
+    public.decrypt_jsonb_value(department) AS department,
+    public.decrypt_jsonb_value(phone_no) AS phone_no,
+    public.decrypt_jsonb_value(email) AS email,
+    userid,
+    public.decrypt_jsonb_value(state) AS state,
+    public.decrypt_jsonb_value(district) AS district,
+    public.decrypt_jsonb_value(state_code) AS state_code,
+    public.decrypt_jsonb_value(district_code) AS district_code,
+    edited,
+    start_date,
+    end_date,
+    delete_status,
+    public.decrypt_text_value(police_station) AS police_station,

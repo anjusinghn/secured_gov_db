@@ -3424,3 +3424,32 @@ FROM public.fsa_traff_status;
 CREATE VIEW public.v_fsa_visible_decrypted WITH (security_invoker = true) AS
 SELECT
     detail_id,
+    visible_id,
+    visib_obstruct_by_objs,
+    atspot_accident_cause,
+    road_eng_sol,
+    public.decrypt_jsonb_value(visib_photos) AS visib_photos,
+    is_visib_obstructed,
+    is_visib_obstructed_others,
+    road_eng_sol_others,
+    delete_status,
+    created_at,
+    updated_at
+FROM public.fsa_visible;
+
+CREATE VIEW public.v_fsa_roadcnd_decrypted WITH (security_invoker = true) AS
+SELECT
+    roadcnd_id,
+    detail_id,
+    road_issue,
+    road_defects,
+    public.decrypt_jsonb_value(road_photos) AS road_photos,
+    road_eng_sol_roadcnd,
+    road_defects_others,
+    road_eng_sol_rdcnd_others,
+    delete_status,
+    created_at,
+    updated_at
+FROM public.fsa_roadcnd;
+
+-- =============================================================================

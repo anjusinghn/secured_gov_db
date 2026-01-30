@@ -3482,3 +3482,32 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON public.fsa_state_district_table TO fsa_a
 GRANT SELECT, INSERT, UPDATE, DELETE ON public.intervention           TO fsa_app;
 GRANT SELECT, INSERT, UPDATE, DELETE ON public.remarks_by_engg        TO fsa_app;
 GRANT SELECT, INSERT, UPDATE, DELETE ON public.stages_table           TO fsa_app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.state_district_master_table TO fsa_app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.status_field_inspection TO fsa_app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.status_of_approval     TO fsa_app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.status_of_estimate     TO fsa_app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.status_of_implementation TO fsa_app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.master_table           TO fsa_app;
+
+-- fsa_app: SELECT on all master schema tables
+GRANT SELECT ON ALL TABLES IN SCHEMA master TO fsa_app;
+
+-- fsa_app: sequence usage
+GRANT USAGE ON SEQUENCE public.fsa_user_id                   TO fsa_app;
+GRANT USAGE ON SEQUENCE public.fsa_admin_table_admin_id_seq  TO fsa_app;
+GRANT USAGE ON SEQUENCE public.gen_details_detail_id_seq     TO fsa_app;
+GRANT USAGE ON SEQUENCE public.intervention_id_seq           TO fsa_app;
+GRANT USAGE ON SEQUENCE public.remarks_by_engg_id_seq        TO fsa_app;
+GRANT USAGE ON SEQUENCE public.stages_table_id_seq           TO fsa_app;
+GRANT USAGE ON SEQUENCE public.status_field_inspection_id_seq TO fsa_app;
+GRANT USAGE ON SEQUENCE public.status_of_approval_id_seq     TO fsa_app;
+GRANT USAGE ON SEQUENCE public.status_of_estimate_id_seq     TO fsa_app;
+GRANT USAGE ON SEQUENCE public.status_of_implementation_id_seq TO fsa_app;
+
+-- fsa_app: audit writes happen via SECURITY DEFINER trigger only — no direct INSERT
+GRANT SELECT ON audit.change_log TO fsa_app;
+
+-- fsa_readonly: SELECT only on all public operational tables
+GRANT SELECT ON public.fsa_user_table             TO fsa_readonly;
+GRANT SELECT ON public.fsa_admin_table            TO fsa_readonly;
+GRANT SELECT ON public.gen_details                TO fsa_readonly;

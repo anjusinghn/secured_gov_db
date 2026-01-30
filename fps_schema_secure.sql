@@ -3308,3 +3308,61 @@ SELECT
     created_at,
     updated_at
 FROM public.fsa_state_district_table;
+
+CREATE VIEW public.v_intervention_decrypted WITH (security_invoker = true) AS
+SELECT id, detail_id, time_updated,
+       public.decrypt_text_value(admin_name) AS admin_name,
+       public.decrypt_text_value(admin_role) AS admin_role,
+       public.decrypt_text_value(admin_email) AS admin_email,
+       admin_id,
+       public.decrypt_text_value(uploaded_docs) AS uploaded_docs,
+       created_at,
+       updated_at
+FROM public.intervention;
+
+CREATE VIEW public.v_remarks_by_engg_decrypted WITH (security_invoker = true) AS
+SELECT id, detail_id, time_updated,
+       public.decrypt_text_value(admin_name) AS admin_name,
+       public.decrypt_text_value(admin_role) AS admin_role,
+       public.decrypt_text_value(admin_email) AS admin_email,
+       admin_id,
+       created_at,
+       updated_at
+FROM public.remarks_by_engg;
+
+CREATE VIEW public.v_stages_table_decrypted WITH (security_invoker = true) AS
+SELECT id, detail_id, status_field_inspection, intervention, status_of_estimate,
+       status_of_approval, status_of_implementation,
+       public.decrypt_text_value(remarks_by_engg) AS remarks_by_engg,
+       time_updated,
+       public.decrypt_text_value(admin_name) AS admin_name,
+       public.decrypt_text_value(admin_role) AS admin_role,
+       public.decrypt_text_value(admin_email) AS admin_email,
+       admin_id,
+       public.decrypt_text_value(upload_docs_intervention) AS upload_docs_intervention,
+       public.decrypt_text_value(upload_docs_estimation) AS upload_docs_estimation,
+       created_at,
+       updated_at
+FROM public.stages_table;
+
+CREATE VIEW public.v_status_field_inspection_decrypted WITH (security_invoker = true) AS
+SELECT id, detail_id, time_updated,
+       public.decrypt_text_value(admin_name) AS admin_name,
+       public.decrypt_text_value(admin_role) AS admin_role,
+       public.decrypt_text_value(admin_email) AS admin_email,
+       admin_id,
+       created_at,
+       updated_at
+FROM public.status_field_inspection;
+
+CREATE VIEW public.v_status_of_approval_decrypted WITH (security_invoker = true) AS
+SELECT id, detail_id, time_updated,
+       public.decrypt_text_value(admin_name) AS admin_name,
+       public.decrypt_text_value(admin_role) AS admin_role,
+       public.decrypt_text_value(admin_email) AS admin_email,
+       admin_id,
+       created_at,
+       updated_at
+FROM public.status_of_approval;
+
+CREATE VIEW public.v_status_of_estimate_decrypted WITH (security_invoker = true) AS

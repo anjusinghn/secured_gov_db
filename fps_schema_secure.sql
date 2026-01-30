@@ -3598,3 +3598,32 @@ AS $$
 							   d.district_name::text AS district_val
 						FROM fsa_state_district_table fsd
 						  JOIN (
+							SELECT DISTINCT state_code, state_name
+							FROM state_district_master_table
+						  ) s
+							ON s.state_code = fsd.state_code
+						  LEFT JOIN state_district_master_table d
+							ON d.state_code    = fsd.state_code
+						   AND d.district_code = NULLIF(fsd.district_code, '')
+						WHERE fsd.state_admin_id = adm_id;
+
+                    ELSIF the_role = 'District Admin' THEN
+                       	
+						RETURN QUERY
+						SELECT DISTINCT sdmt.state_name:: TEXT,sdmt.district_name ::TEXT
+                        FROM fsa_state_district_table fsd INNER JOIN state_district_master_table sdmt
+	                        ON fsd.state_code = sdmt.state_code AND 
+							(fsd.district_code = sdmt.district_code OR fsd.district_code IS NULL) WHERE fsd.district_admin_id = adm_id;
+						
+                    ELSIF the_role = 'ROA_state_Admin' THEN
+					
+                       	RETURN QUERY
+						SELECT
+						    string_agg(DISTINCT sdmt.state_name, ',') AS state_names,
+						    string_agg(DISTINCT sdmt.district_name, ',') AS district_names
+						FROM fsa_state_district_table fsd
+						CROSS JOIN LATERAL unnest(string_to_array(fsd.roa_state_code[1], ',')) AS s_code(state_code)
+						LEFT JOIN LATERAL (
+						    SELECT d_code.district_code
+						    FROM unnest(string_to_array(fsd.roa_district_code[1], ',')) AS d_code(district_code)
+						    WHERE d_code.district_code <> ''

@@ -3569,3 +3569,32 @@ GRANT SELECT ON public.v_stages_table_decrypted TO fsa_app, fsa_readonly;
 GRANT SELECT ON public.v_status_field_inspection_decrypted TO fsa_app, fsa_readonly;
 GRANT SELECT ON public.v_status_of_approval_decrypted TO fsa_app, fsa_readonly;
 GRANT SELECT ON public.v_status_of_estimate_decrypted TO fsa_app, fsa_readonly;
+GRANT SELECT ON public.v_status_of_implementation_decrypted TO fsa_app, fsa_readonly;
+GRANT SELECT ON public.v_fsa_light_decrypted TO fsa_app, fsa_readonly;
+GRANT SELECT ON public.v_fsa_traff_status_decrypted TO fsa_app, fsa_readonly;
+GRANT SELECT ON public.v_fsa_visible_decrypted TO fsa_app, fsa_readonly;
+GRANT SELECT ON public.v_fsa_roadcnd_decrypted TO fsa_app, fsa_readonly;
+
+-- =============================================================================
+-- SECTION 18: APPLICATION FUNCTION (preserved as-is from original schema)
+-- Owner updated to fsa_admin; function body unchanged for app compatibility.
+-- =============================================================================
+
+CREATE FUNCTION public.fetch_data_from_tables(adm_id integer)
+RETURNS TABLE(state_val text, district_val text)
+LANGUAGE plpgsql
+AS $$
+                DECLARE
+                    role_id TEXT;
+                    the_role TEXT;
+                BEGIN
+                    SELECT admin_role_id INTO role_id FROM fsa_admin_table WHERE admin_id = adm_id;
+                    SELECT user_role INTO the_role FROM fsa_user_roles WHERE user_type = role_id;
+
+                    IF the_role = 'State Admin' THEN
+                       	RETURN QUERY   
+						SELECT DISTINCT
+							   s.state_name::text  AS state_val,
+							   d.district_name::text AS district_val
+						FROM fsa_state_district_table fsd
+						  JOIN (

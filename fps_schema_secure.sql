@@ -3395,3 +3395,32 @@ SELECT
     non_avail_light,
     public.decrypt_jsonb_value(light_photos) AS light_photos,
     edited,
+    delete_status,
+    created_at,
+    updated_at
+FROM public.fsa_light;
+
+CREATE VIEW public.v_fsa_traff_status_decrypted WITH (security_invoker = true) AS
+SELECT
+    detail_id,
+    traff_status_id,
+    signal_avail,
+    signal_visible,
+    signal_working,
+    signal_timer_work,
+    signal_need,
+    public.decrypt_jsonb_value(signal_photos) AS signal_photos,
+    signboards_avail,
+    signboards_visible,
+    public.decrypt_jsonb_value(signboards_photos) AS signboards_photos,
+    road_markings_avail,
+    public.decrypt_jsonb_value(road_markings_photos) AS road_markings_photos,
+    edited,
+    delete_status,
+    created_at,
+    updated_at
+FROM public.fsa_traff_status;
+
+CREATE VIEW public.v_fsa_visible_decrypted WITH (security_invoker = true) AS
+SELECT
+    detail_id,

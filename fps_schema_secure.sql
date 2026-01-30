@@ -3453,3 +3453,32 @@ SELECT
 FROM public.fsa_roadcnd;
 
 -- =============================================================================
+-- SECTION 17: GRANT STATEMENTS
+-- =============================================================================
+
+-- SCHEMA usage
+GRANT USAGE ON SCHEMA public  TO fsa_app, fsa_readonly;
+GRANT USAGE ON SCHEMA master  TO fsa_app, fsa_readonly;
+GRANT USAGE ON SCHEMA audit   TO fsa_app, fsa_readonly;
+
+-- fsa_admin owns all schemas and tables — gets ALL implicitly as owner
+
+-- fsa_app: full CRUD on all public operational tables
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.fsa_user_table         TO fsa_app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.fsa_admin_table        TO fsa_app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.gen_details            TO fsa_app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.fsa_acc                TO fsa_app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.fsa_onspot             TO fsa_app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.fsa_light              TO fsa_app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.fsa_ped_cross          TO fsa_app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.fsa_roadcnd            TO fsa_app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.fsa_traff_status       TO fsa_app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.fsa_traffic_condt      TO fsa_app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.fsa_violations         TO fsa_app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.fsa_visible            TO fsa_app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.fsa_wrngway            TO fsa_app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.fsa_user_roles         TO fsa_app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.fsa_state_district_table TO fsa_app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.intervention           TO fsa_app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.remarks_by_engg        TO fsa_app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.stages_table           TO fsa_app;

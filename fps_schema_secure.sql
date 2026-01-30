@@ -3366,3 +3366,32 @@ SELECT id, detail_id, time_updated,
 FROM public.status_of_approval;
 
 CREATE VIEW public.v_status_of_estimate_decrypted WITH (security_invoker = true) AS
+SELECT id, detail_id, time_updated,
+       public.decrypt_text_value(admin_name) AS admin_name,
+       public.decrypt_text_value(admin_role) AS admin_role,
+       public.decrypt_text_value(admin_email) AS admin_email,
+       admin_id,
+       public.decrypt_text_value(uploaded_docs) AS uploaded_docs,
+       created_at,
+       updated_at
+FROM public.status_of_estimate;
+
+CREATE VIEW public.v_status_of_implementation_decrypted WITH (security_invoker = true) AS
+SELECT id, detail_id, time_updated,
+       public.decrypt_text_value(admin_name) AS admin_name,
+       public.decrypt_text_value(admin_role) AS admin_role,
+       public.decrypt_text_value(admin_email) AS admin_email,
+       admin_id,
+       created_at,
+       updated_at
+FROM public.status_of_implementation;
+
+CREATE VIEW public.v_fsa_light_decrypted WITH (security_invoker = true) AS
+SELECT
+    light_id,
+    detail_id,
+    light_avail,
+    switch_type,
+    non_avail_light,
+    public.decrypt_jsonb_value(light_photos) AS light_photos,
+    edited,

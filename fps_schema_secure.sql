@@ -3888,3 +3888,32 @@ BEGIN
     );
 
     INSERT INTO public.status_field_inspection (
+        detail_id, time_updated, admin_name, admin_role, admin_email, admin_id
+    ) VALUES (
+        v_detail_id, now()::text,
+        'Suresh Patel', 'Super Admin', 'admin@fsaroadindia.gov.in', '1'
+    );
+
+    INSERT INTO public.status_of_approval (
+        detail_id, time_updated, admin_name, admin_role, admin_email, admin_id
+    ) VALUES (
+        v_detail_id, now()::text,
+        'Suresh Patel', 'Super Admin', 'admin@fsaroadindia.gov.in', '1'
+    );
+
+    INSERT INTO public.status_of_estimate (
+        detail_id, time_updated, admin_name, admin_role, admin_email, admin_id, uploaded_docs
+    ) VALUES (
+        v_detail_id, now()::text,
+        'Suresh Patel', 'Super Admin', 'admin@fsaroadindia.gov.in',
+        '1', '/docs/cost_estimate_001.pdf'
+    );
+
+    INSERT INTO public.status_of_implementation (
+        detail_id, time_updated, admin_name, admin_role, admin_email, admin_id
+    ) VALUES (
+        v_detail_id, now()::text,
+        'Suresh Patel', 'Super Admin', 'admin@fsaroadindia.gov.in', '1'
+    );
+
+END $$;

@@ -3801,3 +3801,61 @@ BEGIN
 
     INSERT INTO public.fsa_light (
         light_id, detail_id, light_avail, switch_type,
+        non_avail_light, light_photos, edited, delete_status
+    ) VALUES (
+        'LIGHT-' || v_detail_id || '-001', v_detail_id,
+        'Yes', 'Automatic Timer', null,
+        '{"0": "/images/light_001.jpg", "1": "/images/light_002.jpg"}'::jsonb,
+        false, false
+    );
+
+    INSERT INTO public.fsa_traff_status (
+        traff_status_id, detail_id,
+        signal_avail, signal_visible, signal_working, signal_timer_work, signal_need,
+        signal_photos, signboards_avail, signboards_visible, signboards_photos,
+        road_markings_avail, road_markings_photos, edited, delete_status
+    ) VALUES (
+        'TRAFF-' || v_detail_id || '-001', v_detail_id,
+        'Yes', 'Partially', 'Yes', 'Yes', 'No',
+        '{"0": "/images/signal_001.jpg"}'::jsonb,
+        'Yes', 'Yes',
+        '{"0": "/images/signboard_001.jpg", "1": "/images/signboard_002.jpg"}'::jsonb,
+        'Partial',
+        '{"0": "/images/road_marking_001.jpg"}'::jsonb,
+        false, false
+    );
+
+    INSERT INTO public.fsa_visible (
+        visible_id, detail_id,
+        visib_obstruct_by_objs, atspot_accident_cause,
+        road_eng_sol, visib_photos, is_visib_obstructed, delete_status
+    ) VALUES (
+        'VIS-' || v_detail_id || '-001', v_detail_id,
+        'Trees and Billboards', 'Limited sight distance',
+        'Remove obstructions, install mirrors',
+        '{"0": "/images/visibility_001.jpg", "1": "/images/visibility_002.jpg"}'::jsonb,
+        'Yes', false
+    );
+
+    INSERT INTO public.fsa_roadcnd (
+        roadcnd_id, detail_id, road_issue, road_defects, road_photos,
+        road_eng_sol_roadcnd, delete_status
+    ) VALUES (
+        'ROAD-' || v_detail_id || '-001', v_detail_id,
+        'Pothole cluster', 'Surface cracks and potholes',
+        '{"0": "/images/road_damage_001.jpg", "1": "/images/road_damage_002.jpg"}'::jsonb,
+        'Patch repair and resurfacing', false
+    );
+
+    INSERT INTO public.fsa_state_district_table (
+        state_admin_id, state_admin_name, state_code,
+        district_admin_id, district_admin_name, district_code,
+        state_roa_id, state_roa_name, roa_state_code, roa_district_code,
+        district_roa_id, district_roa_name, multiple_districts
+    ) VALUES (
+        1, 'Suresh Patel', '21',
+        1, 'Amit Verma', '05',
+        1, 'Road Safety Officer Odisha', ARRAY['21'], ARRAY['05','06'],
+        1, 'Khurda RO', ARRAY['Khurda','Cuttack']
+    );
+

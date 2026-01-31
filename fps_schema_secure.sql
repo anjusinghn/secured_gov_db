@@ -3685,3 +3685,32 @@ BEGIN
         ('SE', 'State Engineer'),
         ('AE', 'Assistant Engineer'),
         ('JE', 'Junior Engineer'),
+        ('PO', 'Police Officer')
+    ON CONFLICT DO NOTHING;
+
+    INSERT INTO public.state_district_master_table
+        (state_name, district_name, state_code, district_code, s_no)
+    VALUES
+        ('Odisha', 'Khurda',  '21', '05', 1),
+        ('Odisha', 'Cuttack', '21', '06', 2)
+    ON CONFLICT DO NOTHING;
+
+    INSERT INTO public.fsa_user_table (
+        pwd, email, email_hash, rep_name, designation, department,
+        phone_no, user_type, user_role, terms_cond, user_status,
+        state_code, district_code, state_name, district_name,
+        ps_code, police_station, login_status, last_login, user_file
+    ) VALUES (
+        'SecurePass123!',
+        'rajesh.kumar@gov.in', '',
+        'Rajesh Kumar', 'Assistant Engineer', 'Public Works Department',
+        '+91-9876543210', 'AE', 'Assistant Engineer',
+        true, true, '21', '05', 'Odisha', 'Khurda',
+        'PS001', 'Chandrasekharpur PS', false,
+        now()::text,
+        '{"0": "/uploads/id_card_001.pdf"}'::jsonb
+    ) RETURNING userid INTO v_userid1;
+
+    INSERT INTO public.fsa_user_table (
+        pwd, email, email_hash, rep_name, designation, department,
+        phone_no, user_type, user_role, terms_cond, user_status,

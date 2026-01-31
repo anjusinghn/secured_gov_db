@@ -3656,3 +3656,32 @@ AS $$
                 $$;
 
 ALTER FUNCTION public.fetch_data_from_tables(adm_id integer) OWNER TO fsa_admin;
+GRANT EXECUTE ON FUNCTION public.fetch_data_from_tables(integer) TO fsa_app, fsa_readonly;
+
+-- =============================================================================
+-- End of FSA Road Safety Database — Security-Hardened POC Schema
+-- =============================================================================
+
+-- =============================================================================
+-- SEED DATA
+-- =============================================================================
+
+DO $$
+BEGIN
+    IF coalesce(current_setting('app.encryption_key', true), '') = '' THEN
+        RAISE NOTICE 'app.encryption_key not set — using demo key. SET app.encryption_key before running in production.';
+        PERFORM set_config('app.encryption_key',
+            '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef', false);
+    END IF;
+END $$;
+
+DO $$
+DECLARE
+    v_userid1   bigint;
+    v_detail_id bigint;
+BEGIN
+
+    INSERT INTO public.fsa_user_roles (user_type, user_role) VALUES
+        ('SE', 'State Engineer'),
+        ('AE', 'Assistant Engineer'),
+        ('JE', 'Junior Engineer'),

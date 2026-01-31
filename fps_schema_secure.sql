@@ -3772,3 +3772,32 @@ BEGIN
         'Black Spot', 'T-Junction', 'Rasulgarh Square', 'Signalized',
         'Straight', 'Flat', '4', 'Yes',
         'Yes', '50-60 km/h', 'JN-16-A',
+        'Rasulgarh Bus Stand', 'Bus Stop', '200m', 'Rasulgarh to Vani Vihar',
+        '{"0": "/images/onspot_001.jpg", "1": "/images/onspot_002.jpg"}'::jsonb,
+        false, false
+    );
+
+    INSERT INTO public.fsa_acc (
+        detail_id, acc_id, acc_pattern_onspot, no_of_injuries, no_of_deaths,
+        no_of_accidents, nearest_hosp, start_age_range, end_age_range,
+        age_range, time_frame_acc, edited
+    ) VALUES (
+        v_detail_id, 'ACC-' || v_detail_id || '-001',
+        'Head-on collision', '3', '1',
+        '5', 'Capital Hospital, Bhubaneswar', 20, 40,
+        '20-40', '18:00-21:00', false
+    );
+
+    INSERT INTO public.fsa_ped_cross (
+        ped_self_park_t_rash_id, detail_id,
+        ped_animal_cross_lead_acc, ped_animal_cross_spot_reason,
+        road_eng_sol_ped_ani, rash_drivers, remarks, edited, delete_status
+    ) VALUES (
+        'PED-' || v_detail_id || '-001', v_detail_id,
+        'Yes', 'No zebra crossing', 'Install pedestrian crossing', 'Yes',
+        'High pedestrian traffic area near bus stand, needs immediate attention',
+        false, false
+    );
+
+    INSERT INTO public.fsa_light (
+        light_id, detail_id, light_avail, switch_type,

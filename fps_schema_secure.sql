@@ -3743,3 +3743,32 @@ BEGIN
     INSERT INTO public.gen_details (
         userid, rep_name, designation, department, phone_no, email,
         state, district, state_code, district_code,
+        edited, start_date, end_date, delete_status, police_station, ps_code
+    ) VALUES (
+        v_userid1,
+        '{"0": "Rajesh Kumar"}'::jsonb,
+        '{"0": "Assistant Engineer"}'::jsonb,
+        '{"0": "Public Works Department"}'::jsonb,
+        '{"0": "+91-9876543210"}'::jsonb,
+        '{"0": "rajesh.kumar@gov.in"}'::jsonb,
+        '{"0": "Odisha"}'::jsonb,
+        '{"0": "Khurda"}'::jsonb,
+        '{"0": "21"}'::jsonb,
+        '{"0": "05"}'::jsonb,
+        false, '2025-01-15', '2025-03-15', false,
+        'Chandrasekharpur PS', 'PS001'
+    ) RETURNING detail_id INTO v_detail_id;
+
+    INSERT INTO public.fsa_onspot (
+        detail_id, onspot_id, lat, long, highway_no, land_use_pattern,
+        hotspot_type, junction_type, junction_name, junction_formation,
+        stretch_type, stretch_shape, no_of_lanes, median_presence,
+        median_opening, speed_of_all_vehicles, adjoining_or_junction_no,
+        landmark_name, landmark_type, landmark_dist, name_of_stretch,
+        onspot_images, edited, delete_status
+    ) VALUES (
+        v_detail_id, 'ONSPOT-' || v_detail_id || '-001',
+        '20.2961', '85.8245', 'NH-16', 'Urban',
+        'Black Spot', 'T-Junction', 'Rasulgarh Square', 'Signalized',
+        'Straight', 'Flat', '4', 'Yes',
+        'Yes', '50-60 km/h', 'JN-16-A',

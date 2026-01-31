@@ -3859,3 +3859,32 @@ BEGIN
         1, 'Khurda RO', ARRAY['Khurda','Cuttack']
     );
 
+    INSERT INTO public.stages_table (
+        detail_id, status_field_inspection, intervention,
+        status_of_estimate, status_of_approval, status_of_implementation,
+        remarks_by_engg, time_updated, admin_name, admin_role, admin_email,
+        admin_id, upload_docs_intervention, upload_docs_estimation
+    ) VALUES (
+        v_detail_id,
+        'Completed', 'In Progress', 'Pending', 'Pending', 'Not Started',
+        'Site inspection completed, intervention measures identified',
+        now()::text, 'Suresh Patel', 'Super Admin', 'admin@fsaroadindia.gov.in',
+        '1', '/docs/intervention_report_001.pdf', '/docs/estimation_draft_001.pdf'
+    );
+
+    INSERT INTO public.intervention (
+        detail_id, time_updated, admin_name, admin_role, admin_email, admin_id, uploaded_docs
+    ) VALUES (
+        v_detail_id, now()::text,
+        'Suresh Patel', 'Super Admin', 'admin@fsaroadindia.gov.in',
+        '1', '/docs/intervention_photo_001.jpg'
+    );
+
+    INSERT INTO public.remarks_by_engg (
+        detail_id, time_updated, admin_name, admin_role, admin_email, admin_id
+    ) VALUES (
+        v_detail_id, now()::text,
+        'Amit Verma', 'District Engineer', 'amit.verma@gov.in', '2'
+    );
+
+    INSERT INTO public.status_field_inspection (

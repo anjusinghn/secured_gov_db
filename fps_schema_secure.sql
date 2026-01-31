@@ -3714,3 +3714,32 @@ BEGIN
     INSERT INTO public.fsa_user_table (
         pwd, email, email_hash, rep_name, designation, department,
         phone_no, user_type, user_role, terms_cond, user_status,
+        state_code, district_code, state_name, district_name,
+        ps_code, police_station, login_status, last_login, user_file
+    ) VALUES (
+        'AnotherPass456!',
+        'priya.sharma@gov.in', '',
+        'Priya Sharma', 'Junior Engineer', 'Road Transport',
+        '+91-9123456780', 'JE', 'Junior Engineer',
+        true, true, '21', '06', 'Odisha', 'Cuttack',
+        'PS002', 'Cuttack Sadar PS', false,
+        now()::text,
+        '{"0": "/uploads/id_card_002.pdf"}'::jsonb
+    );
+
+    INSERT INTO public.fsa_admin_table (
+        admin_email, admin_email_hash, admin_name, admin_pwd,
+        admin_role_id, admin_role, login_status, user_status,
+        state_name, district_name, state_code, district_code,
+        created_by, phone_no, last_login
+    ) VALUES (
+        'admin@fsaroadindia.gov.in', '',
+        'Suresh Patel', 'AdminPass789!',
+        1, 'Super Admin', false, true,
+        'Odisha', 'Khurda', '21', '05',
+        'System', '+91-9000000001', now()::text
+    );
+
+    INSERT INTO public.gen_details (
+        userid, rep_name, designation, department, phone_no, email,
+        state, district, state_code, district_code,
